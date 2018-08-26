@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/movieImageView"
+        android:layout_width="@dimen/home_movie_list_image_width"
+        android:layout_height="@dimen/home_movie_list_image_height"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/ic_broken_image"
+        app:layout_constraintBottom_toTopOf="@+id/movieTitleTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--<ImageView
+        android:id="@+id/ivMovieItemEmptyImage"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:srcCompat="@drawable/ic_broken_image"
+        app:layout_constraintBottom_toBottomOf="@+id/sdvMovieImageView"
+        app:layout_constraintEnd_toEndOf="@+id/sdvMovieImageView"
+        app:layout_constraintStart_toStartOf="@+id/sdvMovieImageView"
+        app:layout_constraintTop_toTopOf="@+id/sdvMovieImageView" />-->
+
+    <!--<com.themovielist.ui.FavoriteButton
+        android:id="@+id/mfbMovieImageViewFavorite"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:layout_constraintEnd_toEndOf="@+id/sdvMovieImageView"
+        app:layout_constraintTop_toTopOf="@+id/sdvMovieImageView" />-->
+
+    <TextView
+        android:id="@+id/movieTitleTextView"
+        style="@style/LightSmallText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="2"
+        android:maxLines="2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

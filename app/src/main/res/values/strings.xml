@@ -7,4 +7,12 @@
     <string name="browse">Browse</string>
     <string name="cinema">Cinema</string>
     <string name="favorite">Favorite</string>
+    <string name="most_popular">Most popular</string>
+    <string name="most_rated">Most rated</string>
+    <string name="see_all">See all</string>
+    <string name="try_again">Try again</string>
+    <string name="error_something_went_wrong">Uhh… Unfortunately something went wrong. Please, try again</string>
+    <string name="the_list_is_empty">The list is empty</string>
+    <string name="oops">Oops</string>
+    <string name="content_description_broken_robot">This is a image of a robot, indicating that something went wrong on the list loading</string>
 </resources>

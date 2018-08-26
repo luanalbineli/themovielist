@@ -13,12 +13,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", API_KEY)
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    dataBinding {
+        enabled true
     }
 }
 
@@ -31,17 +36,46 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
     implementation "androidx.vectordrawable:vectordrawable:$rootProject.appCompatVersion"
 
-    // Dagger 2
-    implementation "com.google.dagger:dagger-android:$rootProject.dagger"
-    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger"
-    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger"
-    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger"
+    // Architecture Components
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.lifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.lifecycleVersion"
 
-    // Kotlin
+    // Dagger 2
+    implementation "com.google.dagger:dagger-android:$rootProject.daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.daggerVersion"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+
+    // Kotlin + Coroutines + Coroutines adapter for Retrofit 2
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$rootProject.coroutinesRetrofitAdapterVersion"
+
+    // Retrofit + Gson
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpLoggingInterceptor"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    // Room
+    implementation "androidx.room:room-runtime:$rootProject.roomVersion"
+    implementation "androidx.room:room-rxjava2:$rootProject.roomVersion"
+    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+
+    // Timber
+    implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
 
     // Tests
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+}
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
 }
