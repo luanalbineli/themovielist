@@ -14,8 +14,8 @@ This is "basically" an Android application that consumes the services exposed by
   * And so on
 
 ##### Why architecture patterns?
-Split the responsabilities. When you follow an architecture pattern,
-I's easier to understand the flow of information, the responsabilities of each class/object, to maintain the code and test.
+Split the responsibilities. When you follow an architecture pattern,
+I's easier to understand the flow of information, the responsibilities of each class/object, to maintain the code and test.
 
 
 ### Features

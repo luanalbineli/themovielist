@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/movieTitleTextView"
-        style="@style/LightSmallText"
+        style="@style/TextAppearance.MaterialComponents.Caption"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"

@@ -5,7 +5,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/windowBackground</item>
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorTertiary">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -21,51 +24,43 @@
 
     <style name="AppTheme.PopupTheme" parent="ThemeOverlay.MaterialComponents.Light" />
 
-    <style name="TextAppearance.TheMovieList.ToolbarTitle" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+    <style name="TextAppearance.TheMovieList.ToolbarTitle" parent="@style/TextAppearance.MaterialComponents.Caption">
         <item name="android:fontFamily">@font/google_sans</item>
     </style>
 
-    <style name="LightMediumText" parent="Base.TextAppearance.AppCompat.Medium">
-        <item name="android:fontFamily">@font/google_sans</item>
+    <style name="LightMediumText" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="LightSmallText" parent="Base.TextAppearance.AppCompat.Small">
-        <item name="android:fontFamily">@font/google_sans</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="ThinSmallText" parent="Base.TextAppearance.AppCompat.Small">
-        <item name="android:fontFamily">@font/google_sans</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="LightMediumTextBold" parent="LightMediumText">
         <item name="android:textStyle">bold</item>
-        <item name="android:fontFamily">@font/google_sans</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="HomeListTitle" parent="TextAppearance.MaterialComponents.Headline4">
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="BlackLargeText" parent="Base.TextAppearance.AppCompat.Headline">
-        <item name="android:fontFamily">@font/google_sans</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
 
-    <style name="Widget.TheMovieList.BottomNavigation" parent="@style/Widget.MaterialComponents.BottomNavigationView.Colored">
-        <item name="itemIconTint">@color/colorAccent</item>
-        <!--<item name="itemTextAppearanceActive">@style/TextAppearance.IOSched.BottomNavigationView.Active</item>
-        <item name="itemTextAppearanceInactive">@style/TextAppearance.IOSched.BottomNavigationView</item>-->
+    <style name="Widget.TheMovieList.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:background">?android:attr/windowBackground</item>
         <item name="labelVisibilityMode">selected</item>
-        <item name="android:theme">@style/ThemeOverlay.MaterialComponents.Dark</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.TheMovieList.BottomNavigationView.Active</item>
     </style>
 
-    <style name="TextAppearance.IOSched.BottomNavigationView" parent="@style/Widget.MaterialComponents.BottomNavigationView">
-        <item name="android:fontFamily">@font/google_sans</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-    </style>
-
-    <style name="TextAppearance.IOSched.BottomNavigationView.Active">
+    <style name="TextAppearance.TheMovieList.BottomNavigationView.Active" parent="@style/TextAppearance.MaterialComponents.Caption">
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">14sp</item>
     </style>

@@ -10,21 +10,22 @@ import com.themovielist.repository.home.HomeRepository
 import com.themovielist.util.ApiUtil
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
+import kotlinx.coroutines.experimental.Job
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(homeRepository: HomeRepository): ViewModel() {
     val isLoading = MutableLiveData<Boolean>()
 
-    val moviesSortedByRating = homeRepository.getMoviesSortedByRating(ApiUtil.INITIAL_PAGE_INDEX)
-    val moviesSortedByPopularity = homeRepository.getMoviesSortedByPopularity(ApiUtil.INITIAL_PAGE_INDEX)
-
-    private val compositeDisposable = CompositeDisposable()
+    private val disposableParentJob = Job()
+    val moviesSortedByRating = homeRepository.getMoviesSortedByRating(ApiUtil.INITIAL_PAGE_INDEX, disposableParentJob)
+    val moviesSortedByPopularity = homeRepository.getMoviesSortedByPopularity(ApiUtil.INITIAL_PAGE_INDEX, disposableParentJob)
 
     init {
+
     }
 
     override fun onCleared() {
-        compositeDisposable.clear()
+        disposableParentJob.cancel()
         super.onCleared()
     }
 }

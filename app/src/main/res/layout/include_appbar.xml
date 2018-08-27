@@ -18,6 +18,6 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:minHeight="?actionBarSize"
-            android:textAppearance="@style/TextAppearance.TheMovieList.ToolbarTitle" />
+            android:textAppearance="?attr/textAppearanceHeadline6" />
     </FrameLayout>
 </com.google.android.material.appbar.AppBarLayout>

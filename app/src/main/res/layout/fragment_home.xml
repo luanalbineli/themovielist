@@ -42,7 +42,7 @@
 
                     <TextView
                         android:id="@+id/textView2"
-                        style="@style/BlackLargeText"
+                        style="@style/HomeListTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/most_popular"
@@ -56,7 +56,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/see_all"
                         app:drawableRightCompat="@drawable/chevron_right"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
                         app:layout_constraintEnd_toEndOf="parent" />
 
                     <fragment
@@ -81,7 +81,7 @@
 
                     <TextView
                         android:id="@+id/textView4"
-                        style="@style/BlackLargeText"
+                        style="@style/HomeListTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
@@ -94,9 +94,11 @@
                         style="@style/LightMediumText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="-1dp"
                         android:drawablePadding="4dp"
                         android:text="@string/see_all"
                         app:drawableRightCompat="@drawable/chevron_right"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
                         app:layout_constraintBottom_toBottomOf="@+id/textView4"
                         app:layout_constraintEnd_toEndOf="parent" />
 

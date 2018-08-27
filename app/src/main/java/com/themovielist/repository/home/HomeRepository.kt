@@ -11,7 +11,9 @@ import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.repository.RepositoryBase
 import com.themovielist.repository.common.CommonRepository
 import com.themovielist.repository.favorite.FavoriteRepository
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.Job
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import kotlinx.coroutines.experimental.withContext
@@ -22,16 +24,16 @@ class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonR
     override val serviceInstanceType: Class<IHomeService>
         get() = IHomeService::class.java
 
-    fun getMoviesSortedByPopularity(pageIndex: Int) =
-            getMoviesWithGenreAndConfiguration(mApiInstance.getPopularList(pageIndex))
+    fun getMoviesSortedByPopularity(pageIndex: Int, disposableParentJob: Job) =
+            getMoviesWithGenreAndConfiguration(mApiInstance.getPopularList(pageIndex), disposableParentJob)
 
-    fun getMoviesSortedByRating(pageIndex: Int) =
-            getMoviesWithGenreAndConfiguration(mApiInstance.getTopRatedList(pageIndex))
+    fun getMoviesSortedByRating(pageIndex: Int, disposableParentJob: Job) =
+            getMoviesWithGenreAndConfiguration(mApiInstance.getTopRatedList(pageIndex), disposableParentJob)
 
-    private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>): MutableLiveData<Resource<List<MovieImageGenreViewModel>>> {
+    private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>, disposableParentJob: Job): MutableLiveData<Resource<List<MovieImageGenreViewModel>>> {
         val result = MutableLiveData<Resource<List<MovieImageGenreViewModel>>>()
         result.value = Resource.loading()
-        launch {
+        launch(parent = disposableParentJob) {
             try {
                 val genreListRequest = commonRepository.getAllGenres()
                 val favoriteMovies = favoriteRepository.getFavoriteMovieIds()

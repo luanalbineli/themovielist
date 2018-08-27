@@ -10,6 +10,7 @@ import com.themovielist.R
 import com.themovielist.databinding.FragmentHomeBinding
 import com.themovielist.model.response.Resource
 import com.themovielist.model.response.Status
+import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.ui.home.partiallist.HomePartialListFragment
 import com.themovielist.util.extensions.viewModelProvider
 import dagger.android.support.DaggerFragment
@@ -33,36 +34,29 @@ class HomeFragment: DaggerFragment() {
         }
 
         val mostRatedFragmentList = childFragmentManager.findFragmentById(R.id.homeRatedPartialListFragment) as HomePartialListFragment
-
         homeViewModel.moviesSortedByRating.observe(this, Observer { result ->
-            Timber.d("The home movie list sorted by rating has changed")
-            when (result.status) {
-                Status.SUCCESS -> mostRatedFragmentList.showMovies(result.data!!)
-                Status.ERROR -> {
-                    Timber.e(result.exception, "An error occurred while tried to get the movies")
-                    mostRatedFragmentList.showErrorLoadingMovies()
-                }
-                Status.LOADING -> mostRatedFragmentList.showLoadingIndicator()
-            }
+           handleResourceStatus(mostRatedFragmentList, result)
 
         })
 
         val mostPopularFragmentList = childFragmentManager.findFragmentById(R.id.homePopularPartialListFragment) as HomePartialListFragment
-
         homeViewModel.moviesSortedByPopularity.observe(this, Observer { result ->
-            Timber.d("The home movie list sorted by popularity has changed")
-            when (result.status) {
-                Status.SUCCESS -> mostPopularFragmentList.showMovies(result.data!!)
-                Status.ERROR -> {
-                    Timber.e(result.exception, "An error occurred while tried to get the movies")
-                    mostPopularFragmentList.showErrorLoadingMovies()
-                }
-                Status.LOADING -> mostPopularFragmentList.showLoadingIndicator()
-            }
+            handleResourceStatus(mostPopularFragmentList, result)
         })
 
-        binding.root.title.text = "Home"
+        binding.root.title.text = getString(R.string.home)
 
         return binding.root
+    }
+
+    private fun handleResourceStatus(mostRatedFragmentList: HomePartialListFragment, result: Resource<List<MovieImageGenreViewModel>>) {
+        when (result.status) {
+            Status.SUCCESS -> mostRatedFragmentList.showMovies(result.data!!)
+            Status.ERROR -> {
+                Timber.e(result.exception, "An error occurred while tried to get the movies")
+                mostRatedFragmentList.showErrorLoadingMovies()
+            }
+            Status.LOADING -> mostRatedFragmentList.showLoadingIndicator()
+        }
     }
 }
