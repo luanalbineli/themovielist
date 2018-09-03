@@ -12,4 +12,7 @@
     <!-- RequestStatusView -->
     <dimen name="text_error_title_size">56sp</dimen>
     <dimen name="error_robot_height">140dp</dimen>
+
+    <!-- Acessibility -->
+    <dimen name="a11y_min_touch_target">48dp</dimen>
 </resources>

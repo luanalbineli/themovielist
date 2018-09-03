@@ -1,7 +1,5 @@
 package com.themovielist.model.response
 
-import android.os.Parcel
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.themovielist.model.MovieSizeModel
 import com.themovielist.util.ApiUtil.ORIGINAL_IMAGE_SIZE_NAME
@@ -11,18 +9,11 @@ data class ConfigurationResponseModel constructor(@SerializedName("images") val 
 
 data class ConfigurationImageResponseModel constructor(@SerializedName("secure_base_url") val secureBaseUrl: String,
                                                        @SerializedName("poster_sizes") private val posterSizes: List<String>,
-                                                       @SerializedName("profile_sizes") private val profileSizes: List<String>) : Parcelable {
+                                                       @SerializedName("profile_sizes") private val profileSizes: List<String>) {
 
 
     private var mPosterSizeList: List<MovieSizeModel>? = null
     private var mProfileSizeList: List<MovieSizeModel>? = null
-
-    constructor(parcel: Parcel) : this(
-            parcel.readString(),
-            parcel.createStringArrayList(),
-            parcel.createStringArrayList()) {
-        mPosterSizeList = parcel.createTypedArrayList(MovieSizeModel)
-    }
 
     fun getPosterSizeList(): List<MovieSizeModel> {
         if (mPosterSizeList == null) {
@@ -80,20 +71,4 @@ data class ConfigurationImageResponseModel constructor(@SerializedName("secure_b
             }
         }
     }*/
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(secureBaseUrl)
-        parcel.writeStringList(posterSizes)
-        parcel.writeTypedList(mPosterSizeList)
-        parcel.writeTypedList(mProfileSizeList)
-    }
-
-    override fun describeContents(): Int = 0
-
-    companion object CREATOR : Parcelable.Creator<ConfigurationImageResponseModel> {
-        override fun createFromParcel(parcel: Parcel): ConfigurationImageResponseModel =
-                ConfigurationImageResponseModel(parcel)
-
-        override fun newArray(size: Int): Array<ConfigurationImageResponseModel?> =
-                arrayOfNulls(size)
-    }
 }

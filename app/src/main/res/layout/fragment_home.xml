@@ -51,7 +51,7 @@
 
                     <com.themovielist.widget.DrawableCompatTextView
                         android:id="@+id/tvHomeSeeMovieCast"
-                        style="@style/LightMediumText"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/see_all"
@@ -91,7 +91,7 @@
 
                     <com.themovielist.widget.DrawableCompatTextView
                         android:id="@+id/tvHomeSeeMovieListByRating"
-                        style="@style/LightMediumText"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="-1dp"
