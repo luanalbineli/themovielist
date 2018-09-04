@@ -15,4 +15,5 @@
     <string name="the_list_is_empty">The list is empty</string>
     <string name="oops">Oops</string>
     <string name="content_description_broken_robot">This is a image of a robot, indicating that something went wrong on the list loading</string>
+    <string name="i18n_favorite_button">Button used to favorite/unfavorite the movie</string>
 </resources>

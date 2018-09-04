@@ -2,18 +2,19 @@ package com.themovielist.model
 
 import android.content.ContentValues
 import android.database.Cursor
-import android.os.Parcel
-import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.themovielist.repository.favorite.MovieContract
-import com.themovielist.util.extensions.*
+import com.themovielist.util.extensions.getAsIntArray
+import com.themovielist.util.extensions.getIntArray
+import com.themovielist.util.extensions.getNullableString
+import com.themovielist.util.extensions.put
 import java.util.*
 
 @Entity(tableName = MovieContract.MovieEntry.TABLE_NAME)
-open class MovieModel constructor(@SerializedName("id")
+data class MovieModel constructor(@SerializedName("id")
                                   @PrimaryKey
                                   @ColumnInfo(name = MovieContract.MovieEntry._ID)
                                   var id: Int = 0,
@@ -44,17 +45,7 @@ open class MovieModel constructor(@SerializedName("id")
 
                                   @SerializedName("genre_ids")
                                   @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST)
-                                  val genreIdList: IntArray) : Parcelable {
-
-    constructor(parcel: Parcel) : this(
-            parcel.readInt(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readString(),
-            parcel.readDouble(),
-            parcel.readNullableDate(),
-            parcel.readString(),
-            parcel.readIntArray())
+                                  val genreIdList: IntArray) {
 
     constructor(contentValues: ContentValues) : this(
             contentValues.getAsInteger(MovieContract.MovieEntry._ID),
@@ -97,21 +88,6 @@ open class MovieModel constructor(@SerializedName("id")
         return contentValues
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeInt(id)
-        parcel.writeString(posterPath)
-        parcel.writeString(overview)
-        parcel.writeString(title)
-        parcel.writeDouble(voteAverage)
-        parcel.writeNullableDate(releaseDate)
-        parcel.writeString(backdropPath)
-        parcel.writeIntArrayWithLength(genreIdList)
-    }
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
     override fun equals(other: Any?): Boolean {
         if (other == null || !MovieModel::class.java.isAssignableFrom(other.javaClass)) {
             return false
@@ -125,11 +101,5 @@ open class MovieModel constructor(@SerializedName("id")
         var result = 1
         result = prime * result + id.hashCode()
         return result
-    }
-
-    companion object CREATOR : Parcelable.Creator<MovieModel> {
-        override fun createFromParcel(parcel: Parcel): MovieModel = MovieModel(parcel)
-
-        override fun newArray(size: Int): Array<MovieModel?> = arrayOfNulls(size)
     }
 }

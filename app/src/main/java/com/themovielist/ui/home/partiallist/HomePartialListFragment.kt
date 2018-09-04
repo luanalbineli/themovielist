@@ -12,7 +12,7 @@ import com.themovielist.widget.recyclerview.HorizonalSpaceItemDecoration
 import dagger.android.support.DaggerFragment
 
 class HomePartialListFragment : DaggerFragment() {
-    private val mAdapter by lazy { HomeMovieListAdapter(R.string.the_list_is_empty) }
+    private lateinit var mAdapter: HomeMovieListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = RecyclerViewBinding.inflate(inflater, container, false).apply {
@@ -31,6 +31,7 @@ class HomePartialListFragment : DaggerFragment() {
     }
 
     fun showMovies(result: List<MovieImageGenreViewModel>) {
+        if (mAdapter::in)
         mAdapter.hideLoadingIndicator()
         mAdapter.addItems(result)
     }

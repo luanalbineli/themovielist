@@ -14,8 +14,6 @@ import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.ui.home.partiallist.HomePartialListFragment
 import com.themovielist.util.extensions.viewModelProvider
 import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.include_appbar.*
 import kotlinx.android.synthetic.main.include_appbar.view.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -49,14 +47,14 @@ class HomeFragment: DaggerFragment() {
         return binding.root
     }
 
-    private fun handleResourceStatus(mostRatedFragmentList: HomePartialListFragment, result: Resource<List<MovieImageGenreViewModel>>) {
+    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Resource<List<MovieImageGenreViewModel>>) {
         when (result.status) {
-            Status.SUCCESS -> mostRatedFragmentList.showMovies(result.data!!)
+            Status.SUCCESS -> fragmentList.showMovies(result.data!!)
             Status.ERROR -> {
                 Timber.e(result.exception, "An error occurred while tried to get the movies")
-                mostRatedFragmentList.showErrorLoadingMovies()
+                fragmentList.showErrorLoadingMovies()
             }
-            Status.LOADING -> mostRatedFragmentList.showLoadingIndicator()
+            Status.LOADING -> fragmentList.showLoadingIndicator()
         }
     }
 }
