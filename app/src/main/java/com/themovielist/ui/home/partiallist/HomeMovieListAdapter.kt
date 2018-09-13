@@ -10,11 +10,10 @@ import com.themovielist.widget.recyclerview.CustomRecyclerViewAdapter
 import com.themovielist.widget.recyclerview.CustomRecyclerViewHolder
 
 internal class HomeMovieListAdapter(
-        emptyMessageResId: Int,
-        tryAgainClickListener: (() -> Unit)? = null,
-        private val lifecycleOwner: LifecycleOwner,
-        private val configurationImageResponseModel: ConfigurationImageResponseModel
-    ) : CustomRecyclerViewAdapter<MovieImageGenreViewModel, HomeMovieListVH>(emptyMessageResId, tryAgainClickListener) {
+        private val lifecycleOwner: LifecycleOwner
+    ) : CustomRecyclerViewAdapter<MovieImageGenreViewModel, HomeMovieListVH>() {
+
+    lateinit var configurationImageResponseModel: ConfigurationImageResponseModel
 
     override fun onCreateItemViewHolder(parent: ViewGroup, viewType: Int): HomeMovieListVH {
         val binding = HomeMovieListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,14 +28,15 @@ internal class HomeMovieListAdapter(
 }
 
 class HomeMovieListVH(
-        private val homeMovieListItemBinding: HomeMovieListItemBinding,
+        private val binding: HomeMovieListItemBinding,
         private val configurationImageResponseModel: ConfigurationImageResponseModel,
         private val lifecycleOwner: LifecycleOwner)
-    : CustomRecyclerViewHolder(homeMovieListItemBinding.root) {
+    : CustomRecyclerViewHolder(binding.root) {
 
     fun bind(movieImageViewModel: MovieImageGenreViewModel) {
-        homeMovieListItemBinding.model = movieImageViewModel
-        homeMovieListItemBinding.setLifecycleOwner(lifecycleOwner)
-        homeMovieListItemBinding.executePendingBindings()
+        binding.model = movieImageViewModel
+        binding.configurationImageModel = configurationImageResponseModel
+        binding.setLifecycleOwner(lifecycleOwner)
+        binding.executePendingBindings()
     }
 }

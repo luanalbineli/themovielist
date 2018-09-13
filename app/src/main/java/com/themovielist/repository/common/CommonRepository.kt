@@ -4,8 +4,6 @@ import android.util.SparseArray
 import com.themovielist.model.GenreModel
 import com.themovielist.model.MovieModel
 import com.themovielist.model.response.ConfigurationResponseModel
-import com.themovielist.model.response.PaginatedArrayResponseModel
-import com.themovielist.model.view.MovieWithGenreModel
 import com.themovielist.repository.RepositoryBase
 import com.themovielist.util.extensions.mapToListNotNull
 import kotlinx.coroutines.experimental.CompletableDeferred
@@ -57,17 +55,6 @@ constructor(retrofit: Retrofit) : RepositoryBase<ICommonMovieService>(retrofit) 
         }
 
         return completableDeferred
-    }
-
-    fun fillMovieGenresList(movieListResponseModel: PaginatedArrayResponseModel<MovieModel>, genreMap: SparseArray<GenreModel>): PaginatedArrayResponseModel<MovieWithGenreModel> {
-        return PaginatedArrayResponseModel<MovieWithGenreModel>().also {
-            it.results = movieListResponseModel.results.map {
-                MovieWithGenreModel(it, fillMovieGenresList(it, genreMap))
-            }
-
-            it.page = movieListResponseModel.page
-            it.totalPages = movieListResponseModel.totalPages
-        }
     }
 
     fun fillMovieGenresList(movieModel: MovieModel, genreMap: SparseArray<GenreModel>): List<GenreModel>? {

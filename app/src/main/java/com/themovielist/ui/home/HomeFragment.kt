@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.themovielist.R
 import com.themovielist.databinding.FragmentHomeBinding
+import com.themovielist.model.response.MovieListResponseModel
 import com.themovielist.model.response.Resource
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieImageGenreViewModel
@@ -47,9 +48,9 @@ class HomeFragment: DaggerFragment() {
         return binding.root
     }
 
-    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Resource<List<MovieImageGenreViewModel>>) {
+    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Resource<MovieListResponseModel>) {
         when (result.status) {
-            Status.SUCCESS -> fragmentList.showMovies(result.data!!)
+            Status.SUCCESS -> fragmentList.showMovies(result.data!!.movieWithGenreList, result.data.configurationResponseModel.imageResponseModel)
             Status.ERROR -> {
                 Timber.e(result.exception, "An error occurred while tried to get the movies")
                 fragmentList.showErrorLoadingMovies()

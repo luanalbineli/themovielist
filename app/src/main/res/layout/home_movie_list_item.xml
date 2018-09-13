@@ -33,6 +33,7 @@
             android:id="@+id/favoriteButton"
             android:layout_width="@dimen/a11y_min_touch_target"
             android:layout_height="@dimen/a11y_min_touch_target"
+            android:checked="@{model.favorite}"
             android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="@string/i18n_favorite_button"
             android:src="@drawable/asld_star_event"

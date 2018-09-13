@@ -19,11 +19,11 @@ abstract class CustomRecyclerViewAdapter<TItem, THolder : CustomRecyclerViewHold
 
     protected constructor() : this(ArrayList<TItem>())
 
-    protected constructor(tryAgainClickListener: (() -> Unit)?) : this() {
+    protected constructor(tryAgainClickListener: (() -> Unit)? = null) : this() {
         mTryAgainClickListener = tryAgainClickListener
     }
 
-    protected constructor(@StringRes emptyMessageResId: Int, tryAgainClickListener: (() -> Unit)?) : this() {
+    protected constructor(@StringRes emptyMessageResId: Int = R.string.the_list_is_empty, tryAgainClickListener: (() -> Unit)?) : this() {
         mEmptyMessageResId = emptyMessageResId
         mTryAgainClickListener = tryAgainClickListener
     }

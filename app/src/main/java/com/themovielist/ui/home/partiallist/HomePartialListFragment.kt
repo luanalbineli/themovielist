@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.themovielist.R
 import com.themovielist.databinding.RecyclerViewBinding
+import com.themovielist.model.response.ConfigurationImageResponseModel
 import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.widget.recyclerview.HorizonalSpaceItemDecoration
 import dagger.android.support.DaggerFragment
 
 class HomePartialListFragment : DaggerFragment() {
-    private lateinit var mAdapter: HomeMovieListAdapter
+    private val adapter by lazy { HomeMovieListAdapter(this) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = RecyclerViewBinding.inflate(inflater, container, false).apply {
             setLifecycleOwner(this@HomePartialListFragment)
-            recyclerView.adapter = mAdapter
+            recyclerView.adapter = adapter
 
             val dividerAmountOfSpace = inflater.context.resources.getDimension(R.dimen.home_movie_list_image_space)
             val spaceItemViewDecoration = HorizonalSpaceItemDecoration(dividerAmountOfSpace.toInt())
@@ -30,17 +31,17 @@ class HomePartialListFragment : DaggerFragment() {
         return binding.root
     }
 
-    fun showMovies(result: List<MovieImageGenreViewModel>) {
-        if (mAdapter::in)
-        mAdapter.hideLoadingIndicator()
-        mAdapter.addItems(result)
+    fun showMovies(result: List<MovieImageGenreViewModel>, configurationImageResponseModel: ConfigurationImageResponseModel) {
+        adapter.configurationImageResponseModel = configurationImageResponseModel
+        adapter.hideLoadingIndicator()
+        adapter.addItems(result)
     }
 
     fun showErrorLoadingMovies() {
-        mAdapter.showErrorMessage()
+        adapter.showErrorMessage()
     }
 
     fun showLoadingIndicator() {
-        mAdapter.showLoading()
+        adapter.showLoading()
     }
 }
