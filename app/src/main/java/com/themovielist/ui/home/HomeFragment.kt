@@ -9,9 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.themovielist.R
 import com.themovielist.databinding.FragmentHomeBinding
 import com.themovielist.model.response.MovieListResponseModel
-import com.themovielist.model.response.Resource
+import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
-import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.ui.home.partiallist.HomePartialListFragment
 import com.themovielist.util.extensions.viewModelProvider
 import dagger.android.support.DaggerFragment
@@ -48,7 +47,7 @@ class HomeFragment: DaggerFragment() {
         return binding.root
     }
 
-    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Resource<MovieListResponseModel>) {
+    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Result<MovieListResponseModel>) {
         when (result.status) {
             Status.SUCCESS -> fragmentList.showMovies(result.data!!.movieWithGenreList, result.data.configurationResponseModel.imageResponseModel)
             Status.ERROR -> {

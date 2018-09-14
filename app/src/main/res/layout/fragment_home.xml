@@ -30,8 +30,7 @@
                     android:id="@+id/requestStatusView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:goneUnless="@{viewModel.isLoading}" />
+                    android:visibility="gone" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/flHomeMovieContainer"

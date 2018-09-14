@@ -7,7 +7,7 @@ import com.themovielist.model.MovieModel
 import com.themovielist.model.response.ConfigurationResponseModel
 import com.themovielist.model.response.MovieListResponseModel
 import com.themovielist.model.response.PaginatedArrayResponseModel
-import com.themovielist.model.response.Resource
+import com.themovielist.model.response.Result
 import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.repository.RepositoryBase
 import com.themovielist.repository.common.CommonRepository
@@ -27,9 +27,9 @@ class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonR
     fun getMoviesSortedByRating(pageIndex: Int, disposableParentJob: Job) =
             getMoviesWithGenreAndConfiguration(mApiInstance.getTopRatedList(pageIndex), disposableParentJob)
 
-    private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>, disposableParentJob: Job): MutableLiveData<Resource<MovieListResponseModel>> {
-        val result = MutableLiveData<Resource<MovieListResponseModel>>()
-        result.value = Resource.loading()
+    private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>, disposableParentJob: Job): MutableLiveData<Result<MovieListResponseModel>> {
+        val result = MutableLiveData<Result<MovieListResponseModel>>()
+        result.value = Result.loading()
         launch(parent = disposableParentJob, context = IO) {
             try {
                 val genreListRequest = commonRepository.getAllGenres()
@@ -37,9 +37,9 @@ class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonR
                 val configurationRequest = commonRepository.getConfiguration()
 
                 val list = processMovieWithGenreResult(movieRequest.await(), genreListRequest.await(), configurationRequest.await(), favoriteMovies.await())
-                withContext(UI) { result.value = Resource.success(list) }
+                withContext(UI) { result.value = Result.success(list) }
             } catch (exception: Exception) {
-                withContext(UI) { result.value = Resource.error(exception) }
+                withContext(UI) { result.value = Result.error(exception) }
             }
         }
 

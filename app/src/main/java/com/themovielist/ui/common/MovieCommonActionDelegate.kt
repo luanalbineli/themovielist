@@ -2,9 +2,11 @@ package com.themovielist.ui.common
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.themovielist.domain.FavoriteMovieUseCase
 import com.themovielist.model.MovieModel
+import timber.log.Timber
 
-class MovieCommonActionDelegate: MovieCommonAction {
+class MovieCommonActionDelegate constructor(private val favoriteMovieUseCase: FavoriteMovieUseCase): MovieCommonAction {
     private val _navigateToMovieDetailAction = MutableLiveData<Event<MovieModel>>()
     override val navigateToMovieDetailAction: LiveData<Event<MovieModel>>
         get() = _navigateToMovieDetailAction
@@ -14,6 +16,6 @@ class MovieCommonActionDelegate: MovieCommonAction {
     }
 
     override fun onHeartClicked(movieModel: MovieModel) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Timber.d("Toggle movie favorite")
     }
 }
