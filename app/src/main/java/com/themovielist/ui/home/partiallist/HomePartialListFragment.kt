@@ -4,16 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.themovielist.R
 import com.themovielist.databinding.RecyclerViewBinding
+import com.themovielist.domain.FavoriteMovieUseCase
 import com.themovielist.model.response.ConfigurationImageResponseModel
+import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.ui.home.HomeViewModel
-import com.themovielist.util.extensions.viewModelProvider
+import com.themovielist.util.extensions.activityViewModelProvider
 import com.themovielist.widget.recyclerview.HorizonalSpaceItemDecoration
 import dagger.android.support.DaggerFragment
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomePartialListFragment : DaggerFragment() {
@@ -22,10 +26,12 @@ class HomePartialListFragment : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    @Inject lateinit var favoriteMovieUseCase: FavoriteMovieUseCase
+
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        homeViewModel = viewModelProvider(viewModelFactory)
+        homeViewModel = activityViewModelProvider(viewModelFactory)
         adapter = HomeMovieListAdapter(this, homeViewModel)
 
         val binding = RecyclerViewBinding.inflate(inflater, container, false).apply {
@@ -41,6 +47,21 @@ class HomePartialListFragment : DaggerFragment() {
         }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        favoriteMovieUseCase.observe().observe(this, Observer { toggleResult ->
+            Timber.d("Receiving a movie status change: ${toggleResult.status} - ${toggleResult.data}")
+            if (toggleResult.status == Status.SUCCESS) {
+                val toggledMovieId = toggleResult.data!!.movieModel.id
+                val movieIndex = adapter.items.indexOfFirst { it.movieModel.id == toggledMovieId  }
+                Timber.d("Movie index: $movieIndex")
+                if (movieIndex != -1) {
+                    adapter.items[movieIndex].isFavorite = toggleResult.data.isFavorite
+                    adapter.notifyItemChanged(movieIndex)
+                }
+            }
+        })
     }
 
     fun showMovies(result: List<MovieImageGenreViewModel>, configurationImageResponseModel: ConfigurationImageResponseModel) {

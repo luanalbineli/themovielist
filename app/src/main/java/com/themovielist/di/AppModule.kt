@@ -5,6 +5,8 @@ import com.google.gson.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.themovielist.BuildConfig
 import com.themovielist.MainApplication
+import com.themovielist.domain.FavoriteMovieUseCase
+import com.themovielist.repository.favorite.FavoriteRepository
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -25,6 +27,12 @@ class AppModule {
     @Provides
     fun provideContext(application: MainApplication): Context {
         return application.applicationContext
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteMovieUseCase(favoriteRepository: FavoriteRepository): FavoriteMovieUseCase {
+        return FavoriteMovieUseCase(favoriteRepository)
     }
 
     @Provides

@@ -15,6 +15,7 @@ import com.themovielist.repository.favorite.FavoriteRepository
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.UI
 import retrofit2.Retrofit
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonRepository: CommonRepository, private val favoriteRepository: FavoriteRepository): RepositoryBase<IHomeService>(retrofit) {
@@ -28,6 +29,7 @@ class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonR
             getMoviesWithGenreAndConfiguration(mApiInstance.getTopRatedList(pageIndex), disposableParentJob)
 
     private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>, disposableParentJob: Job): MutableLiveData<Result<MovieListResponseModel>> {
+        Timber.d("GETTING THE MOVIES")
         val result = MutableLiveData<Result<MovieListResponseModel>>()
         result.value = Result.loading()
         launch(parent = disposableParentJob, context = IO) {

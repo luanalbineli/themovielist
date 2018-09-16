@@ -16,4 +16,9 @@
     <string name="oops">Oops</string>
     <string name="content_description_broken_robot">This is a image of a robot, indicating that something went wrong on the list loading</string>
     <string name="i18n_favorite_button">Button used to favorite/unfavorite the movie</string>
+    <string name="pipe_separator">|</string>
+    <string name="movie_detail_backdrop_content_description">This is the backdrop of the movie</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="cast">Cast</string>
+    <string name="overview">Overview</string>
 </resources>

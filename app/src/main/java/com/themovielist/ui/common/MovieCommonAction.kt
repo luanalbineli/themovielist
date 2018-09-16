@@ -1,10 +1,10 @@
 package com.themovielist.ui.common
 
 import androidx.lifecycle.LiveData
-import com.themovielist.model.MovieModel
+import com.themovielist.model.view.MovieImageGenreViewModel
 
 interface MovieCommonAction {
-    val navigateToMovieDetailAction: LiveData<Event<MovieModel>>
-    fun openMovieDetail(movieModel: MovieModel)
-    fun onHeartClicked(movieModel: MovieModel)
+    val navigateToMovieDetailAction: LiveData<Event<MovieImageGenreViewModel>>
+    fun openMovieDetail(movieImageGenreViewModel: MovieImageGenreViewModel)
+    fun onHeartClicked(movieImageGenreViewModel: MovieImageGenreViewModel)
 }

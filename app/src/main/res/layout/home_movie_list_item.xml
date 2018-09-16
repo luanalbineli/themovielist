@@ -19,11 +19,12 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:onClick="@{() -> eventListener.openMovieDetail(model.movieModel)}"
+        android:onClick="@{() -> eventListener.openMovieDetail(model)}"
         android:layout_height="wrap_content">
 
         <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/movieImageView"
+            android:onClick="@{() -> eventListener.openMovieDetail(model)}"
             android:layout_width="@dimen/home_movie_list_image_width"
             android:layout_height="@dimen/home_movie_list_image_height"
             android:scaleType="centerCrop"
@@ -39,7 +40,7 @@
             android:layout_width="@dimen/a11y_min_touch_target"
             android:layout_height="@dimen/a11y_min_touch_target"
             android:checked="@{model.favorite}"
-            android:onClick="@{() -> eventListener.onHeartClicked(model.movieModel)}"
+            android:onClick="@{() -> eventListener.onHeartClicked(model)}"
             android:background="?selectableItemBackgroundBorderless"
             android:contentDescription="@string/i18n_favorite_button"
             android:src="@drawable/asld_star_event"

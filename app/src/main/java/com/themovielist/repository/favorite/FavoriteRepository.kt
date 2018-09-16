@@ -35,40 +35,35 @@ class FavoriteRepository @Inject constructor(private val context: Context) {
         return completableDeferred
     }
 
-    fun removeFavoriteMovie(movieModel: MovieModel): Deferred<Result<Unit>> {
+    fun removeFavoriteMovie(movieModel: MovieModel): Result<Unit> {
         Timber.d("Trying to remove movie from favorite: $movieModel")
-        val completableDeferred = CompletableDeferred<Result<Unit>>()
         val contentResolver = context.contentResolver
         if (contentResolver == null) {
-            completableDeferred.completeExceptionally(RuntimeException("Cannot get the ContentResolver"))
+            return Result.error(RuntimeException("Cannot get the ContentResolver"))
         } else {
             val numberOfRemovedItems = contentResolver.delete(MovieContract.MovieEntry.buildMovieWithId(movieModel.id), null, null)
             Timber.d("Number of removed movies: $numberOfRemovedItems")
             if (numberOfRemovedItems < 1) {
-                completableDeferred.completeExceptionally(SQLDataException("An internal error occurred."))
-            } else {
-                completableDeferred.complete(Result.success(Unit))
+                return Result.error(SQLDataException("An internal error occurred."))
             }
         }
 
-        return completableDeferred
+        return Result.success(Unit)
     }
 
-    fun saveFavoriteMovie(movieModel: MovieModel): Deferred<Result<Unit>> {
+    fun saveFavoriteMovie(movieModel: MovieModel): Result<Unit> {
         Timber.d("Trying to set movie as favorite: $movieModel")
-        val completableDeferred = CompletableDeferred<Result<Unit>>()
         val contentResolver = context.contentResolver
         if (contentResolver == null) {
-            completableDeferred.completeExceptionally(RuntimeException("Cannot get the ContentResolver"))
+            return Result.error(RuntimeException("Cannot get the ContentResolver"))
         } else {
             val uri = contentResolver.insert(MovieContract.MovieEntry.CONTENT_URI, movieModel.toContentValues())
             Timber.d("Result of the insertion: $uri")
             if (uri == null) {
-                completableDeferred.completeExceptionally(SQLDataException("An internal error occurred."))
-            } else {
-                completableDeferred.complete(Result.success(Unit))
+                return Result.error(SQLDataException("An internal error occurred."))
             }
         }
-        return completableDeferred
+
+        return Result.success(Unit)
     }
 }

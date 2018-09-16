@@ -11,8 +11,11 @@ import com.themovielist.databinding.FragmentHomeBinding
 import com.themovielist.model.response.MovieListResponseModel
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
+import com.themovielist.model.view.MovieImageGenreViewModel
+import com.themovielist.ui.common.Event
 import com.themovielist.ui.home.partiallist.HomePartialListFragment
-import com.themovielist.util.extensions.viewModelProvider
+import com.themovielist.ui.moviedetail.MovieDetailActivity
+import com.themovielist.util.extensions.activityViewModelProvider
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.include_appbar.view.*
 import timber.log.Timber
@@ -24,7 +27,7 @@ class HomeFragment: DaggerFragment() {
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        homeViewModel = viewModelProvider(viewModelFactory)
+        homeViewModel = activityViewModelProvider(viewModelFactory)
 
         val binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
             setLifecycleOwner(this@HomeFragment)
@@ -42,9 +45,18 @@ class HomeFragment: DaggerFragment() {
             handleResourceStatus(mostPopularFragmentList, result)
         })
 
+        homeViewModel.navigateToMovieDetailAction.observe(this, Observer {
+            Timber.d("Opening movie detail: ${it.content}")
+            openMovieDetail(it)
+        })
+
         binding.root.title.text = getString(R.string.home)
 
         return binding.root
+    }
+
+    private fun openMovieDetail(it: Event<MovieImageGenreViewModel>) {
+        startActivity(MovieDetailActivity.getIntent(requireContext(), it.content))
     }
 
     private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Result<MovieListResponseModel>) {

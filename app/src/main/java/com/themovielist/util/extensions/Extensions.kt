@@ -13,3 +13,11 @@ inline fun FragmentManager.doInTransaction(func: FragmentTransaction.() -> Fragm
 
 inline fun <reified VM: ViewModel> Fragment.viewModelProvider(provider: ViewModelProvider.Factory)
     = ViewModelProviders.of(this, provider).get(VM::class.java)
+
+/**
+ * Like [Fragment.viewModelProvider] for Fragments that want a [ViewModel] scoped to the Activity.
+ */
+inline fun <reified VM : ViewModel> Fragment.activityViewModelProvider(
+        provider: ViewModelProvider.Factory
+) =
+        ViewModelProviders.of(requireActivity(), provider).get(VM::class.java)

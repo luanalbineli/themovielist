@@ -9,5 +9,5 @@ abstract class MediatorUseCase<in P, R> {
         return result
     }
 
-    abstract fun execute(parameters: P)
+    abstract fun execute(params: P)
 }

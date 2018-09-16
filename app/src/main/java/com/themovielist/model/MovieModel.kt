@@ -2,6 +2,7 @@ package com.themovielist.model
 
 import android.content.ContentValues
 import android.database.Cursor
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -11,8 +12,10 @@ import com.themovielist.util.extensions.getAsIntArray
 import com.themovielist.util.extensions.getIntArray
 import com.themovielist.util.extensions.getNullableString
 import com.themovielist.util.extensions.put
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
+@Parcelize
 @Entity(tableName = MovieContract.MovieEntry.TABLE_NAME)
 data class MovieModel constructor(@SerializedName("id")
                                   @PrimaryKey
@@ -45,7 +48,7 @@ data class MovieModel constructor(@SerializedName("id")
 
                                   @SerializedName("genre_ids")
                                   @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST)
-                                  val genreIdList: IntArray) {
+                                  val genreIdList: IntArray) : Parcelable {
 
     constructor(contentValues: ContentValues) : this(
             contentValues.getAsInteger(MovieContract.MovieEntry._ID),

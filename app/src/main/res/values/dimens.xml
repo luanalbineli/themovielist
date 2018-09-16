@@ -15,4 +15,7 @@
 
     <!-- Acessibility -->
     <dimen name="a11y_min_touch_target">48dp</dimen>
+
+    <dimen name="in_theaters_backdrop_height">240dp</dimen>
+    <dimen name="default_icon_size">24dp</dimen>
 </resources>
