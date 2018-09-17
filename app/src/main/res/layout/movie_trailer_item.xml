@@ -1,35 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="8dp"
     android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
     android:orientation="vertical">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/sdvMovieTrailerThumbnail"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        fresco:actualImageScaleType="centerCrop"
-        fresco:layout_constraintBottom_toBottomOf="parent"
-        fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toTopOf="parent"
-        fresco:placeholderImage="@android:color/darker_gray"
-        fresco:roundedCornerRadius="5dp" />
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        android:tint="@color/black_alpha_40"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_account_circle" />
 
     <TextView
         android:id="@+id/tvMovieTrailerName"
         android:layout_width="0dp"
-        style="@style/LightMediumText"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        fresco:layout_constraintEnd_toEndOf="parent"
-        fresco:layout_constraintStart_toEndOf="@+id/sdvMovieTrailerThumbnail"
-        fresco:layout_constraintTop_toTopOf="@+id/sdvMovieTrailerThumbnail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/sdvMovieTrailerThumbnail"
+        app:layout_constraintTop_toTopOf="@+id/sdvMovieTrailerThumbnail"
         tools:text="Name of the trailer" />
 
     <TextView
@@ -37,12 +36,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="@drawable/shape_chip"
+        android:fontFamily="sans-serif-light"
         android:textColor="@android:color/white"
         android:textSize="12sp"
-        android:fontFamily="sans-serif-light"
-        fresco:layout_constraintStart_toStartOf="@+id/tvMovieTrailerName"
-        fresco:layout_constraintTop_toBottomOf="@+id/tvMovieTrailerName"
+        app:layout_constraintStart_toStartOf="@+id/tvMovieTrailerName"
+        app:layout_constraintTop_toBottomOf="@+id/tvMovieTrailerName"
         tools:text="720p" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

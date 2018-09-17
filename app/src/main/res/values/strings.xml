@@ -21,4 +21,9 @@
     <string name="recommendations">Recommendations</string>
     <string name="cast">Cast</string>
     <string name="overview">Overview</string>
+    <string name="reviews">Reviews</string>
+    <string name="trailers">Trailers</string>
+    <string name="read_all_reviews_format">Read all reviews (%1$s)</string>
+    <string name="see_all_trailers_format">See all trailers (%1$s)</string>
+    <string name="movie_runtime_format">%1$sh %2$sm</string>
 </resources>

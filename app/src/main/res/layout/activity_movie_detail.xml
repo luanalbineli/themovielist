@@ -118,8 +118,8 @@
                 <com.themovielist.widget.RequestStatusView
                     android:id="@+id/rsvMovieDetailRequestStatus"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/movieDetailContainer"
@@ -156,6 +156,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
+                        android:text="@{model.movieModel.overview}"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintTop_toBottomOf="@id/tvMovieDetailSynopseLabel"
@@ -197,19 +198,21 @@
                         app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintStart_toStartOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailRatingIcon"
+                        app:voteAverage="@{model.movieModel.voteAverage}"
                         tools:text="7.6" />
 
                     <TextView
-                        android:id="@+id/tvMovieDetailRuntime"
+                        android:id="@+id/movie_runtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintStart_toStartOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailTimeIcon"
+                        app:runtime="@{movie.movieModel.runtime}"
                         tools:text="1h 30m" />
 
-                    <com.themovielist.ui.MovieDetailSectionView
+                    <com.themovielist.widget.MovieDetailSectionView
                         android:id="@+id/mdsMovieDetailReviewSection"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -218,10 +221,10 @@
                         app:emptyMessage="@string/the_list_is_empty"
                         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMovieDetailRuntime"
+                        app:layout_constraintTop_toBottomOf="@+id/movie_runtime"
                         app:title="@string/reviews" />
 
-                    <com.themovielist.ui.MovieDetailSectionView
+                    <com.themovielist.widget.MovieDetailSectionView
                         android:id="@+id/mdsMovieDetailTrailerSection"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

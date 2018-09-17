@@ -16,15 +16,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:tint="@color/black_alpha_40"
-        app:srcCompat="@drawable/account_circle" />
+        app:srcCompat="@drawable/ic_account_circle" />
 
     <TextView
         android:id="@+id/tvMovieReviewAuthor"
-        style="@style/LightMediumTextBold"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:textStyle="bold"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
         app:layout_constraintBottom_toBottomOf="@+id/imageButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
@@ -34,8 +34,8 @@
 
     <TextView
         android:id="@+id/tvMovieReviewContent"
-        style="@style/LightMediumText"
         android:layout_width="0dp"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/tvMovieReviewAuthor"

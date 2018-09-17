@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import com.themovielist.R
+import com.themovielist.util.extensions.setDisplay
+import kotlinx.android.synthetic.main.movie_detail_section.view.*
 import java.security.InvalidParameterException
 
 class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
@@ -33,9 +35,9 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
                 throw InvalidParameterException("The layout is required")
             }
 
-            mTitleText = attributes.getString(R.styleable.MovieDetailSectionView_title)
-            mButtonTitle = attributes.getString(R.styleable.MovieDetailSectionView_buttonTitle)
-            mEmptyMessage = attributes.getString(R.styleable.MovieDetailSectionView_emptyMessage)
+            mTitleText = attributes.getString(R.styleable.MovieDetailSectionView_title) ?: ""
+            mButtonTitle = attributes.getString(R.styleable.MovieDetailSectionView_buttonTitle) ?: ""
+            mEmptyMessage = attributes.getString(R.styleable.MovieDetailSectionView_emptyMessage) ?: ""
         } finally {
             attributes.recycle()
         }
