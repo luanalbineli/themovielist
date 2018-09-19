@@ -6,6 +6,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.Coroutin
 import com.themovielist.BuildConfig
 import com.themovielist.MainApplication
 import com.themovielist.domain.FavoriteMovieUseCase
+import com.themovielist.model.ApiConfigurationModel
 import com.themovielist.repository.favorite.FavoriteRepository
 import dagger.Module
 import dagger.Provides
@@ -64,6 +65,12 @@ class AppModule {
                 .build()
     }
 
+    @Provides
+    @Singleton
+    fun provideApiConfigurationFactory(): ApiConfigurationFactory {
+        return ApiConfigurationFactory()
+    }
+
     private fun buildGsonConverter(): Converter.Factory {
         val gson = GsonBuilder()
                 // Handle empty release_date cases.
@@ -100,4 +107,6 @@ class AppModule {
         private const val DEFAULT_DATE_FORMAT = "yyyy-MM-dd"
     }
 }
+
+data class ApiConfigurationFactory constructor(val apiConfigurationModel: ApiConfigurationModel = ApiConfigurationModel())
 

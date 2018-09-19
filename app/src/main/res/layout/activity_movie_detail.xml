@@ -9,6 +9,13 @@
             name="model"
             type="com.themovielist.model.view.MovieImageGenreViewModel" />
 
+        <variable
+            name="backdropApiImageSizeList"
+            type="com.themovielist.model.ApiImageSizeModel[]" />
+
+        <variable
+            name="screenWidth"
+            type="Float" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -17,9 +24,9 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
+            style="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/Widget.AppBar">
+            android:layout_height="wrap_content">
 
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -27,8 +34,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleMarginEnd="64dp"
-                app:expandedTitleMarginStart="48dp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,9 +47,21 @@
                         android:layout_height="@dimen/in_theaters_backdrop_height"
                         android:contentDescription="@string/movie_detail_backdrop_content_description"
                         android:scaleType="centerCrop"
+                        app:imageUrl="@{model.movieModel.backdropPath}"
+                        app:imageSizeList="@{backdropApiImageSizeList}"
+                        app:viewWidth="@{screenWidth}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@color/black_alpha_40"
+                        app:layout_constraintStart_toStartOf="@id/movie_backdrop"
+                        app:layout_constraintEnd_toEndOf="@+id/movie_backdrop"
+                        app:layout_constraintTop_toTopOf="@+id/movie_backdrop"
+                        app:layout_constraintBottom_toBottomOf="@+id/movie_backdrop" />
 
                     <TextView
                         android:id="@+id/movie_duration"
@@ -143,6 +160,7 @@
 
                     <TextView
                         android:id="@+id/tvMovieDetailSynopseLabel"
+                        style="@style/MovieDetailSectionTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
@@ -152,6 +170,8 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:textColor="#E3DFDC"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:id="@+id/tvMovieDetailSynopsys"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -209,7 +229,6 @@
                         app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintStart_toStartOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailTimeIcon"
-                        app:runtime="@{movie.movieModel.runtime}"
                         tools:text="1h 30m" />
 
                     <com.themovielist.widget.MovieDetailSectionView
@@ -245,12 +264,11 @@
 
                     <TextView
                         android:id="@+id/textView2"
-                        style="@style/Base.TextAppearance.AppCompat.Medium"
+                        style="@style/MovieDetailSectionTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/cast"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@+id/guideline_start"
                         app:layout_constraintTop_toBottomOf="@+id/divider1" />
 
@@ -263,12 +281,11 @@
 
                     <TextView
                         android:id="@+id/textView3"
-                        style="@style/Base.TextAppearance.AppCompat.Medium"
+                        style="@style/MovieDetailSectionTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/recommendations"
-                        android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@+id/guideline_start"
                         app:layout_constraintTop_toBottomOf="@+id/divider2" />
                 </androidx.constraintlayout.widget.ConstraintLayout>

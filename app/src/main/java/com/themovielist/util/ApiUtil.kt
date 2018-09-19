@@ -1,43 +1,29 @@
 package com.themovielist.util
 
-import com.themovielist.model.MovieSizeModel
-import com.themovielist.model.response.ConfigurationImageResponseModel
+import com.themovielist.model.ApiImageSizeModel
+import timber.log.Timber
 
 object ApiUtil {
     const val ORIGINAL_IMAGE_SIZE_NAME = "original"
 
-    private const val BASE_URL_POSTER = "http://image.tmdb.org/t/p/"
-    private val POSTER_SIZE = intArrayOf(92, 154, 185, 342, 500, 780) // TODO: Hardcoded, we should call /configuration.
+    private const val BASE_URL_POSTER = "https://image.tmdb.org/t/p/"
 
-    fun buildPosterImageUrl(posterKey: String, posterWidth: String): String {
-        return "$BASE_URL_POSTER$posterWidth/$posterKey"
+    fun buildPosterImageUrl(posterKey: String, imageSizeList: Array<ApiImageSizeModel>, viewWidth: Int = Int.MAX_VALUE, viewHeight: Int = Int.MAX_VALUE): String {
+        val imageSize = getApiImageSize(imageSizeList, viewWidth, viewHeight)
+        return "$BASE_URL_POSTER$imageSize/${posterKey.removePrefix("/")}"
     }
 
-    fun getDefaultPosterSize(widthPx: Int): String {
-        if (widthPx > POSTER_SIZE[POSTER_SIZE.size - 1]) {
-            return "original"
-        }
-        return POSTER_SIZE
-                .firstOrNull { it > widthPx }
-                ?.let { "w$it" }
-                ?: "original"
-    }
-
-    fun buildPosterImageUrl(posterKey: String, configurationImageResponseModel: ConfigurationImageResponseModel, posterWidth: Int, posterHeight: Int): String {
-        val posterSize = getPosterSize(configurationImageResponseModel.getPosterSizeList(), posterWidth, posterHeight)
-        return "${configurationImageResponseModel.secureBaseUrl}$posterSize/$posterKey"
-    }
-
-    private fun getPosterSize(posterSizeList: List<MovieSizeModel>, posterWidth: Int, posterHeight: Int): String {
-        val posterSize = posterSizeList.firstOrNull {
-            if (it.sizeType == MovieSizeModel.ImageSizeType.WIDTH) {
-                it.size > posterWidth
+    private fun getApiImageSize(apiImageSizeList: Array<ApiImageSizeModel>, posterWidth: Int = Int.MAX_VALUE, posterHeight: Int = Int.MAX_VALUE): String {
+        Timber.d("getApiImageSize: width: $posterWidth - height: $posterHeight || $apiImageSizeList")
+        val posterSize = apiImageSizeList.firstOrNull {
+            if (it.sizeType == ApiImageSizeModel.ImageSizeType.WIDTH) {
+                return@firstOrNull it.size >= posterWidth
             }
 
-            it.size > posterHeight
+            return@firstOrNull it.size >= posterHeight
         } ?: return ORIGINAL_IMAGE_SIZE_NAME
 
-        if (posterSize.sizeType == MovieSizeModel.ImageSizeType.WIDTH) {
+        if (posterSize.sizeType == ApiImageSizeModel.ImageSizeType.WIDTH) {
             return "w${posterSize.size}"
         }
         return "h${posterSize.size}"

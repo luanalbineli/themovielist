@@ -16,8 +16,6 @@ import javax.inject.Inject
 class CommonRepository
 @Inject
 constructor(retrofit: Retrofit) : RepositoryBase<ICommonMovieService>(retrofit) {
-    private var mConfigurationResponseModel: ConfigurationResponseModel? = null
-
     @Synchronized
     fun getAllGenres(): Deferred<SparseArray<GenreModel>> {
         Timber.d("Getting the genre map")
@@ -31,24 +29,6 @@ constructor(retrofit: Retrofit) : RepositoryBase<ICommonMovieService>(retrofit) 
                 GENRE_MAP = SparseArray<GenreModel>().also { sparseArray ->
                     genreResult.genreList.forEach { genreModel -> sparseArray.put(genreModel.id, genreModel) }
                 }.also {
-                    completableDeferred.complete(it)
-                }
-            }
-        }
-
-        return completableDeferred
-    }
-
-    @Synchronized
-    fun getConfiguration(): Deferred<ConfigurationResponseModel> {
-        Timber.d("Getting the configuration")
-        val completableDeferred = CompletableDeferred<ConfigurationResponseModel>()
-        if (mConfigurationResponseModel != null) {
-            Timber.d("The map is cached")
-            completableDeferred.complete(mConfigurationResponseModel!!)
-        } else {
-            launch {
-                mConfigurationResponseModel = mApiInstance.getConfiguration().await().also {
                     completableDeferred.complete(it)
                 }
             }

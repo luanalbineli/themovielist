@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.themovielist.R
 import com.themovielist.databinding.RecyclerViewBinding
 import com.themovielist.domain.FavoriteMovieUseCase
-import com.themovielist.model.response.ConfigurationImageResponseModel
+import com.themovielist.model.ApiImageSizeModel
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.ui.home.HomeViewModel
@@ -51,11 +51,9 @@ class HomePartialListFragment : DaggerFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         favoriteMovieUseCase.observe().observe(this, Observer { toggleResult ->
-            Timber.d("Receiving a movie status change: ${toggleResult.status} - ${toggleResult.data}")
             if (toggleResult.status == Status.SUCCESS) {
                 val toggledMovieId = toggleResult.data!!.movieModel.id
                 val movieIndex = adapter.items.indexOfFirst { it.movieModel.id == toggledMovieId  }
-                Timber.d("Movie index: $movieIndex")
                 if (movieIndex != -1) {
                     adapter.items[movieIndex].isFavorite = toggleResult.data.isFavorite
                     adapter.notifyItemChanged(movieIndex)
@@ -64,8 +62,8 @@ class HomePartialListFragment : DaggerFragment() {
         })
     }
 
-    fun showMovies(result: List<MovieImageGenreViewModel>, configurationImageResponseModel: ConfigurationImageResponseModel) {
-        adapter.configurationImageResponseModel = configurationImageResponseModel
+    fun showMovies(result: List<MovieImageGenreViewModel>, apiImageSizeList: Array<ApiImageSizeModel>) {
+        adapter.apiImageSizeList = apiImageSizeList
         adapter.hideLoadingIndicator()
         adapter.addItems(result)
     }

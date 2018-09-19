@@ -14,6 +14,7 @@
 
     <TextView
         android:id="@+id/tvMovieDetailSectionTitle"
+        style="@style/MovieDetailSectionTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -44,11 +45,13 @@
         android:id="@+id/tvMovieDetailSectionButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_marginTop="16dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvMovieDetailSectionContent"
         tools:text="See all reviews (12)" />

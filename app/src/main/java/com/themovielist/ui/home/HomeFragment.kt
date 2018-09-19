@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.themovielist.R
 import com.themovielist.databinding.FragmentHomeBinding
-import com.themovielist.model.response.MovieListResponseModel
+import com.themovielist.di.ApiConfigurationFactory
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieImageGenreViewModel
@@ -23,6 +23,8 @@ import javax.inject.Inject
 
 class HomeFragment: DaggerFragment() {
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    @Inject lateinit var apiConfiguraFactory: ApiConfigurationFactory
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -46,7 +48,6 @@ class HomeFragment: DaggerFragment() {
         })
 
         homeViewModel.navigateToMovieDetailAction.observe(this, Observer {
-            Timber.d("Opening movie detail: ${it.content}")
             openMovieDetail(it)
         })
 
@@ -59,9 +60,9 @@ class HomeFragment: DaggerFragment() {
         startActivity(MovieDetailActivity.getIntent(requireContext(), it.content))
     }
 
-    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Result<MovieListResponseModel>) {
+    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Result<List<MovieImageGenreViewModel>>) {
         when (result.status) {
-            Status.SUCCESS -> fragmentList.showMovies(result.data!!.movieWithGenreList, result.data.configurationResponseModel.imageResponseModel)
+            Status.SUCCESS -> fragmentList.showMovies(result.data!!, apiConfiguraFactory.apiConfigurationModel.posterImageSizes)
             Status.ERROR -> {
                 Timber.e(result.exception, "An error occurred while tried to get the movies")
                 fragmentList.showErrorLoadingMovies()

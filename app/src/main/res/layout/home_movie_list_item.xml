@@ -8,8 +8,8 @@
             type="com.themovielist.model.view.MovieImageGenreViewModel" />
 
         <variable
-            name="configurationImageModel"
-            type="com.themovielist.model.response.ConfigurationImageResponseModel" />
+            name="apiImageSizeList"
+            type="com.themovielist.model.ApiImageSizeModel[]" />
 
         <variable
             name="eventListener"
@@ -33,7 +33,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:imageUrl="@{model.movieModel.posterPath}"
-            app:configurationImageResponseModel="@{configurationImageModel}"/>
+            app:imageSizeList="@{apiImageSizeList}"
+            app:viewWidth="@{@dimen/home_movie_list_image_width}" />
 
         <com.google.android.material.internal.CheckableImageButton
             android:id="@+id/favoriteButton"

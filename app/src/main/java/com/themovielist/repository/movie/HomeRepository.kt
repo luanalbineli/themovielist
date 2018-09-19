@@ -1,4 +1,4 @@
-package com.themovielist.repository.home
+package com.themovielist.repository.movie
 
 import android.util.SparseArray
 import androidx.lifecycle.MutableLiveData
@@ -10,14 +10,15 @@ import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.repository.RepositoryBase
 import com.themovielist.repository.common.CommonRepository
 import com.themovielist.repository.favorite.FavoriteRepository
+import com.themovielist.repository.home.IHomeService
 import kotlinx.coroutines.experimental.*
 import kotlinx.coroutines.experimental.android.UI
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonRepository: CommonRepository, private val favoriteRepository: FavoriteRepository): RepositoryBase<IHomeService>(retrofit) {
-    override val serviceInstanceType: Class<IHomeService>
-        get() = IHomeService::class.java
+class MovieRepository @Inject constructor(retrofit: Retrofit, private val commonRepository: CommonRepository, private val favoriteRepository: FavoriteRepository): RepositoryBase<IMovieService>(retrofit) {
+    override val serviceInstanceType: Class<IMovieService>
+        get() = IMovieService::class.java
 
     fun getMoviesSortedByPopularity(pageIndex: Int, disposableParentJob: Job) =
             getMoviesWithGenreAndConfiguration(mApiInstance.getPopularList(pageIndex), disposableParentJob)
