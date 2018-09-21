@@ -17,7 +17,7 @@ import java.util.*
 
 @Parcelize
 @Entity(tableName = MovieContract.MovieEntry.TABLE_NAME)
-data class MovieModel constructor(@SerializedName("id")
+open class MovieModel constructor(@SerializedName("id")
                                   @PrimaryKey
                                   @ColumnInfo(name = MovieContract.MovieEntry._ID)
                                   var id: Int = 0,

@@ -20,28 +20,18 @@ class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonR
         get() = IHomeService::class.java
 
     fun getMoviesSortedByPopularity(pageIndex: Int, disposableParentJob: Job) =
-            getMoviesWithGenreAndConfiguration(mApiInstance.getPopularList(pageIndex), disposableParentJob)
+            getMoviesWithGenreAndConfiguration(apiInstance.getPopularList(pageIndex), disposableParentJob)
 
     fun getMoviesSortedByRating(pageIndex: Int, disposableParentJob: Job) =
-            getMoviesWithGenreAndConfiguration(mApiInstance.getTopRatedList(pageIndex), disposableParentJob)
+            getMoviesWithGenreAndConfiguration(apiInstance.getTopRatedList(pageIndex), disposableParentJob)
 
-    private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>, disposableParentJob: Job): MutableLiveData<Result<List<MovieImageGenreViewModel>>> {
-        val result = MutableLiveData<Result<List<MovieImageGenreViewModel>>>()
-        result.value = Result.loading()
-        launch(parent = disposableParentJob, context = IO) {
-            try {
-                val genreListRequest = commonRepository.getAllGenres()
-                val favoriteMovies = favoriteRepository.getFavoriteMovieIds()
+    private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>, parentDisposableJob: Job): MutableLiveData<Result<List<MovieImageGenreViewModel>>> {
+        return executeAsyncRequest(parentDisposableJob) {
+            val genreListRequest = commonRepository.getAllGenres()
+            val favoriteMovies = favoriteRepository.getFavoriteMovieIds()
 
-                val list = processMovieWithGenreResult(movieRequest.await(), genreListRequest.await(), favoriteMovies.await())
-                withContext(UI) { result.value = Result.success(list) }
-            } catch (exception: Exception) {
-                withContext(UI) { result.value = Result.error(exception) }
-            }
+            return@executeAsyncRequest processMovieWithGenreResult(movieRequest.await(), genreListRequest.await(), favoriteMovies.await())
         }
-
-        return result
-
     }
 
     private fun processMovieWithGenreResult(await: PaginatedArrayResponseModel<MovieModel>, genreMap: SparseArray<GenreModel>, favoriteMovieIdList: Array<Int>): List<MovieImageGenreViewModel> {

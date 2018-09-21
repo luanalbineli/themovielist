@@ -25,7 +25,7 @@ constructor(retrofit: Retrofit) : RepositoryBase<ICommonMovieService>(retrofit) 
             completableDeferred.complete(GENRE_MAP!!)
         } else {
             launch {
-                val genreResult = mApiInstance.getAllGenres().await()
+                val genreResult = apiInstance.getAllGenres().await()
                 GENRE_MAP = SparseArray<GenreModel>().also { sparseArray ->
                     genreResult.genreList.forEach { genreModel -> sparseArray.put(genreModel.id, genreModel) }
                 }.also {

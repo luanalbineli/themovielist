@@ -1,6 +1,7 @@
 package com.themovielist.util.extensions
 
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -26,6 +27,14 @@ inline fun <reified VM : ViewModel> Fragment.activityViewModelProvider(
         provider: ViewModelProvider.Factory
 ) =
         ViewModelProviders.of(requireActivity(), provider).get(VM::class.java)
+
+/**
+ * Used for Activities that want a [ViewModel] scoped into it.
+ */
+inline fun <reified VM : ViewModel> AppCompatActivity.activityViewModelProvider(
+        provider: ViewModelProvider.Factory
+) =
+        ViewModelProviders.of(this, provider).get(VM::class.java)
 
 fun View.setDisplay(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.GONE

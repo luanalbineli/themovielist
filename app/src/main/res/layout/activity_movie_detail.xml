@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="model"
-            type="com.themovielist.model.view.MovieImageGenreViewModel" />
+            name="movieDetailViewModel"
+            type="com.themovielist.ui.moviedetail.MovieDetailViewModel" />
 
         <variable
             name="backdropApiImageSizeList"
@@ -47,7 +47,7 @@
                         android:layout_height="@dimen/in_theaters_backdrop_height"
                         android:contentDescription="@string/movie_detail_backdrop_content_description"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{model.movieModel.backdropPath}"
+                        app:imageUrl="@{movieDetailViewModel.movieModel.backdropPath}"
                         app:imageSizeList="@{backdropApiImageSizeList}"
                         app:viewWidth="@{screenWidth}"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
-                        android:text="@{model.movieModel.title}"
+                        android:text="@{movieDetailViewModel.movieModel.title}"
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toTopOf="@+id/movie_duration"
                         app:layout_constraintStart_toStartOf="@+id/movie_duration"
