@@ -1,31 +1,21 @@
 package com.themovielist.ui.moviedetail
 
-import androidx.lifecycle.*
-import com.themovielist.model.MovieModel
-import com.themovielist.model.response.MovieDetailResponseModel
-import com.themovielist.model.response.MovieReviewModel
-import com.themovielist.model.response.MovieTrailerModel
-import com.themovielist.model.response.Result
-import com.themovielist.model.view.MovieImageGenreViewModel
-import com.themovielist.repository.home.HomeRepository
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import com.themovielist.model.response.*
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.ui.common.MovieCommonAction
-import com.themovielist.util.ApiUtil
 import kotlinx.coroutines.experimental.Job
 import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(
-        movieRepository: MovieRepository,
+        private val movieRepository: MovieRepository,
         private val movieCommonAction: MovieCommonAction
-): ViewModel(), MovieCommonAction by movieCommonAction {
+): ViewModel(), MovieCommonAction by movieCommonAction, Observer<Result<MovieDetailResponseModel>> {
+
     private val parentDisposableJob = Job()
-
-    private val movieImageGenreViewModel = MutableLiveData<MovieImageGenreViewModel>()
-    private val _movieImageGenreViewModel = MediatorLiveData<MovieImageGenreViewModel>()
-
-    private val _movieModel = MutableLiveData<MovieModel>()
-    val movieModel: LiveData<MovieModel>
-        get() = _movieModel
 
     private val _trailerList = MutableLiveData<List<MovieTrailerModel>>()
     val trailerList: LiveData<List<MovieTrailerModel>>
@@ -39,16 +29,18 @@ class MovieDetailViewModel @Inject constructor(
     val runtime: LiveData<Int>
         get() = _runtime
 
-    init {
-        _movieImageGenreViewModel.addSource(movieImageGenreViewModel) { it ->
-            _movieModel.postValue(it.movieModel)
-
-            //movieRepository.getMovieDetail(it.movieModel.id, parentDisposableJob).
+    override fun onChanged(result: Result<MovieDetailResponseModel>) {
+        // TODO: FIX
+        if (result.status == Status.SUCCESS) {
+            val movieDetailResponseModel = result.data!!
+            _trailerList.postValue(movieDetailResponseModel.trailerResponseModel.trailerList)
+            _reviewList.postValue(movieDetailResponseModel.reviewsResponseModel.results)
+            _runtime.postValue(movieDetailResponseModel.runtime)
         }
     }
 
-    fun setMovieImageGenreViewModel(movieImageGenreViewModel: MovieImageGenreViewModel) {
-        _movieImageGenreViewModel.postValue(movieImageGenreViewModel)
+    fun setMovieId(movieId: Int) {
+        movieRepository.getMovieDetail(movieId, parentDisposableJob).observeForever(this)
     }
 
     override fun onCleared() {

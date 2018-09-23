@@ -6,7 +6,10 @@
     <data>
 
         <variable
-            name="movieDetailViewModel"
+            name="movieImageGenreViewModel"
+            type="com.themovielist.model.view.MovieImageGenreViewModel" />
+
+        <variable name="viewModel"
             type="com.themovielist.ui.moviedetail.MovieDetailViewModel" />
 
         <variable
@@ -47,7 +50,7 @@
                         android:layout_height="@dimen/in_theaters_backdrop_height"
                         android:contentDescription="@string/movie_detail_backdrop_content_description"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{movieDetailViewModel.movieModel.backdropPath}"
+                        app:imageUrl="@{movieImageGenreViewModel.movieModel.backdropPath}"
                         app:imageSizeList="@{backdropApiImageSizeList}"
                         app:viewWidth="@{screenWidth}"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -64,16 +67,17 @@
                         app:layout_constraintBottom_toBottomOf="@+id/movie_backdrop" />
 
                     <TextView
-                        android:id="@+id/movie_duration"
+                        android:id="@+id/movie_release_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
+                        app:yearFromCalendar="@{movieImageGenreViewModel.movieModel.releaseDate}"
                         android:layout_marginTop="16dp"
                         android:layout_marginBottom="16dp"
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/movie_backdrop"
                         app:layout_constraintStart_toStartOf="@+id/movie_backdrop"
-                        tools:text="1h 20m" />
+                        tools:text="2018" />
 
                     <TextView
                         android:id="@+id/separator"
@@ -82,8 +86,8 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/pipe_separator"
                         android:textColor="@android:color/white"
-                        app:layout_constraintBottom_toBottomOf="@id/movie_duration"
-                        app:layout_constraintStart_toEndOf="@id/movie_duration" />
+                        app:layout_constraintBottom_toBottomOf="@id/movie_release_year"
+                        app:layout_constraintStart_toEndOf="@id/movie_release_year" />
 
                     <TextView
                         android:id="@+id/movie_genres"
@@ -97,18 +101,23 @@
                         app:layout_constraintBottom_toBottomOf="@id/separator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/separator"
+                        app:genres="@{movieImageGenreViewModel.genreList}"
                         tools:text="Action, Sci-Fi, Action, Sci-Fi, Action, Sci-Fi" />
 
                     <TextView
                         android:id="@+id/movie_name"
                         style="@style/TextAppearance.MaterialComponents.Headline4"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
-                        android:text="@{movieDetailViewModel.movieModel.title}"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@{movieImageGenreViewModel.movieModel.title}"
                         android:textColor="@android:color/white"
-                        app:layout_constraintBottom_toTopOf="@+id/movie_duration"
-                        app:layout_constraintStart_toStartOf="@+id/movie_duration"
+                        app:layout_constraintBottom_toTopOf="@+id/movie_release_year"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/movie_release_year"
                         tools:text="Dunkirk" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -176,7 +185,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="@{model.movieModel.overview}"
+                        android:text="@{movieImageGenreViewModel.movieModel.overview}"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintTop_toBottomOf="@id/tvMovieDetailSynopseLabel"
@@ -195,16 +204,18 @@
                         android:layout_height="@dimen/default_icon_size"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
+                        android:tint="@color/half_baked"
                         app:layout_constraintEnd_toStartOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/divider"
-                        app:srcCompat="@drawable/ic_star_rate" />
+                        app:srcCompat="@drawable/ic_star" />
 
                     <ImageView
                         android:id="@+id/ivMovieDetailTimeIcon"
                         android:layout_width="@dimen/default_icon_size"
                         android:layout_height="@dimen/default_icon_size"
                         android:layout_marginStart="8dp"
+                        android:tint="@color/half_baked"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintTop_toTopOf="@+id/ivMovieDetailRatingIcon"
@@ -218,7 +229,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintStart_toStartOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailRatingIcon"
-                        app:voteAverage="@{model.movieModel.voteAverage}"
+                        app:voteAverage="@{movieImageGenreViewModel.movieModel.voteAverage}"
                         tools:text="7.6" />
 
                     <TextView
@@ -229,6 +240,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintStart_toStartOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailTimeIcon"
+                        app:runtime="@{viewModel.runtime}"
                         tools:text="1h 30m" />
 
                     <com.themovielist.widget.MovieDetailSectionView

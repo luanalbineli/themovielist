@@ -3,7 +3,6 @@ package com.themovielist.repository.common
 import android.util.SparseArray
 import com.themovielist.model.GenreModel
 import com.themovielist.model.MovieModel
-import com.themovielist.model.response.ConfigurationResponseModel
 import com.themovielist.repository.RepositoryBase
 import com.themovielist.util.extensions.mapToListNotNull
 import kotlinx.coroutines.experimental.CompletableDeferred
