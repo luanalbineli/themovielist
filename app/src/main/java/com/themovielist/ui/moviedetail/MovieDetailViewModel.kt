@@ -8,6 +8,7 @@ import com.themovielist.model.response.*
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.ui.common.MovieCommonAction
 import kotlinx.coroutines.experimental.Job
+import timber.log.Timber
 import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(
@@ -41,6 +42,14 @@ class MovieDetailViewModel @Inject constructor(
 
     fun setMovieId(movieId: Int) {
         movieRepository.getMovieDetail(movieId, parentDisposableJob).observeForever(this)
+    }
+
+    fun showAllMovieTrailers() {
+
+    }
+
+    fun showAllMovieReviews() {
+
     }
 
     override fun onCleared() {

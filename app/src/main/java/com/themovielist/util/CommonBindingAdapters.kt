@@ -1,6 +1,7 @@
 package com.themovielist.util
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -9,11 +10,7 @@ import com.themovielist.GlideApp
 import com.themovielist.R
 import com.themovielist.model.ApiImageSizeModel
 import timber.log.Timber
-
-/*@BindingAdapter("goneUnless")
-fun goneUnless(view: View, visible: Boolean) {
-    view.visibility = if (visible) View.VISIBLE else View.GONE
-}*/
+import com.themovielist.widget.ReadMoreOption
 
 @BindingAdapter(value = ["imageUrl", "imageSizeList", "viewWidth", "viewHeight"], requireAll = false)
 fun movieImageUrl(imageView: ImageView, imageUrl: String?, imageSizeList: Array<ApiImageSizeModel>, viewWidth: Float?, viewHeight: Float?) {
@@ -30,4 +27,18 @@ fun movieImageUrl(imageView: ImageView, imageUrl: String?, imageSizeList: Array<
                 .transforms(CenterCrop(), RoundedCorners(8))
                 .into(imageView)
     }
+}
+
+@BindingAdapter("readMoreText")
+fun readMoreText(textView: TextView, text: String) {
+    val readMoreOption = ReadMoreOption.Builder(textView.context)
+            .textLength(3, ReadMoreOption.TYPE_LINE)
+            .moreLabel(textView.context.getString(R.string.read_more))
+            .lessLabel(textView.context.getString(R.string.read_less))
+            .moreLabelColor(textView.context.resources.getColor(R.color.half_baked))
+            .lessLabelColor(textView.context.resources.getColor(R.color.half_baked))
+            .expandAnimation(true)
+            .build()
+
+    readMoreOption.addReadMoreTo(textView, text)
 }

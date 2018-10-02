@@ -25,7 +25,8 @@ data class MovieDetailTrailerResponseModel constructor(
 
 data class MovieTrailerModel constructor(@SerializedName("size") val size: String,
                                          @SerializedName("source") val source: String,
-                                         @SerializedName("name") val name: String)
+                                         @SerializedName("name") val name: String,
+                                         @SerializedName("type") val type: String)
 
 data class MovieReviewModel constructor(@SerializedName("author") val author: String,
                                         @SerializedName("content") val content: String)

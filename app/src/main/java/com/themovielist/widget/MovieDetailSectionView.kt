@@ -4,7 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.databinding.ViewDataBinding
 import com.themovielist.R
 import com.themovielist.util.extensions.setDisplay
 import kotlinx.android.synthetic.main.movie_detail_section.view.*
@@ -20,7 +22,7 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
 
     private var mEmptyMessage: String
 
-    var onBindSectionContent: ((View, TModel) -> Unit)? = null
+    var onCreateSectionContent: ((parentView: ViewGroup, layoutInflater: LayoutInflater, TModel) -> Unit)? = null
 
     var onClickSectionButton: (() -> Unit)? = null
 
@@ -50,7 +52,7 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
         if (sectionList.isNotEmpty()) {
             bindSectionContent(sectionList)
         } else {
-            tvMovieDetailSectionContent.setDisplay(false)
+            section_content_container.setDisplay(false)
         }
     }
 
@@ -62,8 +64,7 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
         } else {
             tvMovieDetailSectionButton.setDisplay(false)
         }
-
-        val sectionContentView = mLayoutInflater.inflate(mContentLayoutResId, tvMovieDetailSectionContent)
-        onBindSectionContent?.invoke(sectionContentView, sectionList.first())
+        // val sectionContentView = mLayoutInflater.inflate(mContentLayoutResId, section_content_container)
+        onCreateSectionContent?.invoke(section_content_container, mLayoutInflater, sectionList.first())
     }
 }

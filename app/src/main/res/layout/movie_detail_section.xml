@@ -24,7 +24,7 @@
         app:layout_constraintTop_toBottomOf="@id/dividerMovieDetailSection" />
 
     <FrameLayout
-        android:id="@+id/tvMovieDetailSectionContent"
+        android:id="@+id/section_content_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -53,6 +53,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:gravity="end"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMovieDetailSectionContent"
+        app:layout_constraintTop_toBottomOf="@id/section_content_container"
         tools:text="See all reviews (12)" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.appbar.AppBarLayout
 import com.themovielist.R
 import com.themovielist.databinding.ActivityMovieDetailBinding
+import com.themovielist.databinding.MovieReviewItemBinding
+import com.themovielist.databinding.MovieTrailerItemBinding
 import com.themovielist.di.ApiConfigurationFactory
 import com.themovielist.model.response.MovieReviewModel
+import com.themovielist.model.response.MovieTrailerModel
 import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.util.extensions.activityViewModelProvider
 import com.themovielist.util.extensions.getScreenSize
@@ -24,7 +27,7 @@ class MovieDetailActivity : DaggerAppCompatActivity() {
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject lateinit var apiConfigurationFactory: ApiConfigurationFactory
-    lateinit var movieDetailViewModel: MovieDetailViewModel
+    private lateinit var movieDetailViewModel: MovieDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +44,7 @@ class MovieDetailActivity : DaggerAppCompatActivity() {
             it.backdropApiImageSizeList = apiConfigurationFactory.apiConfigurationModel.backdropImageSizes
 
             configureMovieReviewContent(it.mdsMovieDetailReviewSection as MovieDetailSectionView<MovieReviewModel>)
+            configureMovieTrailerContent(it.mdsMovieDetailTrailerSection as MovieDetailSectionView<MovieTrailerModel>)
 
             movieDetailViewModel.reviewList.observe(this, Observer { reviewList ->
                 Timber.d("Binding the review list")
@@ -57,9 +61,24 @@ class MovieDetailActivity : DaggerAppCompatActivity() {
     }
 
     private fun configureMovieReviewContent(mdsMovieDetailReviewSection: MovieDetailSectionView<MovieReviewModel>) {
-        mdsMovieDetailReviewSection.onBindSectionContent = { itemView, movieReviewModel ->
-            // MovieDetailReviewViewHolder.bindLayout(itemView, movieReviewModel.author, movieReviewModel.content)
+        mdsMovieDetailReviewSection.onCreateSectionContent = { parentView, layoutInflater, movieReviewModel ->
+            MovieReviewItemBinding.inflate(layoutInflater, parentView, true).also {
+                it.reviewModel = movieReviewModel
+            }
         }
+
+        mdsMovieDetailReviewSection.onClickSectionButton = {
+            // mPresenter.showAllReviews()
+        }
+    }
+
+    private fun configureMovieTrailerContent(mdsMovieDetailReviewSection: MovieDetailSectionView<MovieTrailerModel>) {
+        mdsMovieDetailReviewSection.onCreateSectionContent = { parentView, layoutInflater, movieTrailerModel ->
+            MovieTrailerItemBinding.inflate(layoutInflater, parentView, true).also {
+                it.trailerModel = movieTrailerModel
+            }
+        }
+
         mdsMovieDetailReviewSection.onClickSectionButton = {
             // mPresenter.showAllReviews()
         }

@@ -5,9 +5,10 @@ import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.themovielist.R
 import androidx.fragment.app.DialogFragment
 
-abstract class BaseFullscreenListDialog<TModel: Parcelable, TView>: DialogFragment() {
+abstract class BaseFullscreenListDialog<TModel: Parcelable>: DialogFragment() {
     protected lateinit var mList: ArrayList<TModel>
 
     override fun onStart() {
@@ -41,7 +42,7 @@ abstract class BaseFullscreenListDialog<TModel: Parcelable, TView>: DialogFragme
     companion object {
         private const val LIST_BUNDLE_KEY = "list"
 
-        fun <TFragmentDialog : BaseFullscreenListDialog<TModel, *>, TModel : Parcelable> createNewInstance(clazz: Class<TFragmentDialog>, items: List<TModel>): TFragmentDialog {
+        fun <TFragmentDialog : BaseFullscreenListDialog<TModel>, TModel : Parcelable> createNewInstance(clazz: Class<TFragmentDialog>, items: List<TModel>): TFragmentDialog {
             val baseFullscreenDialogWithList = clazz.newInstance()
             val bundle = Bundle()
             bundle.putParcelableArrayList(LIST_BUNDLE_KEY, ArrayList(items))

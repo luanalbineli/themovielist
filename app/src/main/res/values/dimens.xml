@@ -4,10 +4,13 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!-- HOME tab -->
     <dimen name="home_movie_list_image_space">16dp</dimen>
-
     <dimen name="home_movie_list_image_width">150dp</dimen>
     <dimen name="home_movie_list_image_height">200dp</dimen>
+
+    <!-- MOVIE DETAIL -->
+    <dimen name="movie_detail_thumbnail">48dp</dimen>
 
     <!-- RequestStatusView -->
     <dimen name="text_error_title_size">56sp</dimen>
