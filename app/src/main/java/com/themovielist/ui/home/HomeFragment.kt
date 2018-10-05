@@ -24,7 +24,7 @@ import javax.inject.Inject
 class HomeFragment: DaggerFragment() {
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject lateinit var apiConfiguraFactory: ApiConfigurationFactory
+    @Inject lateinit var apiConfigurationFactory: ApiConfigurationFactory
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -61,8 +61,9 @@ class HomeFragment: DaggerFragment() {
     }
 
     private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Result<List<MovieImageGenreViewModel>>) {
+        Timber.d("handleResourceStatus - result: ${result.status}")
         when (result.status) {
-            Status.SUCCESS -> fragmentList.showMovies(result.data!!, apiConfiguraFactory.apiConfigurationModel.posterImageSizes)
+            Status.SUCCESS -> fragmentList.showMovies(result.data!!, apiConfigurationFactory.apiConfigurationModel.posterImageSizes)
             Status.ERROR -> {
                 Timber.e(result.exception, "An error occurred while tried to get the movies")
                 fragmentList.showErrorLoadingMovies()

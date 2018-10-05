@@ -59,7 +59,6 @@ class AppModule {
         return Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(buildGsonConverter())
-                //.addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .client(httpClient.build())
                 .build()

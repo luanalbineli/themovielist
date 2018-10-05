@@ -5,7 +5,7 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.2"
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.themovielist"
         minSdkVersion 21
@@ -31,11 +31,15 @@ androidExtensions {
     experimental = true
 }
 
+kotlin {
+    experimental {
+        coroutines "enable"
+    }
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     // UI compat
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha05'
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.vectordrawable:vectordrawable:$rootProject.appCompatVersion"
@@ -57,7 +61,7 @@ dependencies {
     // Kotlin + Coroutines + Coroutines adapter for Retrofit 2
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:$rootProject.coroutinesRetrofitAdapterVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
 
     // Retrofit + Gson
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
@@ -72,14 +76,4 @@ dependencies {
 
     // Timber
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
-
-    // Tests
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
-}
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
 }
