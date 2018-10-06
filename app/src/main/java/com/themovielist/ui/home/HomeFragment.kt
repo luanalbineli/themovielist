@@ -34,6 +34,9 @@ class HomeFragment: DaggerFragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
             setLifecycleOwner(this@HomeFragment)
             viewModel = homeViewModel
+            requestStatusView.setTryAgainClickListener {
+                homeViewModel.tryLoadAgain()
+            }
         }
 
         val mostRatedFragmentList = childFragmentManager.findFragmentById(R.id.homeRatedPartialListFragment) as HomePartialListFragment

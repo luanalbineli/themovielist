@@ -3,10 +3,8 @@ package com.themovielist.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.databinding.ViewDataBinding
 import com.themovielist.R
 import com.themovielist.util.extensions.setDisplay
 import kotlinx.android.synthetic.main.movie_detail_section.view.*
@@ -44,8 +42,8 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
             attributes.recycle()
         }
 
-        tvMovieDetailSectionTitle.text = mTitleText
-        tvMovieDetailEmptyMessage.text = mEmptyMessage
+        section_title.text = mTitleText
+        section_empty_message.text = mEmptyMessage
     }
 
     fun bind(sectionList: List<TModel>) {
@@ -57,14 +55,13 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
     }
 
     private fun bindSectionContent(sectionList: List<TModel>) {
-        tvMovieDetailEmptyMessage.setDisplay(false)
+        section_empty_message.setDisplay(false)
         if (sectionList.size > 1) {
-            tvMovieDetailSectionButton.text = String.format(mButtonTitle, sectionList.size)
-            tvMovieDetailSectionButton.setOnClickListener { onClickSectionButton?.invoke() }
+            section_see_all.text = String.format(mButtonTitle, sectionList.size)
+            section_see_all.setOnClickListener { onClickSectionButton?.invoke() }
         } else {
-            tvMovieDetailSectionButton.setDisplay(false)
+            section_see_all.setDisplay(false)
         }
-        // val sectionContentView = mLayoutInflater.inflate(mContentLayoutResId, section_content_container)
         onCreateSectionContent?.invoke(section_content_container, mLayoutInflater, sectionList.first())
     }
 }
