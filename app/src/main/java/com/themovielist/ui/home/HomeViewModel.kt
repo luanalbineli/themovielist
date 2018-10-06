@@ -8,6 +8,7 @@ import com.themovielist.repository.home.HomeRepository
 import com.themovielist.ui.common.MovieCommonAction
 import com.themovielist.util.ApiUtil
 import kotlinx.coroutines.experimental.Job
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
