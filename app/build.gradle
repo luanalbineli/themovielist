@@ -31,12 +31,6 @@ androidExtensions {
     experimental = true
 }
 
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
-}
-
 dependencies {
     // UI compat
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
@@ -60,8 +54,9 @@ dependencies {
 
     // Kotlin + Coroutines + Coroutines adapter for Retrofit 2
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.kotlinVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
-    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$rootProject.coroutinesRetrofitAdapterVersion"
 
     // Retrofit + Gson
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"

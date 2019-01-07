@@ -5,8 +5,8 @@ import android.content.Context
 import com.themovielist.model.MovieModel
 import com.themovielist.model.response.Result
 import com.themovielist.util.extensions.toArray
-import kotlinx.coroutines.experimental.CompletableDeferred
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
 import timber.log.Timber
 import java.sql.SQLDataException
 import javax.inject.Inject

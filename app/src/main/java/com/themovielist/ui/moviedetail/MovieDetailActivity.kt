@@ -3,6 +3,7 @@ package com.themovielist.ui.moviedetail
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -38,6 +39,8 @@ class MovieDetailActivity : DaggerAppCompatActivity() {
         movieDetailViewModel.setMovieId(movieImageGenreViewModel.movieModel.id)
 
         DataBindingUtil.setContentView<ActivityMovieDetailBinding>(this, R.layout.activity_movie_detail).also { it ->
+            it.setLifecycleOwner(this@MovieDetailActivity)
+
             it.movieImageGenreViewModel = movieImageGenreViewModel
             it.viewModel = movieDetailViewModel
             it.screenWidth = getScreenSize().widthPixels.toFloat()
@@ -56,7 +59,11 @@ class MovieDetailActivity : DaggerAppCompatActivity() {
                 it.mdsMovieDetailTrailerSection.bind(trailerList)
             })
 
-            // configureAppBar(it.appBar, it.toolbar, movieImageGenreViewModel.movieModel.title)
+            setSupportActionBar(it.toolbar)
+            supportActionBar?.apply {
+                title = movieImageGenreViewModel.movieModel.title
+                setDisplayHomeAsUpEnabled(true)
+            }
         }
     }
 
@@ -68,8 +75,13 @@ class MovieDetailActivity : DaggerAppCompatActivity() {
         }
 
         mdsMovieDetailReviewSection.onClickSectionButton = {
-            // mPresenter.showAllReviews()
+
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.movie_detail, menu)
+        return true
     }
 
     private fun configureMovieTrailerContent(mdsMovieDetailReviewSection: MovieDetailSectionView<MovieTrailerModel>) {
@@ -99,6 +111,11 @@ class MovieDetailActivity : DaggerAppCompatActivity() {
                 isShow = false
             }
         })
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 
     companion object {

@@ -1,7 +1,7 @@
 package com.themovielist.repository.common
 
 import com.themovielist.model.response.GenreListResponseModel
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
 interface ICommonMovieService {

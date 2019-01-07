@@ -14,18 +14,18 @@ abstract class CustomRecyclerViewAdapter<TItem, THolder : CustomRecyclerViewHold
     private var mOnItemClickListener: ((position: Int, item: TItem) -> Unit)? = null
     private var mRequestStatus = RequestStatusView.RequestStatus.HIDDEN
 
-    private var mTryAgainClickListener: (() -> Unit)? = null
+    var tryAgainClickListener: (() -> Unit)? = null
     private var mEmptyMessageResId = R.string.the_list_is_empty
 
     protected constructor() : this(ArrayList<TItem>())
 
     protected constructor(tryAgainClickListener: (() -> Unit)? = null) : this() {
-        mTryAgainClickListener = tryAgainClickListener
+        this.tryAgainClickListener = tryAgainClickListener
     }
 
     protected constructor(@StringRes emptyMessageResId: Int = R.string.the_list_is_empty, tryAgainClickListener: (() -> Unit)?) : this() {
         mEmptyMessageResId = emptyMessageResId
-        mTryAgainClickListener = tryAgainClickListener
+        this.tryAgainClickListener = tryAgainClickListener
     }
 
     interface ViewType {
@@ -41,7 +41,7 @@ abstract class CustomRecyclerViewAdapter<TItem, THolder : CustomRecyclerViewHold
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomRecyclerViewHolder {
         if (viewType == ViewType.GRID_STATUS) {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.grid_status, parent, false)
-            return GridStatusViewHolder(itemView, mTryAgainClickListener, mEmptyMessageResId)
+            return GridStatusViewHolder(itemView, tryAgainClickListener, mEmptyMessageResId)
         }
         return onCreateItemViewHolder(parent, viewType)
     }

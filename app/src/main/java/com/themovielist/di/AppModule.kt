@@ -2,7 +2,7 @@ package com.themovielist.di
 
 import android.content.Context
 import com.google.gson.*
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.themovielist.BuildConfig
 import com.themovielist.MainApplication
 import com.themovielist.domain.FavoriteMovieUseCase

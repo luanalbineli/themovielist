@@ -7,8 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.themovielist.model.response.*
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.ui.common.MovieCommonAction
-import kotlinx.coroutines.experimental.Job
-import timber.log.Timber
+import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(

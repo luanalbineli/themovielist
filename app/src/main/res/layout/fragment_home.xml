@@ -26,12 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.themovielist.widget.RequestStatusView
-                    android:id="@+id/request_status_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/flHomeMovieContainer"
                     android:layout_width="match_parent"

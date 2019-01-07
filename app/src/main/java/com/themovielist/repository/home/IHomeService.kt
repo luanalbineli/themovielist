@@ -2,8 +2,7 @@ package com.themovielist.repository.home
 
 import com.themovielist.model.MovieModel
 import com.themovielist.model.response.PaginatedArrayResponseModel
-import io.reactivex.Single
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
 

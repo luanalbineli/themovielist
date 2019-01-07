@@ -22,7 +22,8 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class HomeFragment: DaggerFragment() {
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     @Inject lateinit var apiConfigurationFactory: ApiConfigurationFactory
 
@@ -34,19 +35,20 @@ class HomeFragment: DaggerFragment() {
         val binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
             setLifecycleOwner(this@HomeFragment)
             viewModel = homeViewModel
-            requestStatusView.setTryAgainClickListener {
-                homeViewModel.tryLoadAgain()
-            }
         }
 
         val mostRatedFragmentList = childFragmentManager.findFragmentById(R.id.homeRatedPartialListFragment) as HomePartialListFragment
+        mostRatedFragmentList.tryAgainClickListener = { homeViewModel.fetchMovieSortedByRating() }
         homeViewModel.moviesSortedByRating.observe(this, Observer { result ->
+            Timber.d("Update from most rated movies")
            handleResourceStatus(mostRatedFragmentList, result)
 
         })
 
         val mostPopularFragmentList = childFragmentManager.findFragmentById(R.id.homePopularPartialListFragment) as HomePartialListFragment
+        mostPopularFragmentList.tryAgainClickListener = { homeViewModel.fetchMoviesSortedByPopularity() }
         homeViewModel.moviesSortedByPopularity.observe(this, Observer { result ->
+            Timber.d("Update from popular movies")
             handleResourceStatus(mostPopularFragmentList, result)
         })
 

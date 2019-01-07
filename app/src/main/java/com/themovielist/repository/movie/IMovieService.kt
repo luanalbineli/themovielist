@@ -1,8 +1,7 @@
 package com.themovielist.repository.movie
 
 import com.themovielist.model.response.MovieDetailResponseModel
-import io.reactivex.Observable
-import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
 

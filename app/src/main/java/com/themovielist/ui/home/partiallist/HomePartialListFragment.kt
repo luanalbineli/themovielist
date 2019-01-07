@@ -17,11 +17,14 @@ import com.themovielist.ui.home.HomeViewModel
 import com.themovielist.util.extensions.activityViewModelProvider
 import com.themovielist.widget.recyclerview.HorizonalSpaceItemDecoration
 import dagger.android.support.DaggerFragment
-import timber.log.Timber
 import javax.inject.Inject
 
 class HomePartialListFragment : DaggerFragment() {
     private lateinit var adapter: HomeMovieListAdapter
+
+    var tryAgainClickListener: (() -> Unit)?
+        get() { return adapter.tryAgainClickListener }
+        set(value) {adapter.tryAgainClickListener = value}
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -37,6 +40,7 @@ class HomePartialListFragment : DaggerFragment() {
         val binding = RecyclerViewBinding.inflate(inflater, container, false).apply {
             setLifecycleOwner(this@HomePartialListFragment)
             recyclerView.adapter = adapter
+            recyclerView.setHasFixedSize(true)
 
             val dividerAmountOfSpace = inflater.context.resources.getDimension(R.dimen.home_movie_list_image_space)
             val spaceItemViewDecoration = HorizonalSpaceItemDecoration(dividerAmountOfSpace.toInt())
