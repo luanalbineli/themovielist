@@ -33,7 +33,7 @@ class HomeFragment: DaggerFragment() {
         homeViewModel = activityViewModelProvider(viewModelFactory)
 
         val binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
-            setLifecycleOwner(this@HomeFragment)
+            lifecycleOwner = viewLifecycleOwner
             viewModel = homeViewModel
         }
 

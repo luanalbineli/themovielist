@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.themovielist.model.response.Result
 import com.themovielist.model.view.MovieImageGenreViewModel
 import com.themovielist.repository.home.HomeRepository
+import com.themovielist.ui.base.BaseViewModel
 import com.themovielist.ui.common.MovieCommonAction
 import com.themovielist.util.ApiUtil
 import kotlinx.coroutines.Job
@@ -14,9 +15,8 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
         private val homeRepository: HomeRepository,
         private val movieCommonAction: MovieCommonAction
-): ViewModel(), MovieCommonAction by movieCommonAction {
+): BaseViewModel(), MovieCommonAction by movieCommonAction {
 
-    private val viewModelJob = Job()
     private lateinit var _moviesSortedByRating: LiveData<Result<List<MovieImageGenreViewModel>>>
     val moviesSortedByRating = MediatorLiveData<Result<List<MovieImageGenreViewModel>>>()
 
@@ -50,9 +50,5 @@ class HomeViewModel @Inject constructor(
         moviesSortedByPopularity.addSource(_moviesSortedByPopularity) {
             moviesSortedByPopularity.value = it
         }
-    }
-
-    override fun onCleared() {
-        viewModelJob.cancel()
     }
 }

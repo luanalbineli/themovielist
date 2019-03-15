@@ -1,8 +1,6 @@
 package com.themovielist.ui.home
 
 import androidx.lifecycle.ViewModel
-import com.google.samples.apps.iosched.shared.di.ViewModelKey
-import com.themovielist.di.FragmentScoped
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

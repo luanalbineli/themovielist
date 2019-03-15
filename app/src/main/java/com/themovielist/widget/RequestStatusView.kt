@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.request_status.view.*
 
 
 class RequestStatusView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
-    private var mRequestStatus = RequestStatus.HIDDEN
+    private var mRequestStatus = Status.HIDDEN
 
     private var mTryAgainClickListener: (() -> Unit)? = null
 
@@ -26,7 +26,7 @@ class RequestStatusView(context: Context, attrs: AttributeSet?) : FrameLayout(co
         inflater.inflate(R.layout.request_status, this)
     }
 
-    fun setRequestStatus(requestStatus: RequestStatus, matchParentHeight: Boolean = false) {
+    fun setRequestStatus(requestStatus: Status, matchParentHeight: Boolean = false) {
         this.mRequestStatus = requestStatus
         redrawStatus(matchParentHeight)
     }
@@ -36,9 +36,9 @@ class RequestStatusView(context: Context, attrs: AttributeSet?) : FrameLayout(co
     }
 
     private fun redrawStatus(matchParentHeight: Boolean) {
-        toggleStatus(mRequestStatus == RequestStatus.LOADING,
-                mRequestStatus == RequestStatus.ERROR,
-                mRequestStatus == RequestStatus.EMPTY,
+        toggleStatus(mRequestStatus == Status.LOADING,
+                mRequestStatus == Status.ERROR,
+                mRequestStatus == Status.EMPTY,
                 if (matchParentHeight) MATCH_PARENT else WRAP_CONTENT)
     }
 
@@ -60,7 +60,7 @@ class RequestStatusView(context: Context, attrs: AttributeSet?) : FrameLayout(co
         mTryAgainClickListener = tryAgainClick
     }
 
-    enum class RequestStatus {
+    enum class Status {
         LOADING,
         ERROR,
         EMPTY,

@@ -3,6 +3,8 @@ package com.themovielist.widget.recyclerview
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.StringRes
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.themovielist.R
 import com.themovielist.widget.RequestStatusView
@@ -10,157 +12,96 @@ import timber.log.Timber
 import java.security.InvalidParameterException
 import java.util.*
 
-abstract class CustomRecyclerViewAdapter<TItem, THolder : CustomRecyclerViewHolder> private constructor(private val mItems: MutableList<TItem>) : RecyclerView.Adapter<CustomRecyclerViewHolder>() {
-    private var mOnItemClickListener: ((position: Int, item: TItem) -> Unit)? = null
-    private var mRequestStatus = RequestStatusView.RequestStatus.HIDDEN
+abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constructor(diffCallback: DiffUtil.ItemCallback<TModel>): ListAdapter<TModel, BaseViewHolder>(diffCallback) {
+    var onItemClick: ((adapterPosition: Int, model: TModel) -> Unit)? = null
+    var onTryAgain: (() -> Unit)? = null
+    var errorMessageResId: Int? = null
+    var emptyMessageResId: Int? = null
 
-    var tryAgainClickListener: (() -> Unit)? = null
-    private var mEmptyMessageResId = R.string.the_list_is_empty
+    var items = emptyList<TModel>()
 
-    protected constructor() : this(ArrayList<TItem>())
+    private var mRequestStatus: RequestStatusView.Status? = null
 
-    protected constructor(tryAgainClickListener: (() -> Unit)? = null) : this() {
-        this.tryAgainClickListener = tryAgainClickListener
-    }
-
-    protected constructor(@StringRes emptyMessageResId: Int = R.string.the_list_is_empty, tryAgainClickListener: (() -> Unit)?) : this() {
-        mEmptyMessageResId = emptyMessageResId
-        this.tryAgainClickListener = tryAgainClickListener
-    }
-
-    interface ViewType {
-        companion object {
-            const val GRID_STATUS = 0
-            const val ITEM = 1
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+        if (viewType == ViewType.GRID_STATUS.ordinal) {
+            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_request_status, parent, false)
+            return RequestStatusVH(itemView)
         }
+        return onCreateItemViewHolder(LayoutInflater.from(parent.context), parent, viewType)
     }
 
-    val isStatusError: Boolean
-        get() = mRequestStatus == RequestStatusView.RequestStatus.ERROR
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomRecyclerViewHolder {
-        if (viewType == ViewType.GRID_STATUS) {
-            val itemView = LayoutInflater.from(parent.context).inflate(R.layout.grid_status, parent, false)
-            return GridStatusViewHolder(itemView, tryAgainClickListener, mEmptyMessageResId)
-        }
-        return onCreateItemViewHolder(parent, viewType)
-    }
-
-    override fun onBindViewHolder(holder: CustomRecyclerViewHolder, position: Int) {
-        Timber.d("onBindViewHolder - Binding the view. Position: $position | GRID_STATUS: ${holder.itemViewType == ViewType.GRID_STATUS} | Holder: $holder")
-        if (holder.itemViewType == ViewType.GRID_STATUS) {
-            val gridStatusViewHolder = holder as GridStatusViewHolder
-            gridStatusViewHolder.bind(mRequestStatus, mItems.size)
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        if (holder.itemViewType == ViewType.GRID_STATUS.ordinal) {
+            Timber.d("Redrawing the request status: $mRequestStatus - position: $position")
+            val requestStatusVH = holder as RequestStatusVH
+            requestStatusVH.bind(mRequestStatus!!, super.getItemCount() == 0, errorMessageResId, emptyMessageResId, onTryAgain)
             return
         }
 
         @Suppress("UNCHECKED_CAST")
         onBindItemViewHolder(holder as THolder, position)
         holder.itemView.setOnClickListener {
-            mOnItemClickListener?.invoke(holder.adapterPosition, mItems[holder.adapterPosition])
+            onItemClick?.invoke(holder.adapterPosition, getItem(position))
         }
-    }
-
-    override fun getItemCount(): Int {
-        return mItems.size + if (mRequestStatus == RequestStatusView.RequestStatus.HIDDEN) 0 else 1 // List status.
     }
 
     final override fun getItemViewType(position: Int): Int {
-        if (position == mItems.size) {
-            return ViewType.GRID_STATUS
+        if (position == super.getItemCount()) {
+            return ViewType.GRID_STATUS.ordinal
         }
-        val itemViewType = getItemViewTypeOverride(position)
-        if (itemViewType == ViewType.GRID_STATUS) {
-            throw InvalidParameterException("The view type must be different of ${ViewType.GRID_STATUS}")
-        }
-        return itemViewType
+        return ViewType.ITEM.ordinal
     }
 
-    protected open fun getItemViewTypeOverride(position: Int): Int {
-        return ViewType.ITEM
+    fun showLoadingStatus() {
+        redrawGridStatus(RequestStatusView.Status.LOADING)
     }
 
-    protected fun getItemByPosition(position: Int): TItem {
-        return mItems[position]
+    fun showErrorStatus() {
+        redrawGridStatus(RequestStatusView.Status.ERROR)
     }
 
-    fun addItems(items: List<TItem>) {
-        hideRequestStatus()
-
-        val itemCount = mItems.size
-        mItems.addAll(items)
-        notifyItemRangeInserted(itemCount, items.size)
-        Timber.i("addItems - itemCount: $itemCount | items.size: ${items.size}")
+    fun showEmptyStatus() {
+        redrawGridStatus(RequestStatusView.Status.EMPTY)
     }
 
-    fun replaceItems(items: List<TItem>) {
-        redrawGridStatus(RequestStatusView.RequestStatus.HIDDEN)
-
-        clearItems()
-
-        mItems.addAll(items)
-        notifyItemRangeInserted(0, items.size)
-    }
-
-    private fun clearItems() {
-        val itemCount = mItems.size
-        if (itemCount > 0) {
-            mItems.clear()
-            notifyItemRangeRemoved(0, itemCount)
-        }
-    }
-
-    fun removeItemByIndex(index: Int) {
-        mItems.removeAt(index)
-        notifyItemRemoved(index)
-    }
-
-    val items: List<TItem>
-        get() = mItems
-
-    fun showLoading() {
-        redrawGridStatus(RequestStatusView.RequestStatus.LOADING)
-        Timber.i("REDRAWING the grid status to SHOW the loading indicator")
-    }
-
-    fun hideRequestStatus() {
-        redrawGridStatus(RequestStatusView.RequestStatus.HIDDEN)
-    }
-
-    fun hideLoadingIndicator() {
-        Timber.i("REDRAWING the grid status to HIDE the loading indicator: ${mRequestStatus == RequestStatusView.RequestStatus.LOADING}")
-        if (mRequestStatus == RequestStatusView.RequestStatus.LOADING) { // Hide only if is loading
-            hideRequestStatus()
-        }
-    }
-
-    fun showEmptyMessage() {
-        redrawGridStatus(RequestStatusView.RequestStatus.EMPTY)
-        Timber.i("REDRAWING the grid status as EMPTY")
-    }
-
-    fun showErrorMessage() {
-        redrawGridStatus(RequestStatusView.RequestStatus.ERROR)
-        Timber.i("REDRAWING the grid status as ERROR")
-    }
-
-    private fun redrawGridStatus(gridStatus: RequestStatusView.RequestStatus) {
+    private fun redrawGridStatus(status: RequestStatusView.Status? = null) {
         val previousRequestStatus = mRequestStatus
-        mRequestStatus = gridStatus
-        if (mRequestStatus == RequestStatusView.RequestStatus.HIDDEN) {
-            notifyItemRemoved(mItems.size)
-        } else if (previousRequestStatus == RequestStatusView.RequestStatus.HIDDEN) {
-            notifyItemInserted(mItems.size)
+        mRequestStatus = status
+        if (mRequestStatus == null) {
+            notifyItemRemoved(itemSize)
+        } else if (previousRequestStatus == null) {
+            notifyItemInserted(itemSize)
         } else {
-            notifyItemChanged(mItems.size)
+            @Suppress("DEPRECATION")
+            Timber.d("Changing the request status. Size list: $itemSize. Total: $itemCount")
+            notifyItemChanged(itemSize)
         }
     }
 
-    fun setOnItemClickListener(onItemClickListener: (position: Int, item: TItem) -> Unit) {
-        this.mOnItemClickListener = onItemClickListener
+    lateinit var recyclerView: BaseRecyclerView
+
+    override fun submitList(list: List<TModel>?) {
+        redrawGridStatus()
+
+        items = list ?: emptyList()
+
+        super.submitList(list)
     }
 
-    protected abstract fun onCreateItemViewHolder(parent: ViewGroup, viewType: Int): THolder
+    private val itemSize
+        get() = super.getItemCount()
+
+    @Deprecated("Use itemSize")
+    override fun getItemCount(): Int {
+        return super.getItemCount() + if (mRequestStatus == null) 0 else 1
+    }
+
+    protected abstract fun onCreateItemViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): THolder
 
     protected abstract fun onBindItemViewHolder(holder: THolder, position: Int)
+}
+
+private enum class ViewType {
+    GRID_STATUS,
+    ITEM
 }

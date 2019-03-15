@@ -1,19 +1,24 @@
 package com.themovielist.di
 
+import android.content.Context
 import com.themovielist.MainApplication
+import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    AndroidSupportInjectionModule::class,
-    ActivityBindingModule::class,
-    ViewModelModule::class,
     AppModule::class
 ])
-interface AppComponent : AndroidInjector<MainApplication> {
+interface AppComponent {
     @Component.Builder
-    abstract class Builder : AndroidInjector.Builder<MainApplication>()
+    interface Builder {
+        @BindsInstance
+        fun applicationContext(applicationContext: Context): Builder
+
+        fun build(): AppComponent
+    }
+
+    fun inject(mainApplication: MainApplication)
 }

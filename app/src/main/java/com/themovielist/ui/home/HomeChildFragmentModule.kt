@@ -1,6 +1,5 @@
 package com.themovielist.ui.home
 
-import com.themovielist.di.ChildFragmentScoped
 import com.themovielist.ui.home.partiallist.HomePartialListFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

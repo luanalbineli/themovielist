@@ -20,7 +20,7 @@ class DrawableCompatTextView : AppCompatTextView {
         initAttrs(context, attrs)
     }
 
-    internal fun initAttrs(context: Context, attrs: AttributeSet?) {
+    private fun initAttrs(context: Context, attrs: AttributeSet?) {
         if (attrs != null) {
             val attributeArray = context.obtainStyledAttributes(
                     attrs,

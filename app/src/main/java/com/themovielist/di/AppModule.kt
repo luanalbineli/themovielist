@@ -1,15 +1,12 @@
 package com.themovielist.di
 
-import android.content.Context
 import com.google.gson.*
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.themovielist.BuildConfig
-import com.themovielist.MainApplication
-import com.themovielist.domain.FavoriteMovieUseCase
 import com.themovielist.model.ApiConfigurationModel
-import com.themovielist.repository.favorite.FavoriteRepository
 import dagger.Module
 import dagger.Provides
+import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
@@ -23,21 +20,10 @@ import java.util.*
 import javax.inject.Singleton
 
 @Module
-class AppModule {
-
+object AppModule {
     @Provides
-    fun provideContext(application: MainApplication): Context {
-        return application.applicationContext
-    }
-
-    @Provides
-    @Singleton
-    fun provideFavoriteMovieUseCase(favoriteRepository: FavoriteRepository): FavoriteMovieUseCase {
-        return FavoriteMovieUseCase(favoriteRepository)
-    }
-
-    @Provides
-    @Singleton
+    @Reusable
+    @JvmStatic
     fun provideRetrofit(): Retrofit {
         // Add a log interceptor
         val httpClient = OkHttpClient.Builder()
@@ -66,6 +52,7 @@ class AppModule {
 
     @Provides
     @Singleton
+    @JvmStatic
     fun provideApiConfigurationFactory(): ApiConfigurationFactory {
         return ApiConfigurationFactory()
     }
@@ -101,10 +88,8 @@ class AppModule {
         return GsonConverterFactory.create(gsonBuilder.create())
     }
 
-    companion object {
-        private const val BASE_URL = "https://api.themoviedb.org/3/"
-        private const val DEFAULT_DATE_FORMAT = "yyyy-MM-dd"
-    }
+    private const val BASE_URL = "https://api.themoviedb.org/3/"
+    private const val DEFAULT_DATE_FORMAT = "yyyy-MM-dd"
 }
 
 data class ApiConfigurationFactory constructor(val apiConfigurationModel: ApiConfigurationModel = ApiConfigurationModel())
