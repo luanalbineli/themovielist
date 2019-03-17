@@ -1,4 +1,19 @@
 <resources>
+    <!-- BEGIN: Default margins -->
+    <dimen name="default_vertical_margin">16dp</dimen>
+    <dimen name="default_horizontal_margin">16dp</dimen>
+    <!-- END: Default margins -->
+
+    <!-- BEGIN: Text sizes -->
+    <dimen name="text_size_subhead">@dimen/abc_text_size_subhead_material</dimen> <!-- 16sp -->
+    <dimen name="text_size_medium">@dimen/abc_text_size_medium_material</dimen> <!-- 18sp -->
+    <dimen name="text_size_title_material">@dimen/abc_text_size_title_material</dimen> <!-- 20sp -->
+    <dimen name="text_size_large">@dimen/abc_text_size_large_material</dimen> <!-- 22sp -->
+    <dimen name="text_size_headline">@dimen/abc_text_size_headline_material</dimen> <!-- 24sp -->
+    <dimen name="text_size_display_1_material">@dimen/abc_text_size_display_1_material</dimen> <!-- 34sp -->
+    <dimen name="text_size_display_2_material">@dimen/abc_text_size_display_2_material</dimen> <!-- 45sp -->
+    <!-- END: Text sizes -->
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="margin_normal">16dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>

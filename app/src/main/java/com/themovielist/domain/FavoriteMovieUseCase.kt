@@ -6,8 +6,14 @@ import com.themovielist.model.response.Status
 import com.themovielist.repository.favorite.FavoriteRepository
 import timber.log.Timber
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class FavoriteMovieUseCase @Inject constructor(private val favoriteRepository: FavoriteRepository): MediatorUseCase<FavoriteMovieParams, FavoriteMovieResult>() {
+@Singleton
+class FavoriteMovieUseCase
+@Inject
+constructor(
+        private val favoriteRepository: FavoriteRepository
+) : MediatorUseCase<FavoriteMovieParams, FavoriteMovieResult>() {
     init {
         Timber.d("INSTANCE")
     }

@@ -8,7 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.themovielist.GlideApp
 import com.themovielist.R
 import com.themovielist.model.GenreModel
-import com.themovielist.util.extensions.yearFromCalendar
+import com.themovielist.extensions.yearFromCalendar
 import timber.log.Timber
 import java.util.*
 

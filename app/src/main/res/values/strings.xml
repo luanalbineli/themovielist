@@ -1,5 +1,11 @@
 <resources>
-    <string name="app_name">themovielist</string>
+    <string name="app_name">The movie list</string>
+    <!-- BEGIN: Common resources -->
+    <string name="text_try_again">Try again</string>
+    <!-- END: Common resources-->
+    <!-- BEGIN: Request status -->
+    <string name="text_request_status_empty_list">The list is empty</string>
+    <!-- END: Request status -->
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>

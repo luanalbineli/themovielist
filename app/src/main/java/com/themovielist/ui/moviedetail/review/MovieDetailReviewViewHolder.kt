@@ -1,11 +1,11 @@
 package com.themovielist.ui.moviedetail.review
 
 import android.view.View
-import com.themovielist.widget.recyclerview.CustomRecyclerViewHolder
+import com.themovielist.widget.recyclerview.CustomViewHolder
 import kotlinx.android.synthetic.main.movie_review_item.view.*
 
 class MovieDetailReviewViewHolder internal constructor(itemView: View)
-    : CustomRecyclerViewHolder(itemView) {
+    : CustomViewHolder(itemView) {
 
     fun bind(author: String, content: String) = bindLayout(itemView, author, content)
 

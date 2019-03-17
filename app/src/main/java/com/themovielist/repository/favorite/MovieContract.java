@@ -32,6 +32,8 @@ public abstract class MovieContract {
 
         public static final String COLUMN_GENRE_ID_LIST = "genreIds";
 
+        public static final String COLUMN_WATCHED = "watched";
+
         public static Uri buildMovieWithId(int id) {
             return CONTENT_URI.buildUpon()
                     .appendPath(String.valueOf(id))

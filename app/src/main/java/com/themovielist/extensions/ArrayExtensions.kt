@@ -1,4 +1,4 @@
-package com.themovielist.util.extensions
+package com.themovielist.extensions
 
 fun <T> IntArray.mapToListNotNull(mapper: (Int) -> T?): List<T>? {
     var list:  MutableList<T>? = null

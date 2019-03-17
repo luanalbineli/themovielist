@@ -5,7 +5,7 @@
     <data>
         <variable
             name="model"
-            type="com.themovielist.model.view.MovieImageGenreViewModel" />
+            type="com.themovielist.model.view.CompleteMovieModel" />
 
         <variable
             name="apiImageSizeList"

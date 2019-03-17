@@ -2,14 +2,18 @@ package com.themovielist.di
 
 import android.content.Context
 import com.themovielist.MainApplication
+import com.themovielist.ui.MainActivityViewModel
+import com.themovielist.ui.home.HomeViewModel
+import com.themovielist.ui.home.fulllist.FullHomeListViewModel
+import com.themovielist.ui.moviedetail.MovieDetailViewModel
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    AppModule::class
+    AppModule::class,
+    BindindModule::class
 ])
 interface AppComponent {
     @Component.Builder
@@ -21,4 +25,9 @@ interface AppComponent {
     }
 
     fun inject(mainApplication: MainApplication)
+
+    fun homeViewModelFactory(): ViewModelFactory<HomeViewModel>
+    fun fullHomeListViewModel(): ViewModelFactory<FullHomeListViewModel>
+    fun mainActivityViewModelFactory(): ViewModelFactory<MainActivityViewModel>
+    fun movieDetailViewModelFactory(): ViewModelFactory<MovieDetailViewModel>
 }

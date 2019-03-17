@@ -1,4 +1,4 @@
-package com.themovielist.util.extensions
+package com.themovielist.extensions
 
 import java.util.*
 

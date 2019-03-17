@@ -3,20 +3,16 @@ package com.themovielist.ui.moviedetail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import com.themovielist.model.response.*
 import com.themovielist.repository.movie.MovieRepository
+import com.themovielist.ui.base.BaseViewModel
 import com.themovielist.ui.common.MovieCommonAction
-import kotlinx.coroutines.Job
 import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(
         private val movieRepository: MovieRepository,
         private val movieCommonAction: MovieCommonAction
-): ViewModel(), MovieCommonAction by movieCommonAction, Observer<Result<MovieDetailResponseModel>> {
-
-    private val parentDisposableJob = Job()
-
+): BaseViewModel(), MovieCommonAction by movieCommonAction, Observer<Result<MovieDetailResponseModel>> {
     private val _trailerList = MutableLiveData<List<MovieTrailerModel>>()
     val trailerList: LiveData<List<MovieTrailerModel>>
         get() = _trailerList
@@ -40,7 +36,7 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun setMovieId(movieId: Int) {
-        movieRepository.getMovieDetail(movieId, parentDisposableJob).observeForever(this)
+        movieRepository.getMovieDetail(movieId, viewModelJob).observeForever(this)
     }
 
     fun showAllMovieTrailers() {
@@ -49,10 +45,5 @@ class MovieDetailViewModel @Inject constructor(
 
     fun showAllMovieReviews() {
 
-    }
-
-    override fun onCleared() {
-        parentDisposableJob.cancel()
-        super.onCleared()
     }
 }

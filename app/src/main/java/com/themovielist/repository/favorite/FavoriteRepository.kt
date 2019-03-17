@@ -1,10 +1,11 @@
 package com.themovielist.repository.favorite
 
-import android.annotation.SuppressLint
 import android.content.Context
+import com.themovielist.extensions.getBoolean
+import com.themovielist.extensions.getInt
+import com.themovielist.extensions.map
 import com.themovielist.model.MovieModel
 import com.themovielist.model.response.Result
-import com.themovielist.util.extensions.toArray
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import timber.log.Timber
@@ -12,9 +13,8 @@ import java.sql.SQLDataException
 import javax.inject.Inject
 
 class FavoriteRepository @Inject constructor(private val context: Context) {
-    @SuppressLint("Recycle")
-    fun getFavoriteMovieIds(): Deferred<Array<Int>> {
-        val completableDeferred = CompletableDeferred<Array<Int>>()
+    fun getFavoriteMovieIds(): Deferred<Map<Int, Boolean>> {
+        val completableDeferred = CompletableDeferred<Map<Int, Boolean>>()
         val contentResolver = context.contentResolver
         if (contentResolver == null) {
             completableDeferred.completeExceptionally(RuntimeException("Cannot get the ContentResolver"))
@@ -24,10 +24,10 @@ class FavoriteRepository @Inject constructor(private val context: Context) {
                 completableDeferred.completeExceptionally(SQLDataException("An internal error occurred. The cursor is null."))
             } else {
                 cursor.use {
-                    val result = cursor.toArray {
-                        getInt(getColumnIndex(MovieContract.MovieEntry._ID))
+                    val map = cursor.map {
+                        cursor.getInt(MovieContract.MovieEntry._ID) to cursor.getBoolean(MovieContract.MovieEntry.COLUMN_WATCHED)
                     }
-                    completableDeferred.complete(result)
+                    completableDeferred.complete(map)
                 }
             }
         }

@@ -6,7 +6,8 @@ import com.themovielist.model.MovieModel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class MovieImageGenreViewModel(
+data class CompleteMovieModel(
         val genreList: List<GenreModel>?,
         val movieModel: MovieModel,
-        var isFavorite: Boolean) : Parcelable
+        var favorite: Boolean,
+        var watched: Boolean) : Parcelable

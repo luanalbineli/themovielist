@@ -7,48 +7,51 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import com.themovielist.extensions.*
 import com.themovielist.repository.favorite.MovieContract
-import com.themovielist.util.extensions.getAsIntArray
-import com.themovielist.util.extensions.getIntArray
-import com.themovielist.util.extensions.getNullableString
-import com.themovielist.util.extensions.put
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 @Parcelize
 @Entity(tableName = MovieContract.MovieEntry.TABLE_NAME)
-open class MovieModel constructor(@SerializedName("id")
-                                  @PrimaryKey
-                                  @ColumnInfo(name = MovieContract.MovieEntry._ID)
-                                  var id: Int = 0,
+open class MovieModel
+constructor(@SerializedName("id")
+            @PrimaryKey
+            @ColumnInfo(name = MovieContract.MovieEntry._ID)
+            var id: Int = 0,
 
-                                  @SerializedName("poster_path")
-                                  @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_POSTER_PATH)
-                                  var posterPath: String? = "",
+            @SerializedName("poster_path")
+            @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_POSTER_PATH)
+            var posterPath: String? = "",
 
-                                  @SerializedName("overview")
-                                  @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_OVERVIEW)
-                                  var overview: String = "",
+            @SerializedName("overview")
+            @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_OVERVIEW)
+            var overview: String = "",
 
-                                  @SerializedName("title")
-                                  @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_TITLE)
-                                  var title: String = "",
+            @SerializedName("title")
+            @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_TITLE)
+            var title: String = "",
 
-                                  @SerializedName("vote_average")
-                                  @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE)
-                                  var voteAverage: Double = 0.0,
+            @SerializedName("vote_average")
+            @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE)
+            var voteAverage: Double = 0.0,
 
-                                  @SerializedName("release_date")
-                                  @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_RELEASE_DATE)
-                                  var releaseDate: Date? = null,
+            @SerializedName("release_date")
+            @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_RELEASE_DATE)
+            var releaseDate: Date? = null,
 
-                                  @SerializedName("backdrop_path")
-                                  @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_BACKDROP_PATH)
-                                  var backdropPath: String?,
+            @SerializedName("backdrop_path")
+            @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_BACKDROP_PATH)
+            var backdropPath: String?,
 
-                                  @SerializedName("genre_ids")
-                                  @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST)
-                                  val genreIdList: IntArray) : Parcelable {
+            @SerializedName("genre_ids")
+            @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST)
+            val genreIdList: IntArray,
+
+            @SerializedName("watched")
+            @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_WATCHED)
+            val watched: Boolean
+) : Parcelable {
 
     constructor(contentValues: ContentValues) : this(
             contentValues.getAsInteger(MovieContract.MovieEntry._ID),
@@ -58,7 +61,8 @@ open class MovieModel constructor(@SerializedName("id")
             contentValues.getAsDouble(MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE),
             Date(contentValues.getAsLong(MovieContract.MovieEntry.COLUMN_RELEASE_DATE)),
             contentValues.getAsString(MovieContract.MovieEntry.COLUMN_BACKDROP_PATH),
-            contentValues.getAsIntArray(MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST))
+            contentValues.getAsIntArray(MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST),
+            contentValues.getAsBoolean(MovieContract.MovieEntry.COLUMN_WATCHED))
 
     private constructor(cursor: Cursor) : this(
             cursor.getInt(cursor.getColumnIndex(MovieContract.MovieEntry._ID)),
@@ -68,7 +72,8 @@ open class MovieModel constructor(@SerializedName("id")
             cursor.getDouble(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_VOTE_AVERAGE)),
             Date(cursor.getLong(cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_RELEASE_DATE))),
             cursor.getNullableString(MovieContract.MovieEntry.COLUMN_BACKDROP_PATH),
-            cursor.getIntArray(MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST))
+            cursor.getIntArray(MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST),
+            cursor.getBoolean(MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST))
 
     fun toContentValues(): ContentValues {
         val contentValues = ContentValues()
@@ -87,6 +92,8 @@ open class MovieModel constructor(@SerializedName("id")
         contentValues.put(MovieContract.MovieEntry.COLUMN_BACKDROP_PATH, backdropPath)
 
         contentValues.put(MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST, genreIdList)
+
+        contentValues.put(MovieContract.MovieEntry.COLUMN_WATCHED, watched)
 
         return contentValues
     }

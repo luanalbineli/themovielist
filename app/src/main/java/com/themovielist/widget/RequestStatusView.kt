@@ -3,67 +3,47 @@ package com.themovielist.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
-import androidx.annotation.StringRes
 import com.themovielist.R
+import com.themovielist.extensions.setDisplay
 import kotlinx.android.synthetic.main.request_status.view.*
 
 
-class RequestStatusView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
-    private var mRequestStatus = Status.HIDDEN
-
-    private var mTryAgainClickListener: (() -> Unit)? = null
+class RequestStatusView(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
+    var onTryAgain: (() -> Unit)? = null
 
     init {
-        initializeViews(context)
-    }
-
-    private fun initializeViews(context: Context) {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        inflater.inflate(R.layout.request_status, this)
-    }
-
-    fun setRequestStatus(requestStatus: Status, matchParentHeight: Boolean = false) {
-        this.mRequestStatus = requestStatus
-        redrawStatus(matchParentHeight)
-    }
-
-    fun setEmptyMessage(@StringRes messageResId: Int) {
-        tvRequestStatusEmptyMessage.setText(messageResId)
-    }
-
-    private fun redrawStatus(matchParentHeight: Boolean) {
-        toggleStatus(mRequestStatus == Status.LOADING,
-                mRequestStatus == Status.ERROR,
-                mRequestStatus == Status.EMPTY,
-                if (matchParentHeight) MATCH_PARENT else WRAP_CONTENT)
-    }
-
-    private fun toggleStatus(loadingVisible: Boolean, errorVisible: Boolean, emptyMessageVisible: Boolean, viewHeight: Int) {
-        pbRequestStatusLoading.visibility = if (loadingVisible) View.VISIBLE else View.INVISIBLE
-        llRequestStatusError.visibility = if (errorVisible) View.VISIBLE else View.INVISIBLE
-        tvRequestStatusEmptyMessage.visibility = if (emptyMessageVisible) View.VISIBLE else View.INVISIBLE
-
-        btRequestStatusRetry.setOnClickListener {
-            mTryAgainClickListener?.invoke()
-            }
-
-        val layoutParams = this.layoutParams
-        layoutParams.height = viewHeight
-        this.layoutParams = layoutParams
+        LayoutInflater.from(context).inflate(R.layout.request_status, this)
+        button_request_status_try_again.setOnClickListener {
+            onTryAgain?.invoke()
         }
+    }
 
-    fun setTryAgainClickListener(tryAgainClick: (() -> Unit)?) {
-        mTryAgainClickListener = tryAgainClick
+    fun toggleStatus(status: Status) {
+        view_request_status_loading.setDisplay(status == Status.LOADING)
+        view_request_status_error.setDisplay(status == Status.ERROR)
+        view_request_status_empty.setDisplay(status == Status.EMPTY)
+    }
+
+    fun setErrorMessage(stringResId: Int?) {
+        if (stringResId == null) {
+            text_request_status_error.text = ""
+        } else {
+            text_request_status_error.setText(stringResId)
+        }
+    }
+
+    fun setEmptyMessage(emptyMessageResId: Int?) {
+        if (emptyMessageResId == null) {
+            text_request_status_empty.text = ""
+        } else {
+            text_request_status_empty.setText(emptyMessageResId)
+        }
     }
 
     enum class Status {
         LOADING,
         ERROR,
-        EMPTY,
-        HIDDEN
+        EMPTY
     }
 }

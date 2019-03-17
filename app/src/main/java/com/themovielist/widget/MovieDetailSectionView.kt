@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import com.themovielist.R
-import com.themovielist.util.extensions.setDisplay
+import com.themovielist.extensions.setDisplay
 import kotlinx.android.synthetic.main.movie_detail_section.view.*
 import java.security.InvalidParameterException
 

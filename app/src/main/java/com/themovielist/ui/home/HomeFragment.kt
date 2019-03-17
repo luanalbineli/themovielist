@@ -5,54 +5,51 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.themovielist.R
 import com.themovielist.databinding.FragmentHomeBinding
 import com.themovielist.di.ApiConfigurationFactory
+import com.themovielist.di.AppComponent
+import com.themovielist.extensions.activityViewModelProvider
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
-import com.themovielist.model.view.MovieImageGenreViewModel
+import com.themovielist.model.view.CompleteMovieModel
+import com.themovielist.ui.base.BaseViewModelFragment
 import com.themovielist.ui.common.Event
 import com.themovielist.ui.home.partiallist.HomePartialListFragment
 import com.themovielist.ui.moviedetail.MovieDetailActivity
-import com.themovielist.util.extensions.activityViewModelProvider
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.include_appbar.view.*
 import timber.log.Timber
 import javax.inject.Inject
 
-class HomeFragment: DaggerFragment() {
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
+class HomeFragment: BaseViewModelFragment<HomeViewModel>() {
+    override fun instantiateViewModel(injector: AppComponent)
+            = activityViewModelProvider(HomeViewModel::class.java, injector.homeViewModelFactory())
 
     @Inject lateinit var apiConfigurationFactory: ApiConfigurationFactory
 
-    private lateinit var homeViewModel: HomeViewModel
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        homeViewModel = activityViewModelProvider(viewModelFactory)
 
         val binding = FragmentHomeBinding.inflate(inflater, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = homeViewModel
+            viewModel = viewModel
         }
 
         val mostRatedFragmentList = childFragmentManager.findFragmentById(R.id.homeRatedPartialListFragment) as HomePartialListFragment
-        mostRatedFragmentList.tryAgainClickListener = { homeViewModel.fetchMovieSortedByRating() }
-        homeViewModel.moviesSortedByRating.observe(this, Observer { result ->
+        mostRatedFragmentList.tryAgainClickListener = { viewModel.fetchMovieSortedByRating() }
+        viewModel.moviesSortedByRating.observe(this, Observer { result ->
             Timber.d("Update from most rated movies")
            handleResourceStatus(mostRatedFragmentList, result)
 
         })
 
         val mostPopularFragmentList = childFragmentManager.findFragmentById(R.id.homePopularPartialListFragment) as HomePartialListFragment
-        mostPopularFragmentList.tryAgainClickListener = { homeViewModel.fetchMoviesSortedByPopularity() }
-        homeViewModel.moviesSortedByPopularity.observe(this, Observer { result ->
+        mostPopularFragmentList.tryAgainClickListener = { viewModel.fetchMoviesSortedByPopularity() }
+        viewModel.moviesSortedByPopularity.observe(this, Observer { result ->
             Timber.d("Update from popular movies")
             handleResourceStatus(mostPopularFragmentList, result)
         })
 
-        homeViewModel.navigateToMovieDetailAction.observe(this, Observer {
+        viewModel.navigateToMovieDetailAction.observe(this, Observer {
             openMovieDetail(it)
         })
 
@@ -61,11 +58,11 @@ class HomeFragment: DaggerFragment() {
         return binding.root
     }
 
-    private fun openMovieDetail(it: Event<MovieImageGenreViewModel>) {
+    private fun openMovieDetail(it: Event<CompleteMovieModel>) {
         startActivity(MovieDetailActivity.getIntent(requireContext(), it.content))
     }
 
-    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Result<List<MovieImageGenreViewModel>>) {
+    private fun handleResourceStatus(fragmentList: HomePartialListFragment, result: Result<List<CompleteMovieModel>>) {
         Timber.d("handleResourceStatus - result: ${result.status}")
         when (result.status) {
             Status.SUCCESS -> fragmentList.showMovies(result.data!!, apiConfigurationFactory.apiConfigurationModel.posterImageSizes)

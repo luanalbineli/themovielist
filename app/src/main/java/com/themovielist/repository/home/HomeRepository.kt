@@ -6,7 +6,7 @@ import com.themovielist.model.GenreModel
 import com.themovielist.model.MovieModel
 import com.themovielist.model.response.PaginatedArrayResponseModel
 import com.themovielist.model.response.Result
-import com.themovielist.model.view.MovieImageGenreViewModel
+import com.themovielist.model.view.CompleteMovieModel
 import com.themovielist.repository.RepositoryBase
 import com.themovielist.repository.common.CommonRepository
 import com.themovielist.repository.favorite.FavoriteRepository
@@ -15,7 +15,13 @@ import kotlinx.coroutines.Job
 import retrofit2.Retrofit
 import javax.inject.Inject
 
-class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonRepository: CommonRepository, private val favoriteRepository: FavoriteRepository): RepositoryBase<IHomeService>(retrofit) {
+class HomeRepository
+@Inject
+constructor(
+        retrofit: Retrofit,
+        private val commonRepository: CommonRepository,
+        private val favoriteRepository: FavoriteRepository
+): RepositoryBase<IHomeService>(retrofit) {
     override val serviceInstanceType: Class<IHomeService>
         get() = IHomeService::class.java
 
@@ -25,7 +31,7 @@ class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonR
     fun getMoviesSortedByRating(pageIndex: Int, disposableParentJob: Job) =
             getMoviesWithGenreAndConfiguration(apiInstance.getTopRatedList(pageIndex), disposableParentJob)
 
-    private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>, viewModelJob: Job): LiveData<Result<List<MovieImageGenreViewModel>>> {
+    private fun getMoviesWithGenreAndConfiguration(movieRequest: Deferred<PaginatedArrayResponseModel<MovieModel>>, viewModelJob: Job): LiveData<Result<List<CompleteMovieModel>>> {
         return executeAsyncRequest(viewModelJob) {
             val genreListRequest = commonRepository.getAllGenres()
             val favoriteMovies = favoriteRepository.getFavoriteMovieIds()
@@ -34,10 +40,11 @@ class HomeRepository @Inject constructor(retrofit: Retrofit, private val commonR
         }
     }
 
-    private fun processMovieWithGenreResult(await: PaginatedArrayResponseModel<MovieModel>, genreMap: SparseArray<GenreModel>, favoriteMovieIdList: Array<Int>): List<MovieImageGenreViewModel> {
-        return await.results.map {
-            val genreList = commonRepository.fillMovieGenresList(it, genreMap)
-            MovieImageGenreViewModel(genreList, it, favoriteMovieIdList.contains(it.id))
+    private fun processMovieWithGenreResult(movieList: PaginatedArrayResponseModel<MovieModel>, genreMap: SparseArray<GenreModel>, favoriteMovieIdList: Map<Int, Boolean>): List<CompleteMovieModel> {
+        return movieList.results.map { movieModel ->
+            val genreList = commonRepository.fillMovieGenresList(movieModel, genreMap)
+            val favoriteMovieInfo = favoriteMovieIdList[movieModel.id]
+            CompleteMovieModel(genreList, movieModel, favoriteMovieInfo != null, favoriteMovieInfo == true)
         }
     }
 }

@@ -7,54 +7,50 @@ import android.view.Menu
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.appbar.AppBarLayout
 import com.themovielist.R
 import com.themovielist.databinding.ActivityMovieDetailBinding
 import com.themovielist.databinding.MovieReviewItemBinding
 import com.themovielist.databinding.MovieTrailerItemBinding
-import com.themovielist.di.ApiConfigurationFactory
+import com.themovielist.di.ViewModelFactory
+import com.themovielist.extensions.injector
 import com.themovielist.model.response.MovieReviewModel
 import com.themovielist.model.response.MovieTrailerModel
-import com.themovielist.model.view.MovieImageGenreViewModel
-import com.themovielist.util.extensions.activityViewModelProvider
-import com.themovielist.util.extensions.getScreenSize
+import com.themovielist.model.view.CompleteMovieModel
+import com.themovielist.ui.base.BaseViewModelActivity
 import com.themovielist.widget.MovieDetailSectionView
-import dagger.android.support.DaggerAppCompatActivity
 import timber.log.Timber
-import javax.inject.Inject
 
-class MovieDetailActivity : DaggerAppCompatActivity() {
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject lateinit var apiConfigurationFactory: ApiConfigurationFactory
-    private lateinit var movieDetailViewModel: MovieDetailViewModel
+class MovieDetailActivity : BaseViewModelActivity<MovieDetailViewModel>() {
+    override val viewModelClass: Class<MovieDetailViewModel>
+        get() = MovieDetailViewModel::class.java
+    override val viewModelFactory: ViewModelFactory<MovieDetailViewModel>
+        get() = injector.movieDetailViewModelFactory()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val movieImageGenreViewModel = intent.getParcelableExtra<MovieImageGenreViewModel>(EXTRA_MOVIE_MODEL)
+        val movieImageGenreViewModel = intent.getParcelableExtra<CompleteMovieModel>(EXTRA_MOVIE_MODEL)
 
-        movieDetailViewModel = activityViewModelProvider(viewModelFactory)
-        movieDetailViewModel.setMovieId(movieImageGenreViewModel.movieModel.id)
+        viewModel.setMovieId(movieImageGenreViewModel.movieModel.id)
 
         DataBindingUtil.setContentView<ActivityMovieDetailBinding>(this, R.layout.activity_movie_detail).also { it ->
-            it.setLifecycleOwner(this@MovieDetailActivity)
+            it.lifecycleOwner = this@MovieDetailActivity
 
             it.movieImageGenreViewModel = movieImageGenreViewModel
-            it.viewModel = movieDetailViewModel
-            it.screenWidth = getScreenSize().widthPixels.toFloat()
-            it.backdropApiImageSizeList = apiConfigurationFactory.apiConfigurationModel.backdropImageSizes
+            it.viewModel = viewModel
+            // it.screenWidth = getScreenSize().widthPixels.toFloat()
+            // it.backdropApiImageSizeList = apiConfigurationFactory.apiConfigurationModel.backdropImageSizes
 
             configureMovieReviewContent(it.mdsMovieDetailReviewSection as MovieDetailSectionView<MovieReviewModel>)
             configureMovieTrailerContent(it.mdsMovieDetailTrailerSection as MovieDetailSectionView<MovieTrailerModel>)
 
-            movieDetailViewModel.reviewList.observe(this, Observer { reviewList ->
+            viewModel.reviewList.observe(this, Observer { reviewList ->
                 Timber.d("Binding the review list")
                 it.mdsMovieDetailReviewSection.bind(reviewList)
             })
 
-            movieDetailViewModel.trailerList.observe(this, Observer { trailerList ->
+            viewModel.trailerList.observe(this, Observer { trailerList ->
                 Timber.d("Binding the trailer list")
                 it.mdsMovieDetailTrailerSection.bind(trailerList)
             })
@@ -121,7 +117,7 @@ class MovieDetailActivity : DaggerAppCompatActivity() {
     companion object {
         private const val EXTRA_MOVIE_MODEL = "extra_movie_model"
 
-        fun getIntent(context: Context, movieImageGenreViewModel: MovieImageGenreViewModel): Intent {
+        fun getIntent(context: Context, movieImageGenreViewModel: CompleteMovieModel): Intent {
             return Intent(context, MovieDetailActivity::class.java).apply {
                 putExtra(EXTRA_MOVIE_MODEL, movieImageGenreViewModel)
             }

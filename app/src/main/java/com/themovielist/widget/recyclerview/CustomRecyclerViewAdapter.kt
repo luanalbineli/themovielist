@@ -2,17 +2,13 @@ package com.themovielist.widget.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.themovielist.R
 import com.themovielist.widget.RequestStatusView
 import timber.log.Timber
-import java.security.InvalidParameterException
-import java.util.*
 
-abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constructor(diffCallback: DiffUtil.ItemCallback<TModel>): ListAdapter<TModel, BaseViewHolder>(diffCallback) {
+abstract class CustomRecyclerViewAdapter<TModel, THolder: CustomViewHolder> constructor(diffCallback: DiffUtil.ItemCallback<TModel>): ListAdapter<TModel, CustomViewHolder>(diffCallback) {
     var onItemClick: ((adapterPosition: Int, model: TModel) -> Unit)? = null
     var onTryAgain: (() -> Unit)? = null
     var errorMessageResId: Int? = null
@@ -22,18 +18,20 @@ abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constr
 
     private var mRequestStatus: RequestStatusView.Status? = null
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
+    private var mRequestErrorModel: Exception? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         if (viewType == ViewType.GRID_STATUS.ordinal) {
             val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_request_status, parent, false)
-            return RequestStatusVH(itemView)
+            return RequestStatusViewHolder(itemView)
         }
         return onCreateItemViewHolder(LayoutInflater.from(parent.context), parent, viewType)
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         if (holder.itemViewType == ViewType.GRID_STATUS.ordinal) {
             Timber.d("Redrawing the request status: $mRequestStatus - position: $position")
-            val requestStatusVH = holder as RequestStatusVH
+            val requestStatusVH = holder as RequestStatusViewHolder
             requestStatusVH.bind(mRequestStatus!!, super.getItemCount() == 0, errorMessageResId, emptyMessageResId, onTryAgain)
             return
         }
@@ -56,7 +54,8 @@ abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constr
         redrawGridStatus(RequestStatusView.Status.LOADING)
     }
 
-    fun showErrorStatus() {
+    fun showErrorStatus(exception: Exception? = null) {
+        mRequestErrorModel = exception
         redrawGridStatus(RequestStatusView.Status.ERROR)
     }
 
@@ -77,8 +76,6 @@ abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constr
             notifyItemChanged(itemSize)
         }
     }
-
-    lateinit var recyclerView: BaseRecyclerView
 
     override fun submitList(list: List<TModel>?) {
         redrawGridStatus()

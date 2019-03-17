@@ -13,7 +13,7 @@ buildscript {
         materialVersion = '1.1.0-alpha04'
         okHttpLoggingInterceptor = '3.6.0'
         retrofitVersion = '2.4.0'
-        roomVersion = '2.1.0-alpha05'
+        roomVersion = '2.1.0-alpha04'
         timberVersion = '4.7.1'
         vectorDrawableVersion = '1.1.0-alpha01'
     }
