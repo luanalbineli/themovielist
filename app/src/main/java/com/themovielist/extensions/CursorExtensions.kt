@@ -2,18 +2,12 @@ package com.themovielist.extensions
 
 import android.database.Cursor
 
-inline fun <reified T> Cursor.toArray(invoker: Cursor.() -> T): Array<T> {
-    return Array(this.count) {
-        this.moveToNext()
-        invoker.invoke(this)
-    }
-}
-
 inline fun <TKey, TValue> Cursor.map(invoker: Cursor.() -> Pair<TKey, TValue>): Map<TKey, TValue> {
     return HashMap<TKey, TValue>(this.count).also { hashMap ->
-        this.moveToNext()
-        val entry = invoker.invoke(this)
-        hashMap[entry.first] = entry.second
+        while (this.moveToNext()) {
+            val entry = invoker.invoke(this)
+            hashMap[entry.first] = entry.second
+        }
     }
 }
 

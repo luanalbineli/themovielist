@@ -35,19 +35,19 @@ class HomeFragment: BaseViewModelFragment<HomeViewModel>() {
         }
 
         val mostRatedFragmentList = childFragmentManager.findFragmentById(R.id.homeRatedPartialListFragment) as HomePartialListFragment
-        mostRatedFragmentList.tryAgainClickListener = { viewModel.fetchMovieSortedByRating() }
+       /* mostRatedFragmentList.tryAgainClickListener = { viewModel.fetchMovieSortedByRating() }
         viewModel.moviesSortedByRating.observe(this, Observer { result ->
             Timber.d("Update from most rated movies")
            handleResourceStatus(mostRatedFragmentList, result)
 
-        })
+        })*/
 
         val mostPopularFragmentList = childFragmentManager.findFragmentById(R.id.homePopularPartialListFragment) as HomePartialListFragment
-        mostPopularFragmentList.tryAgainClickListener = { viewModel.fetchMoviesSortedByPopularity() }
+        /*mostPopularFragmentList.tryAgainClickListener = { viewModel.fetchMoviesSortedByPopularity() }
         viewModel.moviesSortedByPopularity.observe(this, Observer { result ->
             Timber.d("Update from popular movies")
             handleResourceStatus(mostPopularFragmentList, result)
-        })
+        })*/
 
         viewModel.navigateToMovieDetailAction.observe(this, Observer {
             openMovieDetail(it)
@@ -72,5 +72,9 @@ class HomeFragment: BaseViewModelFragment<HomeViewModel>() {
             }
             Status.LOADING -> fragmentList.showLoadingIndicator()
         }
+    }
+
+    companion object {
+        fun getInstance() = HomeFragment()
     }
 }

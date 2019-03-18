@@ -8,12 +8,17 @@ import com.themovielist.repository.home.HomeRepository
 import com.themovielist.ui.base.BaseViewModel
 import com.themovielist.ui.common.MovieCommonAction
 import com.themovielist.util.ApiUtil
+import timber.log.Timber
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
         private val homeRepository: HomeRepository,
         private val movieCommonAction: MovieCommonAction
 ): BaseViewModel(), MovieCommonAction by movieCommonAction {
+
+    init {
+        Timber.d("Starting the HomeViewModel")
+    }
 
     private lateinit var _moviesSortedByRating: LiveData<Result<List<CompleteMovieModel>>>
     val moviesSortedByRating = MediatorLiveData<Result<List<CompleteMovieModel>>>()

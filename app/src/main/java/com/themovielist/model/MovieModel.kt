@@ -48,9 +48,9 @@ constructor(@SerializedName("id")
             @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_GENRE_ID_LIST)
             val genreIdList: IntArray,
 
-            @SerializedName("watched")
+            @Transient
             @ColumnInfo(name = MovieContract.MovieEntry.COLUMN_WATCHED)
-            val watched: Boolean
+            val watched: Boolean = false
 ) : Parcelable {
 
     constructor(contentValues: ContentValues) : this(
