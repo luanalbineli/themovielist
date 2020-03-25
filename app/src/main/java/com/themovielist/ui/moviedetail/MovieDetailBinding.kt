@@ -7,8 +7,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.themovielist.GlideApp
 import com.themovielist.R
-import com.themovielist.model.GenreModel
-import com.themovielist.util.extensions.yearFromCalendar
+import com.themovielist.model.response.genre.GenreResponseModel
+import com.themovielist.extension.yearFromCalendar
 import timber.log.Timber
 import java.util.*
 
@@ -26,7 +26,7 @@ fun voteAverageAdapter(textView: TextView, voteAverage: Double) {
 }
 
 @BindingAdapter("genres")
-fun genreAdapter(textView: TextView, genreList: List<GenreModel>?) {
+fun genreAdapter(textView: TextView, genreList: List<GenreResponseModel>?) {
     textView.text = genreList?.asSequence()?.map { it.name }?.reduce { a, b -> "$a, $b" }
 }
 

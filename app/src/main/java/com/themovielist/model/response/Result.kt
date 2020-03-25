@@ -6,7 +6,7 @@ package com.themovielist.model.response
 </T> */
 data class Result<out T>(val status: Status, val data: T?, val exception: Throwable?) {
     companion object {
-        fun <T> success(data: T): Result<T> {
+        fun <T> success(data: T?): Result<T> {
             return Result(Status.SUCCESS, data, null)
         }
 

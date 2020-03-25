@@ -2,19 +2,26 @@ package com.themovielist.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.themovielist.R
+import com.themovielist.di.ViewModelFactory
+import com.themovielist.extension.injector
+import com.themovielist.ui.base.ViewModelActivity
 import com.themovielist.ui.home.HomeFragment
-import com.themovielist.util.extensions.doInTransaction
-import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : ViewModelActivity<MainViewModel>() {
+    override val viewModelClass: Class<MainViewModel>
+        get() = MainViewModel::class.java
+    override val viewModelFactory: ViewModelFactory<MainViewModel>
+        get() = injector.mainViewModelFactory()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navigation.setOnNavigationItemSelectedListener{
+        navigation.setOnNavigationItemSelectedListener {
             Timber.d("Setting up the main content")
             when (it.itemId) {
                 R.id.navigation_home -> {
@@ -41,13 +48,9 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    private fun <F> replaceFragment(fragment: F) where F: Fragment {
-        supportFragmentManager.doInTransaction {
-            replace(FRAGMENT_CONTAINER_ID, fragment)
+    private fun <F> replaceFragment(fragment: F) where F : Fragment {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, fragment)
         }
-    }
-
-    companion object {
-        private const val FRAGMENT_CONTAINER_ID = R.id.fragment_container
     }
 }

@@ -10,7 +10,7 @@ import com.themovielist.GlideApp
 import com.themovielist.R
 import com.themovielist.model.ApiImageSizeModel
 import timber.log.Timber
-import com.themovielist.widget.ReadMoreOption
+import com.themovielist.widget.text.ReadMoreOption
 
 @BindingAdapter(value = ["imageUrl", "imageSizeList", "viewWidth", "viewHeight"], requireAll = false)
 fun movieImageUrl(imageView: ImageView, imageUrl: String?, imageSizeList: Array<ApiImageSizeModel>, viewWidth: Float?, viewHeight: Float?) {

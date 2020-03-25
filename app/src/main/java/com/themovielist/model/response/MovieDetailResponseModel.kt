@@ -1,22 +1,55 @@
 package com.themovielist.model.response
 
 import com.google.gson.annotations.SerializedName
-import com.themovielist.model.MovieModel
 import java.util.*
 
-class MovieDetailResponseModel(id: Int = 0, posterPath: String, overview: String,
-                               title: String, voteAverage: Double, releaseDate: Date? = null,
-                               backdropPath: String, genreIdList: IntArray) :
-        MovieModel(id, posterPath, overview, title, voteAverage, releaseDate, backdropPath, genreIdList) {
+data class MovieDetailResponseModel constructor(
+        @SerializedName("id")
+        var id: Int,
 
-    @SerializedName("reviews")
-    lateinit var reviewsResponseModel: PaginatedArrayResponseModel<MovieReviewModel>
+        @SerializedName("poster_path")
+        val posterPath: String?,
 
-    @SerializedName("trailers")
-    lateinit var trailerResponseModel: MovieDetailTrailerResponseModel
+        @SerializedName("overview")
+        val overview: String,
 
-    @SerializedName("runtime")
-    var runtime = 0
+        @SerializedName("title")
+        val title: String,
+
+        @SerializedName("vote_average")
+        val voteAverage: Double,
+
+        @SerializedName("release_date")
+        val releaseDate: Date?,
+
+        @SerializedName("backdrop_path")
+        val backdropPath: String?,
+
+        @SerializedName("genre_ids")
+        val genreIdList: IntArray,
+        @SerializedName("reviews")
+        val reviews: PaginatedArrayResponseModel<MovieReviewModel>,
+
+        @SerializedName("trailers")
+        val trailers: MovieDetailTrailerResponseModel,
+
+        @SerializedName("runtime")
+        val runtime: Int
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as MovieDetailResponseModel
+
+        if (id != other.id) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return id
+    }
 }
 
 data class MovieDetailTrailerResponseModel constructor(

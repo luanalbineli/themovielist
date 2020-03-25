@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">themovielist</string>
+    <string name="app_name">The Movie List</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
@@ -28,4 +28,9 @@
     <string name="movie_runtime_format">%1$sh %2$sm</string>
     <string name="read_more">read more</string>
     <string name="read_less">read less</string>
+
+    <!-- BEGIN: Request status -->
+    <string name="text_request_status_try_again">Try again</string>
+    <string name="text_request_status_empty_list_title">The list is empty</string>
+    <!-- END: Request status -->
 </resources>

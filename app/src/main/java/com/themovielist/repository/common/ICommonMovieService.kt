@@ -1,10 +1,10 @@
 package com.themovielist.repository.common
 
-import com.themovielist.model.response.GenreListResponseModel
+import com.themovielist.model.response.genre.GenreListResponseModel
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
 interface ICommonMovieService {
     @GET("genre/movie/list")
-    fun getAllGenres(): Deferred<GenreListResponseModel>
+    suspend fun getAllGenres(): GenreListResponseModel
 }

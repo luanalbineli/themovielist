@@ -1,47 +1,26 @@
 package com.themovielist.repository.common
 
 import android.util.SparseArray
-import com.themovielist.model.GenreModel
-import com.themovielist.model.MovieModel
-import com.themovielist.repository.RepositoryBase
-import com.themovielist.util.extensions.mapToListNotNull
-import kotlinx.coroutines.*
-import retrofit2.Retrofit
+import com.themovielist.model.response.genre.GenreResponseModel
+import com.themovielist.repository.base.Repository
+import com.themovielist.repository.base.RepositoryExecutor
 import timber.log.Timber
 import javax.inject.Inject
 
 class CommonRepository
 @Inject
-constructor(retrofit: Retrofit) : RepositoryBase<ICommonMovieService>(retrofit) {
+constructor(repositoryExecutor: RepositoryExecutor) : Repository<ICommonMovieService>(repositoryExecutor) {
     @Synchronized
-    fun getAllGenres(): Deferred<SparseArray<GenreModel>> {
+    suspend fun getAllGenres(): SparseArray<GenreResponseModel> {
         Timber.d("Getting the genre map")
-        val completableDeferred = CompletableDeferred<SparseArray<GenreModel>>()
-        if (GENRE_MAP != null) {
-            Timber.d("The map is cached")
-            completableDeferred.complete(GENRE_MAP!!)
-        } else {
-            CoroutineScope(Dispatchers.Default).launch {
-                try {
-                    val genreResult = apiInstance.getAllGenres().await()
-                    GENRE_MAP = SparseArray<GenreModel>().also { sparseArray ->
-                        genreResult.genreList.forEach { genreModel -> sparseArray.put(genreModel.id, genreModel) }
-                    }.also {
-                        completableDeferred.complete(it)
-                    }
-                } catch (exception: Exception) {
-                    completableDeferred.cancel(exception)
-                }
+        if (GENRE_MAP == null) {
+            val genreResult = serviceInstance.getAllGenres()
+            GENRE_MAP = SparseArray<GenreResponseModel>().also { sparseArray ->
+                genreResult.genreList.forEach { genreModel -> sparseArray.put(genreModel.id, genreModel) }
             }
         }
 
-        return completableDeferred
-    }
-
-    fun fillMovieGenresList(movieModel: MovieModel, genreMap: SparseArray<GenreModel>): List<GenreModel>? {
-        return movieModel.genreIdList.mapToListNotNull { genreId ->
-            if (genreMap.indexOfKey(genreId) > -1) genreMap.get(genreId) else null
-        }
+        return GENRE_MAP!!
     }
 
     override val serviceInstanceType: Class<ICommonMovieService>
@@ -49,6 +28,6 @@ constructor(retrofit: Retrofit) : RepositoryBase<ICommonMovieService>(retrofit) 
 
     companion object {
         @JvmField
-        var GENRE_MAP: SparseArray<GenreModel>? = null
+        var GENRE_MAP: SparseArray<GenreResponseModel>? = null
     }
 }

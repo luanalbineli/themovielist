@@ -3,9 +3,9 @@ package com.themovielist.ui.home.fulllist
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import dagger.android.support.DaggerAppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
-class FullMovieListActivity: DaggerAppCompatActivity() {
+class FullMovieListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
