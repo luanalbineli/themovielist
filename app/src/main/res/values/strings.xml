@@ -1,22 +1,14 @@
 <resources>
     <string name="app_name">The Movie List</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="home">Home</string>
-    <string name="browse">Browse</string>
-    <string name="cinema">Cinema</string>
-    <string name="favorite">Favorite</string>
-    <string name="most_popular">Most popular</string>
-    <string name="most_rated">Most rated</string>
-    <string name="see_all">See all</string>
-    <string name="try_again">Try again</string>
-    <string name="error_something_went_wrong">Uhh… Unfortunately something went wrong. Please, try again</string>
-    <string name="the_list_is_empty">The list is empty</string>
-    <string name="oops">Oops</string>
-    <string name="content_description_broken_robot">This is a image of a robot, indicating that something went wrong on the list loading</string>
     <string name="i18n_favorite_button">Button used to favorite/unfavorite the movie</string>
-    <string name="pipe_separator">|</string>
+
+    <!-- BEGIN: Home -->
+    <string name="text_home_most_popular">Most popular</string>
+    <string name="text_home_most_rated">Most rated</string>
+    <string name="text_home_see_all">See all</string>
+    <!-- END: Home -->
+
+    <!-- BEGIN: Movie detail -->
     <string name="movie_detail_backdrop_content_description">This is the backdrop of the movie</string>
     <string name="recommendations">Recommendations</string>
     <string name="cast">Cast</string>
@@ -28,9 +20,22 @@
     <string name="movie_runtime_format">%1$sh %2$sm</string>
     <string name="read_more">read more</string>
     <string name="read_less">read less</string>
+    <string name="the_list_is_empty">The list is empty</string>
+    <!-- END: Movie detail -->
+
+    <!-- BEGIN: Common resources -->
+    <string name="symbol_pipe">|</string>
+    <string name="text_home">Home</string>
+    <string name="text_browse">Browse</string>
+    <string name="text_cinema">Cinema</string>
+    <string name="text_library">Library</string>
+    <!-- END: Common resources -->
 
     <!-- BEGIN: Request status -->
     <string name="text_request_status_try_again">Try again</string>
     <string name="text_request_status_empty_list_title">The list is empty</string>
+    <string name="error_request_status_something_went_wrong">Uhh… Unfortunately something went wrong. Please, try again.</string>
+    <string name="text_movie_favorited">The movie was favorited and added to your library</string>
+    <string name="title_home">Home Feature</string>
     <!-- END: Request status -->
 </resources>

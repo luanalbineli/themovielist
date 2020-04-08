@@ -4,25 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.appbar.AppBarLayout
 import com.themovielist.R
 import com.themovielist.databinding.MovieReviewItemBinding
 import com.themovielist.databinding.MovieTrailerItemBinding
-import com.themovielist.di.ViewModelFactory
 import com.themovielist.extension.injector
 import com.themovielist.model.response.MovieReviewModel
 import com.themovielist.model.response.MovieTrailerModel
 import com.themovielist.model.view.MovieModel
-import com.themovielist.ui.base.ViewModelActivity
 import com.themovielist.widget.MovieDetailSectionView
 
-class MovieDetailActivity : ViewModelActivity<MovieDetailViewModel>() {
-    private lateinit var movieDetailViewModel: MovieDetailViewModel
+class MovieDetailActivity : AppCompatActivity() {
+    private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { injector.movieDetailViewModelFactory() })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         /*val movieImageGenreViewModel = intent.getParcelableExtra<MovieImageGenreViewModel>(EXTRA_MOVIE_MODEL)
 
         movieDetailViewModel.setMovieId(movieImageGenreViewModel.movieModel.id)
@@ -116,9 +115,4 @@ class MovieDetailActivity : ViewModelActivity<MovieDetailViewModel>() {
             }
         }
     }
-
-    override val viewModelClass: Class<MovieDetailViewModel>
-        get() = MovieDetailViewModel::class.java
-    override val viewModelFactory: ViewModelFactory<MovieDetailViewModel>
-        get() = injector.movieDetailViewModelFactory()
 }

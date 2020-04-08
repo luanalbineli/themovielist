@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/navigation_home"
-        android:title="@string/home"
+        android:title="@string/text_home"
         android:icon="@drawable/home" />
 
     <item android:id="@+id/navigation_browse"
-        android:title="@string/browse"
+        android:title="@string/text_browse"
         android:icon="@drawable/ic_search" />
 
     <item android:id="@+id/navigation_cinema"
-        android:title="@string/cinema"
+        android:title="@string/text_cinema"
         android:icon="@drawable/ic_movie" />
 
     <item android:id="@+id/navigation_favorite"
-        android:title="@string/favorite"
+        android:title="@string/text_library"
         android:icon="@drawable/ic_favorite" />
 </menu>

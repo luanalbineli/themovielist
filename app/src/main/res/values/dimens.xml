@@ -8,6 +8,7 @@
     <!-- END: Common dimens -->
 
     <!-- BEGIN: Home -->
+    <dimen name="home_movie_list_item_icon_size">40dp</dimen>
     <dimen name="home_movie_list_image_space">16dp</dimen>
     <dimen name="home_movie_list_image_width">150dp</dimen>
     <dimen name="home_movie_list_image_height">200dp</dimen>

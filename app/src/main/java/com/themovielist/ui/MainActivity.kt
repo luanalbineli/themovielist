@@ -1,21 +1,18 @@
 package com.themovielist.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.themovielist.R
-import com.themovielist.di.ViewModelFactory
 import com.themovielist.extension.injector
-import com.themovielist.ui.base.ViewModelActivity
 import com.themovielist.ui.home.HomeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
-class MainActivity : ViewModelActivity<MainViewModel>() {
-    override val viewModelClass: Class<MainViewModel>
-        get() = MainViewModel::class.java
-    override val viewModelFactory: ViewModelFactory<MainViewModel>
-        get() = injector.mainViewModelFactory()
+class MainActivity : AppCompatActivity() {
+    private val viewModel: MainViewModel by viewModels(factoryProducer = { injector.mainViewModelFactory() })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

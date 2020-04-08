@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF424F</color>
-    <color name="colorPrimaryDark">#F83745</color>
-    <color name="colorAccent">#191C1F</color>
-    <color name="windowBackground">#222B31</color>
-    <color name="white">#FFFFFF</color>
+    <color name="martinique">#292D4A</color>
+    <color name="blackPearl">#060726</color>
+    <color name="cerulean">#0DA6B8</color>
+    <color name="cardinal">#D01E42</color>
+    <color name="waterloo">#7D839B</color>
+
+    <color name="colorPrimary">@color/martinique</color>
+    <color name="colorPrimaryDark">#000222</color>
+    <color name="colorAccent">@color/cerulean</color>
+    <color name="windowBackground">@color/blackPearl</color>
     <color name="black_alpha_40">#66000000</color>
     <color name="half_baked">#7CC8CC</color>
 </resources>

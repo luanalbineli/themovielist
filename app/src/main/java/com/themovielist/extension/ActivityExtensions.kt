@@ -7,6 +7,3 @@ import com.themovielist.MainApplication
 import com.themovielist.di.ViewModelFactory
 
 val AppCompatActivity.injector get() = (application as MainApplication).component
-
-fun <VM: ViewModel> AppCompatActivity.viewModelProvider(clazz: Class<VM>, viewModelFactory: ViewModelFactory<VM>)
-        = ViewModelProvider(this, viewModelFactory).get(clazz)

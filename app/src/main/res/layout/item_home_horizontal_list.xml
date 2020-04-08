@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <variable
+            name="movieActions"
+            type="com.themovielist.ui.base.IMovieActions" />
+
         <variable
             name="model"
             type="com.themovielist.model.view.MovieModel" />
@@ -22,24 +27,41 @@
             android:layout_width="@dimen/home_movie_list_image_width"
             android:layout_height="@dimen/home_movie_list_image_height"
             android:scaleType="centerCrop"
+            app:imageSizeList="@{apiImageSizeList}"
+            app:imageUrl="@{model.movieResponseModel.posterPath}"
             app:layout_constraintBottom_toTopOf="@+id/movieTitleTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:imageUrl="@{model.movieResponseModel.posterPath}"
-            app:imageSizeList="@{apiImageSizeList}"
             app:viewWidth="@{@dimen/home_movie_list_image_width}" />
 
-        <com.google.android.material.internal.CheckableImageButton
-            android:id="@+id/favoriteButton"
-            android:layout_width="@dimen/a11y_min_touch_target"
-            android:layout_height="@dimen/a11y_min_touch_target"
+        <com.sackcentury.shinebuttonlib.ShineButton
+            android:id="@+id/button_home_horizontal_list_favorite"
+            android:layout_width="@dimen/home_movie_list_item_icon_size"
+            android:layout_height="@dimen/home_movie_list_item_icon_size"
+            android:layout_margin="4dp"
             android:checked="@{model.favorite}"
-            android:background="?selectableItemBackgroundBorderless"
-            android:contentDescription="@string/i18n_favorite_button"
-            android:src="@drawable/asld_star_event"
+            android:onClick="@{() -> movieActions.toggleMovieWatched(model)}"
+            android:src="@color/waterloo"
+            app:btn_color="@color/waterloo"
+            app:btn_fill_color="@color/cerulean"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:siShape="@drawable/favorite_black" />
+
+        <com.sackcentury.shinebuttonlib.ShineButton
+            android:id="@+id/button_home_horizontal_list_watched"
+            android:layout_width="@dimen/home_movie_list_item_icon_size"
+            android:layout_height="@dimen/home_movie_list_item_icon_size"
+            android:layout_margin="4dp"
+            android:checked="@{model.favorite}"
+            android:onClick="@{() -> movieActions.toggleMovieFavorite(model)}"
+            android:src="@color/waterloo"
+            app:btn_color="@color/waterloo"
+            app:btn_fill_color="@color/cerulean"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:siShape="@drawable/eye_check_black" />
 
         <TextView
             android:id="@+id/movieTitleTextView"

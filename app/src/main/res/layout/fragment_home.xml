@@ -1,24 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
     <include layout="@layout/include_appbar" />
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_height="0dp">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <com.themovielist.widget.RequestStatusView
+                android:layout_margin="@dimen/default_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/request_status_home" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/flHomeMovieContainer"
+                android:id="@+id/container_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
@@ -29,7 +34,7 @@
                     style="@style/HomeListTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/most_popular"
+                    android:text="@string/text_home_most_popular"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,14 +43,14 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/see_all"
+                    android:text="@string/text_home_see_all"
                     app:drawableRightCompat="@drawable/chevron_right"
                     app:layout_constraintBaseline_toBaselineOf="@+id/text_home_most_popular"
                     app:layout_constraintEnd_toEndOf="parent" />
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/fragment_home_movie_list_popular"
-                    android:name="com.themovielist.ui.home.partiallist.HorizontalMovieListFragment"
+                    android:name="com.themovielist.ui.home.horizontalList.HorizontalMovieListFragment"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin_1_5x"
@@ -70,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin_1_5x"
-                    android:text="@string/most_rated"
+                    android:text="@string/text_home_most_rated"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/divider" />
 
@@ -79,7 +84,7 @@
                     style="@style/TextAppearance.MaterialComponents.Headline6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/see_all"
+                    android:text="@string/text_home_see_all"
                     app:drawableRightCompat="@drawable/chevron_right"
                     app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
                     app:layout_constraintBottom_toBottomOf="@+id/textView4"
@@ -87,7 +92,7 @@
 
                 <androidx.fragment.app.FragmentContainerView
                     android:id="@+id/homeRatedPartialListFragment"
-                    android:name="com.themovielist.ui.home.partiallist.HorizontalMovieListFragment"
+                    android:name="com.themovielist.ui.home.horizontalList.HorizontalMovieListFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/default_margin_1_5x"
@@ -95,5 +100,5 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </FrameLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </ScrollView>
+</LinearLayout>

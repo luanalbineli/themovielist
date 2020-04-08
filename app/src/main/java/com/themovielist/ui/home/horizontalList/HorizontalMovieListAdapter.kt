@@ -1,25 +1,23 @@
-package com.themovielist.ui.home.partiallist
+package com.themovielist.ui.home.horizontalList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.themovielist.databinding.HomeMovieListItemBinding
+import com.themovielist.databinding.ItemHomeHorizontalListBinding
 import com.themovielist.model.ApiImageSizeModel
 import com.themovielist.model.view.MovieModel
 import com.themovielist.widget.recyclerview.BaseViewHolder
 import com.themovielist.widget.recyclerview.CustomRecyclerViewAdapter
 
 class HorizontalMovieListAdapter(
-    ) : CustomRecyclerViewAdapter<MovieModel, HomeMovieListVH>(MOVIE_DIFF) {
-
-    lateinit var apiImageSizeList: Array<ApiImageSizeModel>
+        private val apiPosterImageSizes: Array<ApiImageSizeModel>
+) : CustomRecyclerViewAdapter<MovieModel, HomeMovieListVH>(MOVIE_DIFF) {
 
     override fun onCreateItemViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): HomeMovieListVH {
-        val binding = HomeMovieListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemHomeHorizontalListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return HomeMovieListVH(binding, apiImageSizeList)
+        return HomeMovieListVH(binding, apiPosterImageSizes)
     }
-
 
     override fun onBindItemViewHolder(holder: HomeMovieListVH, position: Int) {
         val movieImageViewModel = getItem(position)
@@ -28,7 +26,7 @@ class HorizontalMovieListAdapter(
 
     companion object {
         @JvmField
-        val MOVIE_DIFF = object: DiffUtil.ItemCallback<MovieModel>() {
+        val MOVIE_DIFF = object : DiffUtil.ItemCallback<MovieModel>() {
             override fun areItemsTheSame(oldItem: MovieModel, newItem: MovieModel): Boolean {
                 return oldItem.movieResponseModel.id == newItem.movieResponseModel.id
             }
@@ -44,7 +42,7 @@ class HorizontalMovieListAdapter(
 }
 
 class HomeMovieListVH(
-        private val binding: HomeMovieListItemBinding,
+        private val binding: ItemHomeHorizontalListBinding,
         private val apiImageSizeList: Array<ApiImageSizeModel>)
     : BaseViewHolder(binding.root) {
 
