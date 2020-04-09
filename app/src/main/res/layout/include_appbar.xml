@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.appbar.AppBarLayout android:id="@+id/appbar"
-    style="@style/Widget.AppBar"
+<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/app_bar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
 
-    <FrameLayout
+    <androidx.appcompat.widget.Toolbar
+        android:background="@color/martinique"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+        android:layout_height="?attr/actionBarSize">
 
         <TextView
             android:id="@+id/text_app_bar_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:gravity="center"
-            android:minHeight="?actionBarSize"
             android:textAppearance="?attr/textAppearanceHeadline6" />
-    </FrameLayout>
+    </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>

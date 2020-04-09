@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
             if (result.status == Status.SUCCESS) {
                 showToggleMovieFavoriteMessage(result.data!!)
             } else if (result.status == Status.ERROR) {
-                showSnackBarMessage(R.string.error_favorite_)
+                showSnackBarMessage(R.string.error_home_favorite_movie)
             }
         }
     }

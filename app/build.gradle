@@ -1,7 +1,7 @@
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
+apply plugin: "com.android.application"
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 def keystoreProperties = new Properties()
@@ -19,23 +19,28 @@ android {
 
         buildConfigField("String", "API_KEY", keystoreProperties["apiKey"])
     }
+    
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
+    
     buildFeatures {
         dataBinding true
     }
+    
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8
     }
-    dynamicFeatures = [':home']
+    
+    dynamicFeatures = []
 }
 
 androidExtensions {
@@ -87,5 +92,5 @@ dependencies {
 
     // Shimmer
     implementation "com.facebook.shimmer:shimmer:$shimmer_version"
-    implementation 'io.supercharge:shimmerlayout:2.1.0'
+    implementation "io.supercharge:shimmerlayout:2.1.0"
 }

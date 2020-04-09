@@ -37,5 +37,6 @@
     <string name="error_request_status_something_went_wrong">Uhh… Unfortunately something went wrong. Please, try again.</string>
     <string name="text_movie_favorited">The movie was favorited and added to your library</string>
     <string name="title_home">Home Feature</string>
+    <string name="error_home_favorite_movie">An error occurred. Please, try again.</string>
     <!-- END: Request status -->
 </resources>

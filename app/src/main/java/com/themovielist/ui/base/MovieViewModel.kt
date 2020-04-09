@@ -4,9 +4,9 @@ import androidx.lifecycle.*
 import com.themovielist.model.response.Result
 import com.themovielist.model.view.MovieModel
 import com.themovielist.repository.movie.MovieRepository
+import javax.inject.Inject
 
-abstract class MovieViewModel
-constructor(
+open class MovieViewModel @Inject constructor(
     private val movieRepository: MovieRepository
 ) : IMovieActions, ViewModel() {
     private val mShowMovieDetail = MutableLiveData<MovieModel>()
