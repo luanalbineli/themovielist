@@ -29,14 +29,17 @@
     <string name="text_browse">Browse</string>
     <string name="text_cinema">Cinema</string>
     <string name="text_library">Library</string>
+    <string name="text_movie_added_favorite">The movie was added to your favorite list</string>
+    <string name="text_movie_removed_favorite">The movie was removed from your favorite list</string>
+    <string name="error_favorite_movie_text">An error occurred while tried to favorite the movie. Please, try again.</string>
+    <string name="text_movie_added_watched">The movie was added to your watched list</string>
+    <string name="text_movie_removed_watched">The movie was removed from your watched list</string>
+    <string name="error_watched_movie_text">An error occurred while tried to set the movie watched. Please, try again.</string>
     <!-- END: Common resources -->
 
     <!-- BEGIN: Request status -->
     <string name="text_request_status_try_again">Try again</string>
     <string name="text_request_status_empty_list_title">The list is empty</string>
     <string name="error_request_status_something_went_wrong">Uhh… Unfortunately something went wrong. Please, try again.</string>
-    <string name="text_movie_favorited">The movie was favorited and added to your library</string>
-    <string name="title_home">Home Feature</string>
-    <string name="error_home_favorite_movie">An error occurred. Please, try again.</string>
     <!-- END: Request status -->
 </resources>

@@ -1,6 +1,6 @@
 package com.themovielist.enums
 
-enum class HomeMovieSortingType {
+enum class HomeMovieSortType {
     RATING,
     POPULARITY
 }

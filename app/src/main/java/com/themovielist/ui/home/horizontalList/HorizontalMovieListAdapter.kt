@@ -6,17 +6,19 @@ import androidx.recyclerview.widget.DiffUtil
 import com.themovielist.databinding.ItemHomeHorizontalListBinding
 import com.themovielist.model.ApiImageSizeModel
 import com.themovielist.model.view.MovieModel
+import com.themovielist.ui.base.IMovieActions
 import com.themovielist.widget.recyclerview.BaseViewHolder
 import com.themovielist.widget.recyclerview.CustomRecyclerViewAdapter
 
 class HorizontalMovieListAdapter(
-        private val apiPosterImageSizes: Array<ApiImageSizeModel>
+        private val apiPosterImageSizes: Array<ApiImageSizeModel>,
+        private val movieActions: IMovieActions
 ) : CustomRecyclerViewAdapter<MovieModel, HomeMovieListVH>(MOVIE_DIFF) {
 
     override fun onCreateItemViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): HomeMovieListVH {
         val binding = ItemHomeHorizontalListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return HomeMovieListVH(binding, apiPosterImageSizes)
+        return HomeMovieListVH(binding, movieActions, apiPosterImageSizes)
     }
 
     override fun onBindItemViewHolder(holder: HomeMovieListVH, position: Int) {
@@ -43,12 +45,14 @@ class HorizontalMovieListAdapter(
 
 class HomeMovieListVH(
         private val binding: ItemHomeHorizontalListBinding,
+        private val movieActions: IMovieActions,
         private val apiImageSizeList: Array<ApiImageSizeModel>)
     : BaseViewHolder(binding.root) {
 
     fun bind(movieModel: MovieModel) {
         binding.model = movieModel
         binding.apiImageSizeList = apiImageSizeList
+        binding.movieActions = movieActions
         binding.executePendingBindings()
     }
 }

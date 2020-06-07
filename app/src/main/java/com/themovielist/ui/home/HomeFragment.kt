@@ -6,26 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.snackbar.Snackbar
 import com.themovielist.R
-import com.themovielist.di.module.ApiConfigurationFactory
 import com.themovielist.extension.injector
 import com.themovielist.extension.safeNullObserve
 import com.themovielist.extension.setDisplay
 import com.themovielist.extension.showSnackBarMessage
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
+import com.themovielist.ui.home.fulllist.FullMovieListActivity
 import com.themovielist.ui.moviedetail.MovieDetailActivity
 import com.themovielist.widget.RequestStatusView
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_appbar.*
-import kotlinx.android.synthetic.main.item_home_horizontal_list.*
-import javax.inject.Inject
 
 class HomeFragment : Fragment() {
-    @Inject
-    lateinit var apiConfigurationFactory: ApiConfigurationFactory
-
     private val viewModel: HomeViewModel by activityViewModels(factoryProducer = { injector.homeViewModelFactory() })
 
     override fun onCreateView(
@@ -56,16 +50,38 @@ class HomeFragment : Fragment() {
             if (result.status == Status.SUCCESS) {
                 showToggleMovieFavoriteMessage(result.data!!)
             } else if (result.status == Status.ERROR) {
-                showSnackBarMessage(R.string.error_home_favorite_movie)
+                showSnackBarMessage(R.string.error_favorite_movie_text)
             }
+        }
+
+        viewModel.toggleMovieWatched.safeNullObserve(this) { result ->
+            if (result.status == Status.SUCCESS) {
+                showToggleMovieWatchedMessage(result.data!!)
+            } else if (result.status == Status.ERROR) {
+                showSnackBarMessage(R.string.error_watched_movie_text)
+            }
+        }
+
+        viewModel.showFullMovieList.safeNullObserve(viewLifecycleOwner) { homeMovieSortType ->
+            val intent = FullMovieListActivity.getIntent(requireContext(), homeMovieSortType)
+            startActivity(intent)
         }
     }
 
     private fun showToggleMovieFavoriteMessage(movieModel: MovieModel) {
         val messageResId = if (movieModel.isFavorite)
-            R.string.text_movie_favorited
+            R.string.text_movie_added_favorite
         else
-            R.string.text_movie_favorited
+            R.string.text_movie_removed_favorite
+
+        showSnackBarMessage(messageResId)
+    }
+
+    private fun showToggleMovieWatchedMessage(movieModel: MovieModel) {
+        val messageResId = if (movieModel.isWatched)
+            R.string.text_movie_added_watched
+        else
+            R.string.text_movie_removed_watched
 
         showSnackBarMessage(messageResId)
     }

@@ -1,104 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+<layout>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.themovielist.ui.home.HomeViewModel" />
+    </data>
 
-    <include layout="@layout/include_appbar" />
-
-    <ScrollView
-        android:layout_weight="1"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:orientation="vertical"
+        android:layout_height="match_parent">
 
-        <FrameLayout
+        <include layout="@layout/include_appbar" />
+
+        <ScrollView
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp">
 
-            <com.themovielist.widget.RequestStatusView
-                android:layout_margin="@dimen/default_margin"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/request_status_home" />
+                android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/container_home"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
-                android:visibility="visible">
-
-                <TextView
-                    android:id="@+id/text_home_most_popular"
-                    style="@style/HomeListTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_home_most_popular"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <com.themovielist.widget.text.DrawableCompatTextView
-                    android:id="@+id/text_drawable_home_see_all_popularity"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_home_see_all"
-                    app:drawableRightCompat="@drawable/chevron_right"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/text_home_most_popular"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/fragment_home_movie_list_popular"
-                    android:name="com.themovielist.ui.home.horizontalList.HorizontalMovieListFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_margin_1_5x"
-                    android:tag="popular"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_home_most_popular" />
-
-                <View
-                    android:id="@+id/divider"
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/default_margin_1_5x"
-                    android:background="@drawable/horizontal_line_divider"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_home_movie_list_popular" />
-
-                <TextView
-                    android:id="@+id/textView4"
-                    style="@style/HomeListTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_margin_1_5x"
-                    android:text="@string/text_home_most_rated"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/divider" />
-
-                <com.themovielist.widget.text.DrawableCompatTextView
-                    android:id="@+id/tvHomeSeeMovieListByRating"
-                    style="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/text_home_see_all"
-                    app:drawableRightCompat="@drawable/chevron_right"
-                    app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-                <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/homeRatedPartialListFragment"
-                    android:name="com.themovielist.ui.home.horizontalList.HorizontalMovieListFragment"
+                <com.themovielist.widget.RequestStatusView
+                    android:layout_margin="@dimen/default_margin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/default_margin_1_5x"
-                    android:tag="rating"
-                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
-    </ScrollView>
-</LinearLayout>
+                    android:id="@+id/request_status_home" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/container_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/default_margin"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/text_home_most_popular"
+                        style="@style/HomeListTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_home_most_popular"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.themovielist.widget.text.DrawableCompatTextView
+                        android:id="@+id/text_home_see_all_popularity"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_home_see_all"
+                        android:onClick="@{() -> viewModel.showFullListSortedByPopularity()}"
+                        app:drawableRightCompat="@drawable/chevron_right"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_home_most_popular"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/fragment_home_movie_list_popular"
+                        android:name="com.themovielist.ui.home.horizontalList.HorizontalMovieListFragment"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin_1_5x"
+                        android:tag="popular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_home_most_popular" />
+
+                    <View
+                        android:id="@+id/divider"
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/default_margin_1_5x"
+                        android:background="@drawable/horizontal_line_divider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_home_movie_list_popular" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        style="@style/HomeListTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin_1_5x"
+                        android:text="@string/text_home_most_rated"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+                    <com.themovielist.widget.text.DrawableCompatTextView
+                        android:id="@+id/text_home_see_all_rating"
+                        style="@style/TextAppearance.MaterialComponents.Headline6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_home_see_all"
+                        android:onClick="@{() -> viewModel.showFullListSortedByRating()}"
+                        app:drawableRightCompat="@drawable/chevron_right"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <androidx.fragment.app.FragmentContainerView
+                        android:id="@+id/homeRatedPartialListFragment"
+                        android:name="com.themovielist.ui.home.horizontalList.HorizontalMovieListFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/default_margin_1_5x"
+                        android:tag="rating"
+                        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </FrameLayout>
+        </ScrollView>
+    </LinearLayout>
+</layout>

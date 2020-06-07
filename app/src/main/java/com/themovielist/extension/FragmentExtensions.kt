@@ -10,4 +10,4 @@ val Fragment.injector get() = (requireActivity().application as MainApplication)
 fun Fragment.showSnackBarMessage(@StringRes messageResId: Int) = Snackbar.make(
     requireActivity().findViewById(android.R.id.content),
     messageResId, Snackbar.LENGTH_LONG
-)
+).show()

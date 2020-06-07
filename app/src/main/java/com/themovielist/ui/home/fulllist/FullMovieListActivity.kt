@@ -3,20 +3,31 @@ package com.themovielist.ui.home.fulllist
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
+import com.themovielist.R
+import com.themovielist.enums.HomeMovieSortType
+import com.themovielist.extension.injector
+import com.themovielist.ui.home.HomeViewModel
 
 class FullMovieListActivity: AppCompatActivity() {
+    private val viewModel: HomeViewModel by viewModels(factoryProducer = { injector.homeViewModelFactory() })
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-    }
-    companion object {
-        const val SORT_POPULAR = 1
-        const val SORT_RATING = 2
-        private const val SORT_BUNDLE = "sort_movies"
+        setContentView(R.layout.activity_full_movie_list)
 
-        fun getIntent(context: Context, sort: Int): Intent {
+        val sortType = intent.getSerializableExtra(MOVIE_SORT_BUNDLE_KEY) as HomeMovieSortType
+
+    }
+
+    companion object {
+        private const val MOVIE_SORT_BUNDLE_KEY = "movie_sort"
+
+        fun getIntent(context: Context, homeMovieSortType: HomeMovieSortType): Intent {
             return Intent(context, FullMovieListActivity::class.java).also {
-                it.putExtra(SORT_BUNDLE, sort)
+                it.putExtra(MOVIE_SORT_BUNDLE_KEY, homeMovieSortType)
             }
         }
     }

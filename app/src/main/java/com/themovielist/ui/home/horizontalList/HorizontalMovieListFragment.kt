@@ -21,7 +21,7 @@ import timber.log.Timber
 
 class HorizontalMovieListFragment : Fragment() {
     private val mAdapter by lazy {
-        HorizontalMovieListAdapter(viewModel.apiConfigurationFactory.apiConfigurationModel.posterImageSizes)
+        HorizontalMovieListAdapter(viewModel.apiConfigurationFactory.apiConfigurationModel.posterImageSizes, viewModel)
     }
 
     private val viewModel: HomeViewModel by activityViewModels(factoryProducer = { injector.homeViewModelFactory() })

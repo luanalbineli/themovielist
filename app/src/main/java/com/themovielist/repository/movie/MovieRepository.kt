@@ -3,9 +3,9 @@ package com.themovielist.repository.movie
 import android.util.SparseArray
 import androidx.core.util.contains
 import androidx.lifecycle.LiveData
-import com.themovielist.model.entity.MovieEntityModel
 import com.themovielist.model.entity.MovieFavoriteWatchedEntityModel
 import com.themovielist.model.response.MovieResponseModel
+import com.themovielist.model.response.PaginatedArrayResponseModel
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.genre.GenreResponseModel
 import com.themovielist.model.view.HomeMovieListModel
@@ -39,11 +39,45 @@ constructor(
         }
     }
 
-    fun updateMovie(viewModelScope: CoroutineScope, movieModel: MovieModel): LiveData<Result<MovieModel>> {
+    fun getPopularList(viewModelScope: CoroutineScope, pageIndex: Int): LiveData<Result<PaginatedArrayResponseModel<MovieModel>>> {
+        return makeRequest(viewModelScope) {
+            val result = serviceInstance.getPopularList(pageIndex)
+
+            val movieList = mapToMovieList(result.results)
+            return@makeRequest PaginatedArrayResponseModel(movieList, result.page, result.totalPages)
+        }
+    }
+
+    fun getTopRatedList(viewModelScope: CoroutineScope, pageIndex: Int): LiveData<Result<PaginatedArrayResponseModel<MovieModel>>> {
+        return makeRequest(viewModelScope) {
+            val result = serviceInstance.getTopRatedList(pageIndex)
+
+            val movieList = mapToMovieList(result.results)
+            return@makeRequest PaginatedArrayResponseModel(movieList, result.page, result.totalPages)
+        }
+    }
+
+    fun updateMovie(
+        viewModelScope: CoroutineScope,
+        movieModel: MovieModel
+    ): LiveData<Result<MovieModel>> {
         return makeRequest(viewModelScope) {
             roomRepository.updateMovie(movieModel)
             return@makeRequest movieModel
         }
+    }
+
+    private suspend fun mapToMovieList(movieResponseList: List<MovieResponseModel>): List<MovieModel> {
+        val genreList = commonRepository.getAllGenres()
+        val favoriteWatchedMovieList = roomRepository.getFavoriteWatchedMovieList()
+        return movieResponseList.map {
+            convertMovieResponseToMovie(
+                it,
+                genreList,
+                favoriteWatchedMovieList
+            )
+        }
+
     }
 
     private suspend fun createHomeMovieList(
@@ -88,7 +122,7 @@ constructor(
         return MovieModel(
             movieResponseModel = movieResponseModel,
             isFavorite = movieFavoriteWatchedEntityModel != null && movieFavoriteWatchedEntityModel.isFavorite,
-            isWatched = movieFavoriteWatchedEntityModel != null && movieFavoriteWatchedEntityModel.isFavorite,
+            isWatched = movieFavoriteWatchedEntityModel != null && movieFavoriteWatchedEntityModel.isWatched,
             genreList = genreList
         )
     }

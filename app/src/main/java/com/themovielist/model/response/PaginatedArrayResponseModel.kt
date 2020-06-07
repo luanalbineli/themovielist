@@ -2,16 +2,16 @@ package com.themovielist.model.response
 
 import com.google.gson.annotations.SerializedName
 
-class PaginatedArrayResponseModel<T> {
+data class PaginatedArrayResponseModel<T> constructor(
     @SerializedName("results")
-    lateinit var results: List<T>
+    var results: List<T>,
 
     @SerializedName("page")
-    var page: Int = 0
+    val page: Int,
 
     @SerializedName("total_pages")
-    var totalPages: Int = 0
-
+    val totalPages: Int
+) {
     fun hasMorePages(): Boolean {
         return page < totalPages
     }
