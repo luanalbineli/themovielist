@@ -1,4 +1,4 @@
-package com.themovielist.ui.moviedetail
+package com.themovielist.ui.movieDetail
 
 import android.content.Context
 import android.content.Intent

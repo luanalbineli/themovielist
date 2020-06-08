@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="movieActions"
+            type="com.themovielist.ui.base.IMovieActions" />
+
+        <variable
+            name="model"
+            type="com.themovielist.model.view.MovieModel" />
+
+        <variable
+            name="apiImageSizeList"
+            type="com.themovielist.model.ApiImageSizeModel[]" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:animateLayoutChanges="true">
+
+        <ImageView
+            android:id="@+id/image_movie_item"
+            android:layout_width="80dp"
+            android:layout_height="120dp"
+            app:actualImageScaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_movie_item_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:lines="1"
+            android:maxLines="1"
+            android:text="@{model.movieResponseModel.title}"
+            app:layout_constraintEnd_toStartOf="@+id/button_movie_item_watched"
+            app:layout_constraintStart_toEndOf="@+id/image_movie_item"
+            app:layout_constraintTop_toTopOf="@+id/image_movie_item" />
+
+        <com.sackcentury.shinebuttonlib.ShineButton
+            android:id="@+id/button_movie_item_watched"
+            android:layout_width="@dimen/home_movie_list_item_icon_size"
+            android:layout_height="@dimen/home_movie_list_item_icon_size"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:checked="@{model.watched}"
+            android:onClick="@{() -> movieActions.toggleMovieWatched(model)}"
+            android:src="@color/waterloo"
+            app:btn_color="@color/waterloo"
+            app:btn_fill_color="@color/cerulean"
+            app:layout_constraintEnd_toStartOf="@+id/button_movie_item_favorite"
+            app:layout_constraintTop_toTopOf="@+id/button_movie_item_favorite"
+            app:siShape="@drawable/eye_check_black" />
+
+        <com.sackcentury.shinebuttonlib.ShineButton
+            android:id="@+id/button_movie_item_favorite"
+            android:layout_width="@dimen/home_movie_list_item_icon_size"
+            android:layout_height="@dimen/home_movie_list_item_icon_size"
+            android:layout_margin="4dp"
+            android:checked="@{model.favorite}"
+            android:onClick="@{() -> movieActions.toggleMovieFavorite(model)}"
+            android:src="@color/waterloo"
+            app:btn_color="@color/waterloo"
+            app:btn_fill_color="@color/cerulean"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:siShape="@drawable/favorite_black" />
+
+        <TextView
+            android:id="@+id/tvMovieItemGenre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="@+id/button_movie_item_favorite"
+            app:layout_constraintStart_toStartOf="@+id/text_movie_item_name"
+            app:layout_constraintTop_toBottomOf="@+id/button_movie_item_favorite"
+            tools:text="Drama, TV Show, Action das das da sda sd asd as das da sda sd " />
+
+
+        <ImageView
+            android:id="@+id/image_movie_item_rating"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_movie_item_name" />
+
+        <TextView
+            android:id="@+id/text_movie_item_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivMovieDetailRatingIcon"
+            app:layout_constraintEnd_toEndOf="@+id/guideline"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/ivMovieDetailRatingIcon"
+            app:layout_constraintTop_toTopOf="@+id/ivMovieDetailRatingIcon"
+            tools:text="7.6" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <ImageView
+            android:id="@+id/image_movie_item_year"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_movie_item_rating"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="@+id/image_movie_item_rating" />
+
+        <TextView
+            android:id="@+id/text_movie_item_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_movie_item_year"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/image_movie_item_year"
+            app:layout_constraintTop_toTopOf="@+id/image_movie_item_year"
+            tools:text="2017" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

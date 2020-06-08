@@ -14,7 +14,7 @@ import com.themovielist.extension.showSnackBarMessage
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
 import com.themovielist.ui.home.fulllist.FullMovieListActivity
-import com.themovielist.ui.moviedetail.MovieDetailActivity
+import com.themovielist.ui.movieDetail.MovieDetailActivity
 import com.themovielist.widget.RequestStatusView
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_appbar.*
@@ -41,12 +41,12 @@ class HomeFragment : Fragment() {
             request_status_home.setDisplay(it.status == Status.ERROR)
         }
 
-        viewModel.showMovieDetail.safeNullObserve(this) {
+        viewModel.showMovieDetail.safeNullObserve(viewLifecycleOwner) {
             val intent = MovieDetailActivity.getIntent(requireActivity(), it)
             startActivity(intent)
         }
 
-        viewModel.toggleMovieFavorite.safeNullObserve(this) { result ->
+        viewModel.toggleMovieFavorite.safeNullObserve(viewLifecycleOwner) { result ->
             if (result.status == Status.SUCCESS) {
                 showToggleMovieFavoriteMessage(result.data!!)
             } else if (result.status == Status.ERROR) {
@@ -54,7 +54,7 @@ class HomeFragment : Fragment() {
             }
         }
 
-        viewModel.toggleMovieWatched.safeNullObserve(this) { result ->
+        viewModel.toggleMovieWatched.safeNullObserve(viewLifecycleOwner) { result ->
             if (result.status == Status.SUCCESS) {
                 showToggleMovieWatchedMessage(result.data!!)
             } else if (result.status == Status.ERROR) {

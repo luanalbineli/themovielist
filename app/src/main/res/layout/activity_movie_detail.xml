@@ -10,7 +10,7 @@
             type="com.themovielist.model.view.MovieModel" />
 
         <variable name="viewModel"
-            type="com.themovielist.ui.moviedetail.MovieDetailViewModel" />
+            type="com.themovielist.ui.movieDetail.MovieDetailViewModel" />
 
         <variable
             name="backdropApiImageSizeList"

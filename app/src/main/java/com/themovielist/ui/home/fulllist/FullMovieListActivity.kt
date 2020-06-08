@@ -9,17 +9,19 @@ import androidx.fragment.app.activityViewModels
 import com.themovielist.R
 import com.themovielist.enums.HomeMovieSortType
 import com.themovielist.extension.injector
+import com.themovielist.extension.safeNullObserve
 import com.themovielist.ui.home.HomeViewModel
+import kotlinx.android.synthetic.main.activity_full_movie_list.*
 
 class FullMovieListActivity: AppCompatActivity() {
-    private val viewModel: HomeViewModel by viewModels(factoryProducer = { injector.homeViewModelFactory() })
+    private val viewModel: FullMovieListViewModel by viewModels(factoryProducer = { injector.fullMovieListViewModelFactory() })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_movie_list)
 
         val sortType = intent.getSerializableExtra(MOVIE_SORT_BUNDLE_KEY) as HomeMovieSortType
-
+        viewModel.init(sortType)
     }
 
     companion object {

@@ -1,4 +1,4 @@
-package com.themovielist.ui.moviedetail
+package com.themovielist.ui.movieDetail
 
 import androidx.lifecycle.ViewModel
 import com.themovielist.repository.movie.MovieRepository
