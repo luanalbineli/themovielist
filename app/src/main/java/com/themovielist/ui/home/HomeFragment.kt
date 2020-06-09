@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.themovielist.R
+import com.themovielist.databinding.FragmentHomeBinding
 import com.themovielist.extension.injector
 import com.themovielist.extension.safeNullObserve
 import com.themovielist.extension.setDisplay
@@ -26,7 +27,12 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_home, container, false)
+    ): View = FragmentHomeBinding.inflate(layoutInflater, container, false).let { binding ->
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+
+        binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         text_app_bar_title.setText(R.string.text_home)

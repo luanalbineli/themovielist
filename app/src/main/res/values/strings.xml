@@ -31,10 +31,15 @@
     <string name="text_library">Library</string>
     <string name="text_movie_added_favorite">The movie was added to your favorite list</string>
     <string name="text_movie_removed_favorite">The movie was removed from your favorite list</string>
+    <string name="text_set_favorite">Set as favorite</string>
+    <string name="text_remove_favorite">Remove as favorite</string>
+    <string name="text_set_watched">Set as watched</string>
+    <string name="text_remove_watched">Remove as watched</string>
     <string name="error_favorite_movie_text">An error occurred while tried to favorite the movie. Please, try again.</string>
     <string name="text_movie_added_watched">The movie was added to your watched list</string>
     <string name="text_movie_removed_watched">The movie was removed from your watched list</string>
     <string name="error_watched_movie_text">An error occurred while tried to set the movie watched. Please, try again.</string>
+    <string name="tag_movie_list">Movie list</string>
     <!-- END: Common resources -->
 
     <!-- BEGIN: Request status -->

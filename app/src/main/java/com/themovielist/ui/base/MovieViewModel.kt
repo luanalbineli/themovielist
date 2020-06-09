@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import com.themovielist.model.response.Result
 import com.themovielist.model.view.MovieModel
 import com.themovielist.repository.movie.MovieRepository
-import timber.log.Timber
 import javax.inject.Inject
 
 open class MovieViewModel @Inject constructor(

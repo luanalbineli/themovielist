@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
     <data>
 
         <variable
             name="viewModel"
             type="com.themovielist.ui.home.fulllist.FullMovieListViewModel" />
+
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,12 +14,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/include_appbar" />
+        <include layout="@layout/include_appbar" android:id="@+id/app_bar" />
 
         <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_movie_list"
+            android:name="com.themovielist.ui.movieList.MovieListFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:class="com.themovielist.ui.movieList.MovieListFragment" />
+            android:tag="@string/tag_movie_list" />
     </LinearLayout>
 </layout>
