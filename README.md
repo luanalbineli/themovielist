@@ -22,11 +22,11 @@ I's easier to understand the flow of information, the responsibilities of each c
 
 The application was divided into four tabs:
 
-  * :x: Home - The default tab of the application
+  * :white_check_mark: Home - The default tab of the application
     * :white_check_mark: List of the first twenty movies ordered by popularity;
     * :white_check_mark: List of the first twenty movies ordered by rating;
-    * :x: Option to see all movies ordered by popularity (infinite scroll);
-    * :x: Option to see all movies ordered by rating (infinite scroll);
+    * :white_check_mark: Option to see all movies ordered by popularity (infinite scroll);
+    * :white_check_mark: Option to see all movies ordered by rating (infinite scroll);
 
   * :x: Browse - Tab that let's the user to search for movies
 
