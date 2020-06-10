@@ -60,8 +60,4 @@ API_KEY = "YOUR_API_KEY"
    
 Some screenshots:
 
-<img src="https://raw.github.com/luanalbineli/popularmovies/master/screenshots/Screenshot_1514071118.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.github.com/luanalbineli/popularmovies/master/screenshots/Screenshot_1514071175.png" width="250">
-\
-<img src="https://raw.github.com/luanalbineli/popularmovies/master/screenshots/Screenshot_1514071183.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.github.com/luanalbineli/popularmovies/master/screenshots/Screenshot_1514083364.png" width="250">
-\
-<img src="https://raw.github.com/luanalbineli/popularmovies/master/screenshots/Screenshot_1514083379.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.github.com/luanalbineli/popularmovies/master/screenshots/Screenshot_20180526-234522.png" width="250">
+<img src="https://raw.github.com/luanalbineli/themovielist/master/screenshots/Screenshot_1591756538.png" width="250">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://raw.github.com/luanalbineli/themovielist/master/screenshots/Screenshot_1591756643.png" width="250">
