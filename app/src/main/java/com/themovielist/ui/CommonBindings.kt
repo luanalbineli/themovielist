@@ -1,12 +1,12 @@
 package com.themovielist.ui
 
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -14,8 +14,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.themovielist.GlideApp
 import com.themovielist.R
 import com.themovielist.extension.format
+import com.themovielist.extension.setDisplay
 import com.themovielist.extension.yearFromCalendar
-import com.themovielist.generated.callback.OnClickListener
 import com.themovielist.model.ApiImageSizeModel
 import com.themovielist.model.response.genre.GenreResponseModel
 import com.themovielist.model.view.MovieModel
@@ -85,7 +85,8 @@ fun TextView.genreListBinding(genreList: List<GenreResponseModel>) {
 
 @BindingAdapter("movieMenu", "onFavoriteToggle", "onWatchToggle", requireAll = false)
 fun AppCompatImageButton.movieMenu(movieModel: MovieModel, onFavoriteToggle: View.OnClickListener, onWatchToggle: View.OnClickListener) {
-    val popupMenu = PopupMenu(context, this)
+    val contextThemeWrapper = ContextThemeWrapper(context, R.style.CustomPopupMenu)
+    val popupMenu = PopupMenu(contextThemeWrapper, this)
     popupMenu.menuInflater.inflate(R.menu.movie_item, popupMenu.menu)
     popupMenu.menu[0].setTitle(
         if (movieModel.isFavorite)
@@ -118,4 +119,9 @@ fun AppCompatImageButton.movieMenu(movieModel: MovieModel, onFavoriteToggle: Vie
     }
 
     setOnClickListener { popupMenu.show() }
+}
+
+@BindingAdapter("goneUnless")
+fun goneUnless(view: View, visible: Boolean) {
+    view.setDisplay(visible)
 }

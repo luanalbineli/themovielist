@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">The Movie List</string>
-    <string name="i18n_favorite_button">Button used to favorite/unfavorite the movie</string>
+
+    <!-- BEGIN: Request status -->
+    <string name="text_request_status_try_again">Try again</string>
+    <string name="text_request_status_empty_list_title">The list is empty</string>
+    <string name="error_request_status_something_went_wrong">Uhh… Unfortunately something went wrong. Please, try again.</string>
+    <!-- END: Request status -->
 
     <!-- BEGIN: Home -->
     <string name="text_home_most_popular">Most popular</string>
@@ -25,26 +30,27 @@
 
     <!-- BEGIN: Common resources -->
     <string name="symbol_pipe">|</string>
+    <string name="symbol_bullet">\u2022</string>
     <string name="text_home">Home</string>
     <string name="text_browse">Browse</string>
     <string name="text_cinema">Cinema</string>
     <string name="text_library">Library</string>
+    <string name="text_favorite">Favorite</string>
+    <string name="text_watched">Watched</string>
     <string name="text_movie_added_favorite">The movie was added to your favorite list</string>
     <string name="text_movie_removed_favorite">The movie was removed from your favorite list</string>
     <string name="text_set_favorite">Set as favorite</string>
     <string name="text_remove_favorite">Remove as favorite</string>
     <string name="text_set_watched">Set as watched</string>
     <string name="text_remove_watched">Remove as watched</string>
-    <string name="error_favorite_movie_text">An error occurred while tried to favorite the movie. Please, try again.</string>
     <string name="text_movie_added_watched">The movie was added to your watched list</string>
     <string name="text_movie_removed_watched">The movie was removed from your watched list</string>
+    <string name="error_favorite_movie_text">An error occurred while tried to favorite the movie. Please, try again.</string>
     <string name="error_watched_movie_text">An error occurred while tried to set the movie watched. Please, try again.</string>
     <string name="tag_movie_list">Movie list</string>
+    <string name="a11y_movie_item_calendar">Calendar image, related to the movie release year</string>
+    <string name="i18n_favorite_button">Button used to favorite/unfavorite the movie</string>
+    <string name="a11y_movie_item_star">Star image, related to the movie rating</string>
+    <string name="a11y_movie_item_poster">Movie poster</string>
     <!-- END: Common resources -->
-
-    <!-- BEGIN: Request status -->
-    <string name="text_request_status_try_again">Try again</string>
-    <string name="text_request_status_empty_list_title">The list is empty</string>
-    <string name="error_request_status_something_went_wrong">Uhh… Unfortunately something went wrong. Please, try again.</string>
-    <!-- END: Request status -->
 </resources>

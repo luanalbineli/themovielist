@@ -10,12 +10,15 @@ import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
 import com.themovielist.repository.movie.MovieRepository
+import com.themovielist.repository.movie.MovieStore
+import com.themovielist.ui.base.MovieViewModel
 import com.themovielist.util.ApiUtil
 import javax.inject.Inject
 
 class FullMovieListViewModel @Inject constructor(
-        private val movieRepository: MovieRepository
-): ViewModel() {
+    private val movieRepository: MovieRepository,
+    movieStore: MovieStore
+): MovieViewModel(movieRepository, movieStore) {
     private val mMovieList = MediatorLiveData<Result<PaginatedArrayResponseModel<MovieModel>>>()
     val movieList: LiveData<Result<PaginatedArrayResponseModel<MovieModel>>>
         get() = mMovieList
@@ -42,14 +45,24 @@ class FullMovieListViewModel @Inject constructor(
             if (result.status == Status.SUCCESS) {
                 val resultData = result.data!!
                 fullMovieList.addAll(resultData.results)
-                mMovieList.value = Result.success(PaginatedArrayResponseModel(results = fullMovieList, page = resultData.page, totalPages = resultData.totalPages))
+                mMovieList.postValue(Result.success(resultData.copy(results = fullMovieList)))
 
                 mNextPageIndex += 1
             } else {
-                mMovieList.value = result
+                mMovieList.postValue(result)
             }
         }
     }
 
     fun tryFetchHomeDataAgain() = fetchMovieList()
+
+    override fun onMovieChanged(movieModel: MovieModel) {
+        movieList.value?.data?.let { result ->
+            val updatedMovieList = updateMovieList(result.results, movieModel)
+            if (updatedMovieList != null) {
+                mMovieList.postValue(Result.success(result.copy(results = updatedMovieList)))
+            }
+        }
+
+    }
 }

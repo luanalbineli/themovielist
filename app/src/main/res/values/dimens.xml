@@ -32,4 +32,15 @@
     <dimen name="a11y_min_touch_target">48dp</dimen>
     <dimen name="in_theaters_backdrop_height">240dp</dimen>
     <dimen name="default_icon_size">24dp</dimen>
+
+    <!-- BEGIN: Text sizes -->
+    <dimen name="text_size_h1">64sp</dimen>
+    <dimen name="text_size_subhead">@dimen/abc_text_size_subhead_material</dimen> <!-- 16sp -->
+    <dimen name="text_size_medium">@dimen/abc_text_size_medium_material</dimen> <!-- 18sp -->
+    <dimen name="text_size_title_material">@dimen/abc_text_size_title_material</dimen> <!-- 20sp -->
+    <dimen name="text_size_large">@dimen/abc_text_size_large_material</dimen> <!-- 22sp -->
+    <dimen name="text_size_headline">@dimen/abc_text_size_headline_material</dimen> <!-- 24sp -->
+    <dimen name="text_size_display_1_material">@dimen/abc_text_size_display_1_material</dimen> <!-- 34sp -->
+    <dimen name="text_size_display_2_material">@dimen/abc_text_size_display_2_material</dimen> <!-- 45sp -->
+    <!-- END: Text sizes -->
 </resources>
