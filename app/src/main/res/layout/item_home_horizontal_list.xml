@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -20,51 +21,56 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> movieActions.showMovieDetail(model)}">
 
         <ImageView
-            android:id="@+id/movieImageView"
+            android:id="@+id/image_item_horizontal_movie"
             android:layout_width="@dimen/home_movie_list_image_width"
             android:layout_height="@dimen/home_movie_list_image_height"
+            android:contentDescription="@string/a11y_movie_item_poster"
             android:scaleType="centerCrop"
             app:imageSizeList="@{apiImageSizeList}"
             app:imageUrl="@{model.movieResponseModel.posterPath}"
-            app:layout_constraintBottom_toTopOf="@+id/movieTitleTextView"
+            app:layout_constraintBottom_toTopOf="@+id/text_item_horizontal_movie_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:viewWidth="@{@dimen/home_movie_list_image_width}" />
+            app:viewWidth="@{@dimen/home_movie_list_image_width}"
+            tools:src="@drawable/movie_poster" />
 
         <com.sackcentury.shinebuttonlib.ShineButton
-            android:id="@+id/button_home_horizontal_list_favorite"
+            android:id="@+id/button_item_horizontal_movie_favorite"
             android:layout_width="@dimen/home_movie_list_item_icon_size"
             android:layout_height="@dimen/home_movie_list_item_icon_size"
             android:layout_margin="4dp"
             android:checked="@{model.favorite}"
+            android:elevation="3dp"
             android:onClick="@{() -> movieActions.toggleMovieFavorite(model)}"
             android:src="@color/waterloo"
             app:btn_color="@color/waterloo"
             app:btn_fill_color="@color/cerulean"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:siShape="@drawable/favorite_black" />
+            app:siShape="@drawable/ic_favorite_black" />
 
         <com.sackcentury.shinebuttonlib.ShineButton
-            android:id="@+id/button_home_horizontal_list_watched"
+            android:id="@+id/button_item_horizontal_movie_watched"
             android:layout_width="@dimen/home_movie_list_item_icon_size"
             android:layout_height="@dimen/home_movie_list_item_icon_size"
             android:layout_margin="4dp"
             android:checked="@{model.watched}"
+            android:elevation="3dp"
             android:onClick="@{() -> movieActions.toggleMovieWatched(model)}"
             android:src="@color/waterloo"
             app:btn_color="@color/waterloo"
             app:btn_fill_color="@color/cerulean"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:siShape="@drawable/eye_check_black" />
+            app:siShape="@drawable/ic_eye_check_black" />
 
         <TextView
-            android:id="@+id/movieTitleTextView"
+            android:id="@+id/text_item_horizontal_movie_title"
             style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -75,6 +81,17 @@
             android:text="@{model.movieResponseModel.title}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:title="Movie title" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/background_home_horizontal_list_item"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/image_item_horizontal_movie"
+            app:layout_constraintEnd_toEndOf="@+id/image_item_horizontal_movie"
+            app:layout_constraintStart_toStartOf="@+id/image_item_horizontal_movie"
+            app:layout_constraintTop_toTopOf="@+id/image_item_horizontal_movie" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

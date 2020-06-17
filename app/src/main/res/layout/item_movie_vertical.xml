@@ -23,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:animateLayoutChanges="true">
+        android:animateLayoutChanges="true"
+        android:onClick="@{() -> movieActions.showMovieDetail(model)}">
 
         <ImageView
             android:id="@+id/image_movie_item"

@@ -43,15 +43,15 @@
 
     <TextView
         android:id="@+id/section_see_all"
+        style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_marginTop="16dp"
+        android:gravity="end"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        android:gravity="end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/section_empty_message"
         tools:text="See all reviews (12)" />

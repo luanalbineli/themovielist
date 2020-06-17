@@ -5,10 +5,6 @@
 
     <data>
 
-        <variable
-            name="movieModel"
-            type="com.themovielist.model.view.MovieModel" />
-
         <variable name="viewModel"
             type="com.themovielist.ui.movieDetail.MovieDetailViewModel" />
 
@@ -50,7 +46,7 @@
                         android:layout_height="@dimen/in_theaters_backdrop_height"
                         android:contentDescription="@string/movie_detail_backdrop_content_description"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{movieModel.movieResponseModel.backdropPath}"
+                        app:imageUrl="@{viewModel.movieModel.movieResponseModel.backdropPath}"
                         app:imageSizeList="@{backdropApiImageSizeList}"
                         app:viewWidth="@{screenWidth}"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -70,10 +66,10 @@
                         android:id="@+id/movie_release_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        app:yearFromCalendar="@{movieModel.movieResponseModel.releaseDate}"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginStart="@dimen/default_margin"
+                        app:yearFromCalendar="@{viewModel.movieModel.movieResponseModel.releaseDate}"
+                        android:layout_marginTop="@dimen/default_margin"
+                        android:layout_marginBottom="@dimen/default_margin"
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/movie_backdrop"
                         app:layout_constraintStart_toStartOf="@+id/movie_backdrop"
@@ -101,19 +97,20 @@
                         app:layout_constraintBottom_toBottomOf="@id/separator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/separator"
-                        app:genres="@{movieModel.genreList}"
+                        app:genres="@{viewModel.movieModel.genreList}"
                         tools:text="Action, Sci-Fi, Action, Sci-Fi, Action, Sci-Fi" />
 
                     <TextView
                         android:id="@+id/movie_name"
-                        style="@style/TextAppearance.MaterialComponents.Headline4"
+                        android:textStyle="bold"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:layout_marginBottom="8dp"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="@{movieModel.movieResponseModel.title}"
+                        android:text="@{viewModel.movieModel.movieResponseModel.title}"
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toTopOf="@+id/movie_release_year"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -178,13 +175,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:textColor="#E3DFDC"
                         style="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:id="@+id/tvMovieDetailSynopsys"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@{movieModel.movieResponseModel.overview}"
+                        android:layout_marginTop="@dimen/default_margin_0_5x"
+                        android:text="@{viewModel.movieModel.movieResponseModel.overview}"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintTop_toBottomOf="@id/tvMovieDetailSynopseLabel"
@@ -228,7 +224,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintStart_toStartOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailRatingIcon"
-                        app:voteAverage="@{movieModel.movieResponseModel.voteAverage}"
+                        app:voteAverage="@{viewModel.movieModel.movieResponseModel.voteAverage}"
                         tools:text="7.6" />
 
                     <TextView

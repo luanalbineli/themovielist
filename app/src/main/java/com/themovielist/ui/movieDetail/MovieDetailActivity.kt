@@ -7,10 +7,13 @@ import android.view.Menu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.appbar.AppBarLayout
 import com.themovielist.R
+import com.themovielist.databinding.ActivityMovieDetailBinding
 import com.themovielist.databinding.MovieReviewItemBinding
 import com.themovielist.databinding.MovieTrailerItemBinding
+import com.themovielist.extension.getScreenSize
 import com.themovielist.extension.injector
 import com.themovielist.model.response.MovieReviewModel
 import com.themovielist.model.response.MovieTrailerModel
@@ -22,6 +25,18 @@ class MovieDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val movieModel = intent.getParcelableExtra<MovieModel>(EXTRA_MOVIE_MODEL)!!
+        viewModel.init(movieModel)
+
+        DataBindingUtil.setContentView<ActivityMovieDetailBinding>(this, R.layout.activity_movie_detail).also {
+            it.viewModel = viewModel
+            it.lifecycleOwner = this
+            it.backdropApiImageSizeList = viewModel.apiConfigurationFactory.apiConfigurationModel.backdropImageSizes
+            it.screenWidth = getScreenSize().widthPixels.toFloat()
+
+            configureAppBar(it.appBar, it.toolbar, movieModel.movieResponseModel.title)
+        }
+
         /*val movieImageGenreViewModel = intent.getParcelableExtra<MovieImageGenreViewModel>(EXTRA_MOVIE_MODEL)
 
         movieDetailViewModel.setMovieId(movieImageGenreViewModel.movieModel.id)
@@ -99,6 +114,11 @@ class MovieDetailActivity : AppCompatActivity() {
                 isShow = false
             }
         })
+
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

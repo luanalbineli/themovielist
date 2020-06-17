@@ -8,10 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.themovielist.R
 import com.themovielist.databinding.FragmentHomeBinding
-import com.themovielist.extension.injector
-import com.themovielist.extension.safeNullObserve
-import com.themovielist.extension.setDisplay
-import com.themovielist.extension.showSnackBarMessage
+import com.themovielist.extension.*
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
 import com.themovielist.ui.home.fulllist.FullMovieListActivity
@@ -72,23 +69,5 @@ class HomeFragment : Fragment() {
             val intent = FullMovieListActivity.getIntent(requireContext(), homeMovieSortType)
             startActivity(intent)
         }
-    }
-
-    private fun showToggleMovieFavoriteMessage(movieModel: MovieModel) {
-        val messageResId = if (movieModel.isFavorite)
-            R.string.text_movie_added_favorite
-        else
-            R.string.text_movie_removed_favorite
-
-        showSnackBarMessage(messageResId)
-    }
-
-    private fun showToggleMovieWatchedMessage(movieModel: MovieModel) {
-        val messageResId = if (movieModel.isWatched)
-            R.string.text_movie_added_watched
-        else
-            R.string.text_movie_removed_watched
-
-        showSnackBarMessage(messageResId)
     }
 }

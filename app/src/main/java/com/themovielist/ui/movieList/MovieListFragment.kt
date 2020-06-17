@@ -9,11 +9,12 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.themovielist.R
-import com.themovielist.extension.injector
+import com.themovielist.extension.*
 import com.themovielist.model.response.PaginatedArrayResponseModel
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
+import com.themovielist.ui.movieDetail.MovieDetailActivity
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 
 class MovieListFragment : Fragment() {
@@ -44,6 +45,31 @@ class MovieListFragment : Fragment() {
         list_movie.layoutManager = mLinearLayoutManager
         list_movie.onLoadMoreItems = onLoadMoreItems
         list_movie.addItemDecoration(DividerItemDecoration(requireContext(), mLinearLayoutManager.orientation))
+
+        attachListeners()
+    }
+
+    private fun attachListeners() {
+        viewModel.showMovieDetail.safeNullObserve(viewLifecycleOwner) {
+            val intent = MovieDetailActivity.getIntent(requireActivity(), it)
+            startActivity(intent)
+        }
+
+        viewModel.toggleMovieFavorite.safeNullObserve(viewLifecycleOwner) { result ->
+            if (result.status == Status.SUCCESS) {
+                showToggleMovieFavoriteMessage(result.data!!)
+            } else if (result.status == Status.ERROR) {
+                showSnackBarMessage(R.string.error_favorite_movie_text)
+            }
+        }
+
+        viewModel.toggleMovieWatched.safeNullObserve(viewLifecycleOwner) { result ->
+            if (result.status == Status.SUCCESS) {
+                showToggleMovieWatchedMessage(result.data!!)
+            } else if (result.status == Status.ERROR) {
+                showSnackBarMessage(R.string.error_watched_movie_text)
+            }
+        }
     }
 
     fun setMovieListResult(result: Result<PaginatedArrayResponseModel<MovieModel>>) {
