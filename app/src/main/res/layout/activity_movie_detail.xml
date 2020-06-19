@@ -5,7 +5,8 @@
 
     <data>
 
-        <variable name="viewModel"
+        <variable
+            name="viewModel"
             type="com.themovielist.ui.movieDetail.MovieDetailViewModel" />
 
         <variable
@@ -33,6 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:contentScrim="?attr/colorPrimary"
+                app:expandedTitleTextAppearance="@style/CollapsingToolbarLayoutExpandedTextStyle"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,33 +48,33 @@
                         android:layout_height="@dimen/in_theaters_backdrop_height"
                         android:contentDescription="@string/movie_detail_backdrop_content_description"
                         android:scaleType="centerCrop"
-                        app:imageUrl="@{viewModel.movieModel.movieResponseModel.backdropPath}"
                         app:imageSizeList="@{backdropApiImageSizeList}"
-                        app:viewWidth="@{screenWidth}"
+                        app:imageUrl="@{viewModel.movieModel.movieResponseModel.backdropPath}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:viewWidth="@{screenWidth}" />
 
                     <View
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:background="@color/black_alpha_40"
-                        app:layout_constraintStart_toStartOf="@id/movie_backdrop"
+                        app:layout_constraintBottom_toBottomOf="@+id/movie_backdrop"
                         app:layout_constraintEnd_toEndOf="@+id/movie_backdrop"
-                        app:layout_constraintTop_toTopOf="@+id/movie_backdrop"
-                        app:layout_constraintBottom_toBottomOf="@+id/movie_backdrop" />
+                        app:layout_constraintStart_toStartOf="@id/movie_backdrop"
+                        app:layout_constraintTop_toTopOf="@+id/movie_backdrop" />
 
                     <TextView
                         android:id="@+id/movie_release_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/default_margin"
-                        app:yearFromCalendar="@{viewModel.movieModel.movieResponseModel.releaseDate}"
                         android:layout_marginTop="@dimen/default_margin"
                         android:layout_marginBottom="@dimen/default_margin"
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/movie_backdrop"
                         app:layout_constraintStart_toStartOf="@+id/movie_backdrop"
+                        app:yearFromCalendar="@{viewModel.movieModel.movieResponseModel.releaseDate}"
                         tools:text="2018" />
 
                     <TextView
@@ -94,15 +96,14 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@android:color/white"
+                        app:genres="@{viewModel.movieModel.genreList}"
                         app:layout_constraintBottom_toBottomOf="@id/separator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/separator"
-                        app:genres="@{viewModel.movieModel.genreList}"
                         tools:text="Action, Sci-Fi, Action, Sci-Fi, Action, Sci-Fi" />
 
                     <TextView
                         android:id="@+id/movie_name"
-                        android:textStyle="bold"
                         style="@style/TextAppearance.MaterialComponents.Headline5"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -112,6 +113,7 @@
                         android:singleLine="true"
                         android:text="@{viewModel.movieModel.movieResponseModel.title}"
                         android:textColor="@android:color/white"
+                        android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/movie_release_year"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/movie_release_year"
@@ -175,8 +177,8 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:id="@+id/tvMovieDetailSynopsys"
+                        style="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin_0_5x"
@@ -199,22 +201,22 @@
                         android:layout_height="@dimen/default_icon_size"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
-                        app:tint="@color/half_baked"
                         app:layout_constraintEnd_toStartOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/divider"
-                        app:srcCompat="@drawable/ic_star_black" />
+                        app:srcCompat="@drawable/ic_star_black"
+                        app:tint="@color/half_baked" />
 
                     <ImageView
                         android:id="@+id/ivMovieDetailTimeIcon"
                         android:layout_width="@dimen/default_icon_size"
                         android:layout_height="@dimen/default_icon_size"
                         android:layout_marginStart="8dp"
-                        app:tint="@color/half_baked"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintTop_toTopOf="@+id/ivMovieDetailRatingIcon"
-                        app:srcCompat="@drawable/ic_schedule" />
+                        app:srcCompat="@drawable/ic_schedule"
+                        app:tint="@color/half_baked" />
 
                     <TextView
                         android:id="@+id/tvMovieDetailRating"

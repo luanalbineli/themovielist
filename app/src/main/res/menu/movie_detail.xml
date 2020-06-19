@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/movie_detail_favorite"
-        android:icon="@drawable/ic_favorite_border"
-        android:title="@string/i18n_favorite_button"
-        app:showAsAction="ifRoom" />
+        android:id="@+id/menu_item_watched"
+        android:title=""
+        app:actionLayout="@layout/menu_item_movie_detail_watched"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_item_favorite"
+        android:title=""
+        app:actionLayout="@layout/menu_item_movie_detail_favorite"
+        app:showAsAction="always" />
 </menu>

@@ -50,6 +50,8 @@ class FullMovieListActivity : AppCompatActivity() {
         mMovieListFragment?.onLoadMoreItems = {
             viewModel.loadMoreMovies()
         }
+
+        mMovieListFragment?.onLoadMoreItems
     }
 
     private fun configureToolbar(

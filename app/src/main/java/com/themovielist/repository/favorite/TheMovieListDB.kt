@@ -5,10 +5,12 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.themovielist.model.entity.MovieEntityModel
 
-@Database(entities = [
-    MovieEntityModel::class
-], version = 1)
+@Database(
+    entities = [
+        MovieEntityModel::class
+    ], version = 1, exportSchema = false
+)
 @TypeConverters(RoomConverters::class)
-abstract class TheMovieListDB: RoomDatabase() {
-    abstract fun movieDAO() : MovieDAO
+abstract class TheMovieListDB : RoomDatabase() {
+    abstract fun movieDAO(): MovieDAO
 }

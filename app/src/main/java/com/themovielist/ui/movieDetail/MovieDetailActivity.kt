@@ -8,7 +8,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.appbar.AppBarLayout
 import com.themovielist.R
 import com.themovielist.databinding.ActivityMovieDetailBinding
 import com.themovielist.databinding.MovieReviewItemBinding
@@ -34,7 +33,7 @@ class MovieDetailActivity : AppCompatActivity() {
             it.backdropApiImageSizeList = viewModel.apiConfigurationFactory.apiConfigurationModel.backdropImageSizes
             it.screenWidth = getScreenSize().widthPixels.toFloat()
 
-            configureAppBar(it.appBar, it.toolbar, movieModel.movieResponseModel.title)
+            configureToolbar(it.toolbar, movieModel.movieResponseModel.title)
         }
 
         /*val movieImageGenreViewModel = intent.getParcelableExtra<MovieImageGenreViewModel>(EXTRA_MOVIE_MODEL)
@@ -99,26 +98,13 @@ class MovieDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun configureAppBar(appBar: AppBarLayout, toolbar: Toolbar, title: String) {
-        var isShow = false
-        var scrollRange = -1
-        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            if (scrollRange == -1) {
-                scrollRange = appBarLayout.totalScrollRange
-            }
-            if (scrollRange + verticalOffset == 0) {
-                toolbar.title = title
-                isShow = true
-            } else if(isShow) {
-                toolbar.title = ""
-                isShow = false
-            }
-        })
-
+    private fun configureToolbar(toolbar: Toolbar, title: String) {
         setSupportActionBar(toolbar)
         supportActionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
         }
+
+        this.title = title
     }
 
     override fun onSupportNavigateUp(): Boolean {

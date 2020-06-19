@@ -17,6 +17,7 @@
 
     <!-- MOVIE DETAIL -->
     <dimen name="movie_detail_thumbnail">48dp</dimen>
+    <dimen name="movie_detail_menu_item_size">30dp</dimen>
 
     <!-- BEGIN: RequestStatusView -->
     <dimen name="text_error_title_size">56sp</dimen>

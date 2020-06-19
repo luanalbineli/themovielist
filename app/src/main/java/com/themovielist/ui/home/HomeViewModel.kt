@@ -9,6 +9,7 @@ import com.themovielist.enums.HomeMovieSortType
 import com.themovielist.model.response.Result
 import com.themovielist.model.view.HomeMovieListModel
 import com.themovielist.model.view.MovieModel
+import com.themovielist.repository.home.HomeRepository
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.repository.movie.MovieStore
 import com.themovielist.ui.base.MovieViewModel
@@ -16,6 +17,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
+    private val homeRepository: HomeRepository,
     private val movieRepository: MovieRepository,
     movieStore: MovieStore,
     val apiConfigurationFactory: ApiConfigurationFactory
@@ -33,7 +35,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun fetchHomeMovieList() {
-        mHomeMovieList.addSource(movieRepository.getHomeMovieList(viewModelScope)) {
+        mHomeMovieList.addSource(homeRepository.getHomeMovieList(viewModelScope)) {
             mHomeMovieList.value = it
         }
     }

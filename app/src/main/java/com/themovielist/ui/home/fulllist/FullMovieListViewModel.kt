@@ -2,13 +2,13 @@ package com.themovielist.ui.home.fulllist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.themovielist.enums.HomeMovieSortType
 import com.themovielist.model.response.PaginatedArrayResponseModel
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
+import com.themovielist.repository.home.HomeRepository
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.repository.movie.MovieStore
 import com.themovielist.ui.base.MovieViewModel
@@ -16,7 +16,8 @@ import com.themovielist.util.ApiUtil
 import javax.inject.Inject
 
 class FullMovieListViewModel @Inject constructor(
-    private val movieRepository: MovieRepository,
+    movieRepository: MovieRepository,
+    private val homeRepository: HomeRepository,
     movieStore: MovieStore
 ): MovieViewModel(movieRepository, movieStore) {
     private val mMovieList = MediatorLiveData<Result<PaginatedArrayResponseModel<MovieModel>>>()
@@ -37,9 +38,9 @@ class FullMovieListViewModel @Inject constructor(
     private fun fetchMovieList() {
         val fullMovieList = movieList.value?.data?.results?.toMutableList() ?: mutableListOf()
         val source = if (homeMovieSortType == HomeMovieSortType.POPULARITY) {
-            movieRepository.getPopularList(viewModelScope, mNextPageIndex)
+            homeRepository.getPopularList(viewModelScope, mNextPageIndex)
         } else
-            movieRepository.getTopRatedList(viewModelScope, mNextPageIndex)
+            homeRepository.getTopRatedList(viewModelScope, mNextPageIndex)
 
         mMovieList.addSource(source) { result ->
             if (result.status == Status.SUCCESS) {
