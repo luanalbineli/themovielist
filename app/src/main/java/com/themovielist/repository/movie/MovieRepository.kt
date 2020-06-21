@@ -1,6 +1,7 @@
 package com.themovielist.repository.movie
 
 import androidx.lifecycle.LiveData
+import com.themovielist.model.response.MovieDetailResponseModel
 import com.themovielist.model.response.Result
 import com.themovielist.model.view.MovieModel
 import com.themovielist.repository.base.Repository
@@ -25,5 +26,12 @@ constructor(
             roomRepository.updateMovie(movieModel)
             return@makeRequest movieModel
         }
+    }
+
+    fun getMovieDetail(
+        viewModelScope: CoroutineScope,
+        movieId: Int
+    ): LiveData<Result<MovieDetailResponseModel>> = makeRequest(viewModelScope) {
+        serviceInstance.getMovieDetail(movieId)
     }
 }

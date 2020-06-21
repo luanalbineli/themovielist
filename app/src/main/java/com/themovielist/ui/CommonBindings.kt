@@ -7,10 +7,13 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
 import com.themovielist.GlideApp
 import com.themovielist.R
 import com.themovielist.extension.format
@@ -49,7 +52,14 @@ fun ImageView.movieImageUrl(
         Timber.d("Binding the image url: $fullImageUrl")
         GlideApp.with(this)
             .load(fullImageUrl)
-            .transforms(CenterCrop(), RoundedCorners(8))
+            .apply(
+                RequestOptions.bitmapTransform(
+                    MultiTransformation(
+                        CenterCrop(),
+                        RoundedCorners(8)
+                    )
+                )
+            )
             .into(this)
     }
 }
@@ -60,8 +70,8 @@ fun readMoreText(textView: TextView, text: String) {
         .textLength(3, ReadMoreOption.TYPE_LINE)
         .moreLabel(textView.context.getString(R.string.read_more))
         .lessLabel(textView.context.getString(R.string.read_less))
-        .moreLabelColor(textView.context.resources.getColor(R.color.half_baked))
-        .lessLabelColor(textView.context.resources.getColor(R.color.half_baked))
+        .moreLabelColor(ContextCompat.getColor(textView.context, R.color.half_baked))
+        .lessLabelColor(ContextCompat.getColor(textView.context, R.color.half_baked))
         .expandAnimation(true)
         .build()
 
@@ -84,7 +94,11 @@ fun TextView.genreListBinding(genreList: List<GenreResponseModel>) {
 }
 
 @BindingAdapter("movieMenu", "onFavoriteToggle", "onWatchToggle", requireAll = false)
-fun AppCompatImageButton.movieMenu(movieModel: MovieModel, onFavoriteToggle: View.OnClickListener, onWatchToggle: View.OnClickListener) {
+fun AppCompatImageButton.movieMenu(
+    movieModel: MovieModel,
+    onFavoriteToggle: View.OnClickListener,
+    onWatchToggle: View.OnClickListener
+) {
     val contextThemeWrapper = ContextThemeWrapper(context, R.style.CustomPopupMenu)
     val popupMenu = PopupMenu(contextThemeWrapper, this)
     popupMenu.menuInflater.inflate(R.menu.movie_item, popupMenu.menu)

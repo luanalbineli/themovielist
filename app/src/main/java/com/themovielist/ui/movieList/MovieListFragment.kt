@@ -24,10 +24,15 @@ class MovieListFragment : Fragment() {
         MovieListAdapter(
             apiPosterImageSizes = viewModel.apiConfigurationFactory.apiConfigurationModel.posterImageSizes,
             movieActions = viewModel
-        )
+        ).also {
+            it.onTryAgain = {
+                onTryAgain?.invoke()
+            }
+        }
     }
 
     var onLoadMoreItems: (() -> Unit)? = null
+    var onTryAgain: (() -> Unit)? = null
 
     private val mLinearLayoutManager =
         LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

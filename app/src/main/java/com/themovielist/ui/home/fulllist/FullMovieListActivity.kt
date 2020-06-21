@@ -51,7 +51,9 @@ class FullMovieListActivity : AppCompatActivity() {
             viewModel.loadMoreMovies()
         }
 
-        mMovieListFragment?.onLoadMoreItems
+        mMovieListFragment?.onTryAgain = {
+            viewModel.tryFetchHomeDataAgain()
+        }
     }
 
     private fun configureToolbar(

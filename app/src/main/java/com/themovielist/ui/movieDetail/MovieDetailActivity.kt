@@ -4,20 +4,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.activity.viewModels
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import com.sackcentury.shinebuttonlib.ShineButton
 import com.themovielist.R
 import com.themovielist.databinding.ActivityMovieDetailBinding
 import com.themovielist.databinding.MovieReviewItemBinding
 import com.themovielist.databinding.MovieTrailerItemBinding
-import com.themovielist.extension.getScreenSize
-import com.themovielist.extension.injector
+import com.themovielist.extension.*
 import com.themovielist.model.response.MovieReviewModel
 import com.themovielist.model.response.MovieTrailerModel
+import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
 import com.themovielist.widget.MovieDetailSectionView
+import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 class MovieDetailActivity : AppCompatActivity() {
     private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { injector.movieDetailViewModelFactory() })
@@ -27,54 +31,64 @@ class MovieDetailActivity : AppCompatActivity() {
         val movieModel = intent.getParcelableExtra<MovieModel>(EXTRA_MOVIE_MODEL)!!
         viewModel.init(movieModel)
 
-        DataBindingUtil.setContentView<ActivityMovieDetailBinding>(this, R.layout.activity_movie_detail).also {
+        DataBindingUtil.setContentView<ActivityMovieDetailBinding>(
+            this,
+            R.layout.activity_movie_detail
+        ).also {
             it.viewModel = viewModel
             it.lifecycleOwner = this
-            it.backdropApiImageSizeList = viewModel.apiConfigurationFactory.apiConfigurationModel.backdropImageSizes
+            it.backdropApiImageSizeList =
+                viewModel.apiConfigurationFactory.apiConfigurationModel.backdropImageSizes
             it.screenWidth = getScreenSize().widthPixels.toFloat()
 
             configureToolbar(it.toolbar, movieModel.movieResponseModel.title)
-        }
-
-        /*val movieImageGenreViewModel = intent.getParcelableExtra<MovieImageGenreViewModel>(EXTRA_MOVIE_MODEL)
-
-        movieDetailViewModel.setMovieId(movieImageGenreViewModel.movieModel.id)
-
-        DataBindingUtil.setContentView<ActivityMovieDetailBinding>(this, R.layout.activity_movie_detail).also { it ->
-            it.lifecycleOwner = this
-
-            it.movieImageGenreViewModel = movieImageGenreViewModel
-            it.viewModel = movieDetailViewModel
-            it.screenWidth = getScreenSize().widthPixels.toFloat()
-            it.backdropApiImageSizeList = apiConfigurationFactory.apiConfigurationModel.backdropImageSizes
 
             configureMovieReviewContent(it.mdsMovieDetailReviewSection as MovieDetailSectionView<MovieReviewModel>)
             configureMovieTrailerContent(it.mdsMovieDetailTrailerSection as MovieDetailSectionView<MovieTrailerModel>)
+        }
 
-            movieDetailViewModel.reviewList.observe(this, Observer { reviewList ->
-                Timber.d("Binding the review list")
-                it.mdsMovieDetailReviewSection.bind(reviewList)
-            })
+        attachListeners()
+    }
 
-            movieDetailViewModel.trailerList.observe(this, Observer { trailerList ->
-                Timber.d("Binding the trailer list")
-                it.mdsMovieDetailTrailerSection.bind(trailerList)
-            })
-
-            setSupportActionBar(it.toolbar)
-            supportActionBar?.apply {
-                title = movieImageGenreViewModel.movieModel.title
-                setDisplayHomeAsUpEnabled(true)
+    private fun attachListeners() {
+        viewModel.toggleMovieFavorite.safeNullObserve(this) { result ->
+            if (result.status == Status.SUCCESS) {
+                showToggleMovieFavoriteMessage(result.data!!)
+            } else if (result.status == Status.ERROR) {
+                showSnackBarMessage(R.string.error_favorite_movie_text)
+                invalidateOptionsMenu()
             }
-        }*/
+        }
+
+        viewModel.toggleMovieWatched.safeNullObserve(this) { result ->
+            if (result.status == Status.SUCCESS) {
+                showToggleMovieWatchedMessage(result.data!!)
+            } else if (result.status == Status.ERROR) {
+                showSnackBarMessage(R.string.error_watched_movie_text)
+                invalidateOptionsMenu()
+            }
+        }
+
+        viewModel.movieDetail.safeNullObserve(this) {
+            // TODO: Handle the status
+            if (it.data != null) {
+                (mdsMovieDetailReviewSection as MovieDetailSectionView<MovieReviewModel>).bind(it.data.reviews.results)
+                (mdsMovieDetailTrailerSection as MovieDetailSectionView<MovieTrailerModel>).bind(it.data.trailers.trailerList)
+            }
+        }
+
+        viewModel.movie.safeNullObserve(this) {
+            invalidateOptionsMenu()
+        }
     }
 
     private fun configureMovieReviewContent(mdsMovieDetailReviewSection: MovieDetailSectionView<MovieReviewModel>) {
-        mdsMovieDetailReviewSection.onCreateSectionContent = { parentView, layoutInflater, movieReviewModel ->
-            MovieReviewItemBinding.inflate(layoutInflater, parentView, true).also {
-                it.reviewModel = movieReviewModel
+        mdsMovieDetailReviewSection.onCreateSectionContent =
+            { parentView, layoutInflater, movieReviewModel ->
+                MovieReviewItemBinding.inflate(layoutInflater, parentView, true).also {
+                    it.reviewModel = movieReviewModel
+                }
             }
-        }
 
         mdsMovieDetailReviewSection.onClickSectionButton = {
 
@@ -83,15 +97,46 @@ class MovieDetailActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.movie_detail, menu)
+        menu?.let {
+            viewModel.movie.value?.let { movieModel ->
+                bindMenuItem(menu,
+                    R.id.menu_item_favorite,
+                    R.id.button_movie_item_menu_favorite,
+                    movieModel.isFavorite,
+                    View.OnClickListener { viewModel.toggleMovieFavorite() })
+
+                bindMenuItem(menu,
+                    R.id.menu_item_watched,
+                    R.id.button_movie_item_menu_watched,
+                    movieModel.isWatched,
+                    View.OnClickListener { viewModel.toggleMovieWatched() })
+            }
+
+        }
         return true
     }
 
+    private fun bindMenuItem(
+        menu: Menu,
+        @IdRes menuItemId: Int,
+        @IdRes buttonId: Int,
+        isChecked: Boolean,
+        onClick: View.OnClickListener
+    ) {
+        val favoriteMenuItem = menu.findItem(menuItemId)
+
+        val buttonView = favoriteMenuItem.actionView.findViewById<ShineButton>(buttonId)
+        buttonView.isChecked = isChecked
+        buttonView.setOnClickListener(onClick)
+    }
+
     private fun configureMovieTrailerContent(mdsMovieDetailReviewSection: MovieDetailSectionView<MovieTrailerModel>) {
-        mdsMovieDetailReviewSection.onCreateSectionContent = { parentView, layoutInflater, movieTrailerModel ->
-            MovieTrailerItemBinding.inflate(layoutInflater, parentView, true).also {
-                it.trailerModel = movieTrailerModel
+        mdsMovieDetailReviewSection.onCreateSectionContent =
+            { parentView, layoutInflater, movieTrailerModel ->
+                MovieTrailerItemBinding.inflate(layoutInflater, parentView, true).also {
+                    it.trailerModel = movieTrailerModel
+                }
             }
-        }
 
         mdsMovieDetailReviewSection.onClickSectionButton = {
             // mPresenter.showAllReviews()

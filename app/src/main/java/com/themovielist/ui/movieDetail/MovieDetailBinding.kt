@@ -7,23 +7,22 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.themovielist.GlideApp
 import com.themovielist.R
-import com.themovielist.model.response.genre.GenreResponseModel
 import com.themovielist.extension.yearFromCalendar
-import timber.log.Timber
+import com.themovielist.model.response.genre.GenreResponseModel
 import java.util.*
 
-@BindingAdapter("runtime")
-fun runtimeAdapter(textView: TextView, runtime: Int) {
-    Timber.d("RUNTIME: $runtime")
-    val hours = runtime / 60
-    val minutes = runtime % 60
-    textView.text = String.format(textView.context.getString(R.string.movie_runtime_format), hours, minutes)
+@BindingAdapter("movieDetailRuntime")
+fun TextView.movieDetailRuntime(runtime: Int?) {
+    text = if (runtime == null) {
+        null
+    } else {
+        val hours = runtime / 60
+        val minutes = runtime % 60
+        String.format(context.getString(R.string.format_movie_detail_runtime), hours, minutes)
+    }
 }
 
-@BindingAdapter("voteAverage")
-fun voteAverageAdapter(textView: TextView, voteAverage: Double) {
-    textView.text = voteAverage.toString()
-}
+
 
 @BindingAdapter("genres")
 fun genreAdapter(textView: TextView, genreList: List<GenreResponseModel>?) {

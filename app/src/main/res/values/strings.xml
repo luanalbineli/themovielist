@@ -14,7 +14,6 @@
     <!-- END: Home -->
 
     <!-- BEGIN: Movie detail -->
-    <string name="movie_detail_backdrop_content_description">This is the backdrop of the movie</string>
     <string name="recommendations">Recommendations</string>
     <string name="cast">Cast</string>
     <string name="overview">Overview</string>
@@ -22,10 +21,11 @@
     <string name="trailers">Trailers</string>
     <string name="read_all_reviews_format">Read all reviews (%1$s)</string>
     <string name="see_all_trailers_format">See all trailers (%1$s)</string>
-    <string name="movie_runtime_format">%1$sh %2$sm</string>
     <string name="read_more">read more</string>
     <string name="read_less">read less</string>
     <string name="the_list_is_empty">The list is empty</string>
+    <string name="format_movie_detail_runtime">%1$sh %2$sm</string>
+    <string name="a11y_movie_detail_backdrop">This is the backdrop of the movie</string>
     <!-- END: Movie detail -->
 
     <!-- BEGIN: Common resources -->
@@ -49,7 +49,7 @@
     <string name="error_watched_movie_text">An error occurred while tried to set the movie watched. Please, try again.</string>
     <string name="tag_movie_list">Movie list</string>
     <string name="a11y_movie_item_calendar">Calendar image, related to the movie release year</string>
-    <string name="i18n_favorite_button">Button used to favorite/unfavorite the movie</string>
+    <string name="a11y_favorite_button">Button used to favorite/unfavorite the movie</string>
     <string name="a11y_movie_item_star">Star image, related to the movie rating</string>
     <string name="a11y_movie_item_poster">Movie poster</string>
     <!-- END: Common resources -->

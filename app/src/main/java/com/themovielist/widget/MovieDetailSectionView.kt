@@ -42,15 +42,15 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
             attributes.recycle()
         }
 
-        section_title.text = mTitleText
+        movie_detail_section_title.text = mTitleText
         section_empty_message.text = mEmptyMessage
     }
 
     fun bind(sectionList: List<TModel>) {
-        if (sectionList.isNotEmpty()) {
-            bindSectionContent(sectionList)
+        if (sectionList.isEmpty()) {
+            section_see_all.setDisplay(false)
         } else {
-            section_content_container.setDisplay(false)
+            bindSectionContent(sectionList)
         }
     }
 
@@ -62,6 +62,6 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
         } else {
             section_see_all.setDisplay(false)
         }
-        onCreateSectionContent?.invoke(section_content_container, mLayoutInflater, sectionList.first())
+        onCreateSectionContent?.invoke(section_movie_detail_container, mLayoutInflater, sectionList.first())
     }
 }

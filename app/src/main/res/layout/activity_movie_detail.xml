@@ -46,10 +46,10 @@
                         android:id="@+id/movie_backdrop"
                         android:layout_width="0dp"
                         android:layout_height="@dimen/in_theaters_backdrop_height"
-                        android:contentDescription="@string/movie_detail_backdrop_content_description"
+                        android:contentDescription="@string/a11y_movie_detail_backdrop"
                         android:scaleType="centerCrop"
                         app:imageSizeList="@{backdropApiImageSizeList}"
-                        app:imageUrl="@{viewModel.movieModel.movieResponseModel.backdropPath}"
+                        app:imageUrl="@{viewModel.movie.movieResponseModel.backdropPath}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -74,7 +74,7 @@
                         android:textColor="@android:color/white"
                         app:layout_constraintBottom_toBottomOf="@+id/movie_backdrop"
                         app:layout_constraintStart_toStartOf="@+id/movie_backdrop"
-                        app:yearFromCalendar="@{viewModel.movieModel.movieResponseModel.releaseDate}"
+                        app:yearFromCalendar="@{viewModel.movie.movieResponseModel.releaseDate}"
                         tools:text="2018" />
 
                     <TextView
@@ -96,7 +96,7 @@
                         android:ellipsize="end"
                         android:maxLines="1"
                         android:textColor="@android:color/white"
-                        app:genres="@{viewModel.movieModel.genreList}"
+                        app:genres="@{viewModel.movie.genreList}"
                         app:layout_constraintBottom_toBottomOf="@id/separator"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/separator"
@@ -111,7 +111,7 @@
                         android:layout_marginBottom="8dp"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:text="@{viewModel.movieModel.movieResponseModel.title}"
+                        android:text="@{viewModel.movie.movieResponseModel.title}"
                         android:textColor="@android:color/white"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/movie_release_year"
@@ -182,7 +182,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin_0_5x"
-                        android:text="@{viewModel.movieModel.movieResponseModel.overview}"
+                        android:text="@{viewModel.movie.movieResponseModel.overview}"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintTop_toBottomOf="@id/tvMovieDetailSynopseLabel"
@@ -219,21 +219,23 @@
                         app:tint="@color/half_baked" />
 
                     <TextView
-                        android:id="@+id/tvMovieDetailRating"
+                        android:id="@+id/text_movie_detail_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        android:text="@{viewModel.movie.movieResponseModel.voteAverage}"
+                        app:digits="@{1}"
                         app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintStart_toStartOf="@+id/ivMovieDetailRatingIcon"
                         app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailRatingIcon"
-                        app:voteAverage="@{viewModel.movieModel.movieResponseModel.voteAverage}"
                         tools:text="7.6" />
 
                     <TextView
-                        android:id="@+id/movie_runtime"
+                        android:id="@+id/text_movie_detail_runtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
+                        app:movieDetailRuntime="@{viewModel.movieDetail.data.runtime}"
                         app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintStart_toStartOf="@+id/ivMovieDetailTimeIcon"
                         app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailTimeIcon"
@@ -248,7 +250,7 @@
                         app:emptyMessage="@string/the_list_is_empty"
                         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@+id/movie_runtime"
+                        app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_runtime"
                         app:title="@string/reviews" />
 
                     <com.themovielist.widget.MovieDetailSectionView
