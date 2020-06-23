@@ -43,11 +43,31 @@ class MovieDetailActivity : AppCompatActivity() {
 
             configureToolbar(it.toolbar, movieModel.movieResponseModel.title)
 
-            configureMovieReviewContent(it.mdsMovieDetailReviewSection as MovieDetailSectionView<MovieReviewModel>)
-            configureMovieTrailerContent(it.mdsMovieDetailTrailerSection as MovieDetailSectionView<MovieTrailerModel>)
+            configureMovieReviewContent(it.sectionViewMovieDetailReview as MovieDetailSectionView<MovieReviewModel>)
+            configureMovieTrailerContent(it.sectionViewMovieDetailTrailer as MovieDetailSectionView<MovieTrailerModel>)
         }
 
         attachListeners()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.movie_detail, menu)
+        menu?.let {
+            viewModel.movie.value?.let { movieModel ->
+                bindMenuItem(menu,
+                    R.id.menu_item_favorite,
+                    R.id.button_movie_item_menu_favorite,
+                    movieModel.isFavorite,
+                    View.OnClickListener { viewModel.toggleMovieFavorite() })
+
+                bindMenuItem(menu,
+                    R.id.menu_item_watched,
+                    R.id.button_movie_item_menu_watched,
+                    movieModel.isWatched,
+                    View.OnClickListener { viewModel.toggleMovieWatched() })
+            }
+        }
+        return true
     }
 
     private fun attachListeners() {
@@ -72,48 +92,48 @@ class MovieDetailActivity : AppCompatActivity() {
         viewModel.movieDetail.safeNullObserve(this) {
             // TODO: Handle the status
             if (it.data != null) {
-                (mdsMovieDetailReviewSection as MovieDetailSectionView<MovieReviewModel>).bind(it.data.reviews.results)
-                (mdsMovieDetailTrailerSection as MovieDetailSectionView<MovieTrailerModel>).bind(it.data.trailers.trailerList)
+                (section_view_movie_detail_review as MovieDetailSectionView<MovieReviewModel>).bind(it.data.reviews.results)
+                (section_view_movie_detail_trailer as MovieDetailSectionView<MovieTrailerModel>).bind(it.data.trailers.trailerList)
             }
         }
 
         viewModel.movie.safeNullObserve(this) {
             invalidateOptionsMenu()
         }
+
+        viewModel.showFullMovieReviewList.safeNullObserve(this) {
+            // TODO: Show movie review list dialog
+        }
+
+        viewModel.showFullMovieTrailerList.safeNullObserve(this) {
+            // TODO: Show movie trailer list dialog
+        }
     }
 
-    private fun configureMovieReviewContent(mdsMovieDetailReviewSection: MovieDetailSectionView<MovieReviewModel>) {
-        mdsMovieDetailReviewSection.onCreateSectionContent =
+    private fun configureMovieReviewContent(sectionView: MovieDetailSectionView<MovieReviewModel>) {
+        sectionView.onCreateSectionContent =
             { parentView, layoutInflater, movieReviewModel ->
                 MovieReviewItemBinding.inflate(layoutInflater, parentView, true).also {
                     it.reviewModel = movieReviewModel
                 }
             }
 
-        mdsMovieDetailReviewSection.onClickSectionButton = {
-
+        sectionView.onClickSectionButton = {
+            viewModel.showFullMovieReviewList()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.movie_detail, menu)
-        menu?.let {
-            viewModel.movie.value?.let { movieModel ->
-                bindMenuItem(menu,
-                    R.id.menu_item_favorite,
-                    R.id.button_movie_item_menu_favorite,
-                    movieModel.isFavorite,
-                    View.OnClickListener { viewModel.toggleMovieFavorite() })
-
-                bindMenuItem(menu,
-                    R.id.menu_item_watched,
-                    R.id.button_movie_item_menu_watched,
-                    movieModel.isWatched,
-                    View.OnClickListener { viewModel.toggleMovieWatched() })
+    private fun configureMovieTrailerContent(sectionView: MovieDetailSectionView<MovieTrailerModel>) {
+        sectionView.onCreateSectionContent =
+            { parentView, layoutInflater, movieTrailerModel ->
+                MovieTrailerItemBinding.inflate(layoutInflater, parentView, true).also {
+                    it.trailerModel = movieTrailerModel
+                }
             }
 
+        sectionView.onClickSectionButton = {
+            viewModel.showFullMovieTrailerList()
         }
-        return true
     }
 
     private fun bindMenuItem(
@@ -128,19 +148,6 @@ class MovieDetailActivity : AppCompatActivity() {
         val buttonView = favoriteMenuItem.actionView.findViewById<ShineButton>(buttonId)
         buttonView.isChecked = isChecked
         buttonView.setOnClickListener(onClick)
-    }
-
-    private fun configureMovieTrailerContent(mdsMovieDetailReviewSection: MovieDetailSectionView<MovieTrailerModel>) {
-        mdsMovieDetailReviewSection.onCreateSectionContent =
-            { parentView, layoutInflater, movieTrailerModel ->
-                MovieTrailerItemBinding.inflate(layoutInflater, parentView, true).also {
-                    it.trailerModel = movieTrailerModel
-                }
-            }
-
-        mdsMovieDetailReviewSection.onClickSectionButton = {
-            // mPresenter.showAllReviews()
-        }
     }
 
     private fun configureToolbar(toolbar: Toolbar, title: String) {

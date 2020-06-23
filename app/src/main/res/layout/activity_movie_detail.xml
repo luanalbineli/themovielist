@@ -242,7 +242,7 @@
                         tools:text="1h 30m" />
 
                     <com.themovielist.widget.MovieDetailSectionView
-                        android:id="@+id/mdsMovieDetailReviewSection"
+                        android:id="@+id/section_view_movie_detail_review"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:buttonTitle="@string/read_all_reviews_format"
@@ -254,7 +254,7 @@
                         app:title="@string/reviews" />
 
                     <com.themovielist.widget.MovieDetailSectionView
-                        android:id="@+id/mdsMovieDetailTrailerSection"
+                        android:id="@+id/section_view_movie_detail_trailer"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:buttonTitle="@string/see_all_trailers_format"
@@ -262,7 +262,7 @@
                         app:emptyMessage="@string/the_list_is_empty"
                         app:layout_constraintEnd_toEndOf="@+id/guideline_end"
                         app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@+id/mdsMovieDetailReviewSection"
+                        app:layout_constraintTop_toBottomOf="@+id/section_view_movie_detail_review"
                         app:title="@string/trailers" />
 
                     <View
@@ -270,7 +270,7 @@
                         style="@style/HorizontalLineDivider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/mdsMovieDetailTrailerSection" />
+                        app:layout_constraintTop_toBottomOf="@+id/section_view_movie_detail_trailer" />
 
                     <TextView
                         android:id="@+id/text_home_most_popular"
