@@ -1,50 +1,36 @@
 package com.themovielist.ui.movieDetail.trailerListDialog
 
-class MovieTrailerListDialog : BaseFullscreenDialogWithList<MovieTrailerModel, MovieTrailerListDialogContract.View>(), MovieTrailerListDialogContract.View {
+import android.os.Bundle
+import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.themovielist.R
+import com.themovielist.model.response.MovieTrailerResponseModel
+import com.themovielist.widget.dialog.FullscreenListDialog
+import kotlinx.android.synthetic.main.dialog_list_fullscreen.*
+
+class MovieTrailerListDialog : FullscreenListDialog<MovieTrailerResponseModel>() {
     private val mMovieReviewAdapter by lazy { MovieTrailerAdapter() }
 
-    private val mLinearLayoutManager by lazy { LinearLayoutManager(rvFullscreenFragmentDialog.context, LinearLayoutManager.VERTICAL, false) }
-
-    @Inject
-    lateinit var mPresenter: MovieTrailerListDialogPresenter
-
-    override val presenterImplementation: BasePresenter<MovieTrailerListDialogContract.View>
-        get() = mPresenter
-
-    override val viewImplementation: MovieTrailerListDialogContract.View
-        get() = this
+    private val mLinearLayoutManager by lazy { LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mMovieReviewAdapter.setOnItemClickListener { _, item -> YouTubeUtil.openYouTubeVideo(activity, item.source) }
+        val dividerItemDecoration = DividerItemDecoration(context, mLinearLayoutManager.orientation)
 
-        val dividerItemDecoration = DividerItemDecoration(rvFullscreenFragmentDialog.context, mLinearLayoutManager.orientation)
+        list_fullscreen_dialog.addItemDecoration(dividerItemDecoration)
+        list_fullscreen_dialog.layoutManager = mLinearLayoutManager
+        list_fullscreen_dialog.adapter = mMovieReviewAdapter
 
-        rvFullscreenFragmentDialog.addItemDecoration(dividerItemDecoration)
-        rvFullscreenFragmentDialog.layoutManager = mLinearLayoutManager
-        rvFullscreenFragmentDialog.adapter = mMovieReviewAdapter
+        mMovieReviewAdapter.submitList(mList)
 
-        mPresenter.start(mList)
-
-        setTitle(R.string.all_trailers)
-    }
-
-    override fun showTrailersIntoList(movieReviewList: List<MovieTrailerModel>) {
-        mMovieReviewAdapter.addItems(movieReviewList)
-    }
-
-    override fun onInjectDependencies(applicationComponent: ApplicationComponent) {
-        DaggerFragmentComponent.builder()
-            .applicationComponent(PopularMovieApplication.getApplicationComponent(activity))
-            .build()
-            .inject(this)
+        setTitle(R.string.text_trailer_list)
     }
 
     companion object {
-
-        fun getInstance(movieModelList: List<MovieTrailerModel>): MovieTrailerListDialog {
-            return BaseFullscreenDialogWithList.createNewInstance(MovieTrailerListDialog::class.java, movieModelList)
+        fun getInstance(movieModelList: List<MovieTrailerResponseModel>): MovieTrailerListDialog {
+            return createNewInstance(MovieTrailerListDialog::class.java, movieModelList)
         }
     }
 }

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="reviewModel"
-            type="com.themovielist.model.response.MovieReviewModel" />
+            type="com.themovielist.model.response.MovieReviewResponseModel" />
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/imageButton"
-            android:layout_width="@dimen/movie_detail_thumbnail"
-            android:layout_height="@dimen/movie_detail_thumbnail"
+            android:layout_width="@dimen/movie_detail_trailer_thumbnail_size"
+            android:layout_height="@dimen/movie_detail_trailer_thumbnail_size"
             android:layout_marginTop="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

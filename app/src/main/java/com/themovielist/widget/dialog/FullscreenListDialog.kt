@@ -13,7 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.themovielist.R
 import com.themovielist.extension.getScreenSize
-import kotlinx.android.synthetic.main.fullscreen_list_dialog.*
+import kotlinx.android.synthetic.main.dialog_list_fullscreen.*
 import java.security.InvalidParameterException
 
 abstract class FullscreenListDialog<TModel : Parcelable> : BottomSheetDialogFragment() {
@@ -43,10 +43,12 @@ abstract class FullscreenListDialog<TModel : Parcelable> : BottomSheetDialogFrag
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fullscreen_list_dialog, container)
+    ): View? = inflater.inflate(R.layout.dialog_list_fullscreen, container)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupFullscreenDialog()
+
+        button_dialog_list_close.setOnClickListener { dismiss() }
     }
 
     private fun setupFullscreenDialog() {

@@ -22,12 +22,12 @@ class MovieDetailViewModel @Inject constructor(
     val movieDetail: LiveData<Result<MovieDetailResponseModel>>
         get() = mMovieDetail
 
-    private val mShowFullMovieTrailerList = MutableLiveData<List<MovieTrailerModel>>()
-    val showFullMovieTrailerList: LiveData<List<MovieTrailerModel>>
+    private val mShowFullMovieTrailerList = MutableLiveData<List<MovieTrailerResponseModel>>()
+    val showFullMovieTrailerList: LiveData<List<MovieTrailerResponseModel>>
         get() = mShowFullMovieTrailerList
 
-    private val mShowFullMovieReviewList = MutableLiveData<PaginatedArrayResponseModel<MovieReviewModel>>()
-    val showFullMovieReviewList: LiveData<PaginatedArrayResponseModel<MovieReviewModel>>
+    private val mShowFullMovieReviewList = MutableLiveData<PaginatedArrayResponseModel<MovieReviewResponseModel>>()
+    val showFullMovieReviewList: LiveData<PaginatedArrayResponseModel<MovieReviewResponseModel>>
         get() = mShowFullMovieReviewList
 
     fun init(movieModel: MovieModel) {

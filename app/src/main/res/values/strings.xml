@@ -52,5 +52,7 @@
     <string name="a11y_favorite_button">Button used to favorite/unfavorite the movie</string>
     <string name="a11y_movie_item_star">Star image, related to the movie rating</string>
     <string name="a11y_movie_item_poster">Movie poster</string>
+    <string name="text_trailer_list">Trailer list</string>
+    <string name="a11y_movie_trailer_thumbnail">Movie trailer\'s thumbnail</string>
     <!-- END: Common resources -->
 </resources>

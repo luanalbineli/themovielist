@@ -7,21 +7,20 @@ import com.themovielist.databinding.ItemMovieVerticalBinding
 import com.themovielist.model.ApiImageSizeModel
 import com.themovielist.model.view.MovieModel
 import com.themovielist.ui.base.IMovieActions
-import com.themovielist.widget.recyclerview.BaseViewHolder
 import com.themovielist.widget.recyclerview.CustomRecyclerViewAdapter
 
 class MovieListAdapter(
     private val apiPosterImageSizes: Array<ApiImageSizeModel>,
     private val movieActions: IMovieActions
-) : CustomRecyclerViewAdapter<MovieModel, HomeMovieVH>(MOVIE_DIFF) {
+) : CustomRecyclerViewAdapter<MovieModel, HomeMovieViewHolder>(MOVIE_DIFF) {
 
-    override fun onCreateItemViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): HomeMovieVH {
+    override fun onCreateItemViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): HomeMovieViewHolder {
         val binding = ItemMovieVerticalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return HomeMovieVH(binding, movieActions, apiPosterImageSizes)
+        return HomeMovieViewHolder(binding, movieActions, apiPosterImageSizes)
     }
 
-    override fun onBindItemViewHolder(holder: HomeMovieVH, position: Int) {
+    override fun onBindItemViewHolder(holder: HomeMovieViewHolder, position: Int) {
         val movieImageViewModel = getItem(position)
         holder.bind(movieImageViewModel)
     }
@@ -40,19 +39,5 @@ class MovieListAdapter(
             }
 
         }
-    }
-}
-
-class HomeMovieVH(
-    private val binding: ItemMovieVerticalBinding,
-    private val movieActions: IMovieActions,
-    private val apiImageSizeList: Array<ApiImageSizeModel>)
-    : BaseViewHolder(binding.root) {
-
-    fun bind(movieModel: MovieModel) {
-        binding.model = movieModel
-        binding.apiImageSizeList = apiImageSizeList
-        binding.movieActions = movieActions
-        binding.executePendingBindings()
     }
 }

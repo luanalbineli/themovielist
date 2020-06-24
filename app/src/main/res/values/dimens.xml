@@ -14,14 +14,10 @@
     <dimen name="home_movie_list_image_height">200dp</dimen>
     <!-- END: Home -->
 
-    <!-- MOVIE DETAIL -->
-    <dimen name="movie_detail_thumbnail">48dp</dimen>
+    <!-- BEGIN: MOVIE DETAIL -->
+    <dimen name="movie_detail_trailer_thumbnail_size">64dp</dimen>
     <dimen name="movie_detail_menu_item_size">30dp</dimen>
-
-    <!-- BEGIN: RequestStatusView -->
-    <dimen name="text_error_title_size">56sp</dimen>
-    <dimen name="error_robot_height">140dp</dimen>
-    <!-- END: RequestStatusView -->
+    <!-- END: MOVIE DETAIL -->
 
     <!-- BEGIN: Movie list -->
     <dimen name="movie_list_image_width">80dp</dimen>
@@ -34,6 +30,7 @@
     <!-- END: BottomSheetDialog -->
 
     <!-- Accessibility -->
+    <dimen name="a11y_min_font_size">12sp</dimen>
     <dimen name="a11y_min_touch_target">48dp</dimen>
     <dimen name="in_theaters_backdrop_height">240dp</dimen>
     <dimen name="default_icon_size">24dp</dimen>

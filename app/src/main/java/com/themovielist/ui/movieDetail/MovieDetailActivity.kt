@@ -12,19 +12,22 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.sackcentury.shinebuttonlib.ShineButton
 import com.themovielist.R
-import com.themovielist.databinding.ActivityMovieDetailBinding
-import com.themovielist.databinding.MovieReviewItemBinding
-import com.themovielist.databinding.MovieTrailerItemBinding
+import com.themovielist.databinding.*
 import com.themovielist.extension.*
-import com.themovielist.model.response.MovieReviewModel
-import com.themovielist.model.response.MovieTrailerModel
+import com.themovielist.model.response.MovieReviewResponseModel
+import com.themovielist.model.response.MovieTrailerResponseModel
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
+import com.themovielist.ui.movieDetail.trailerListDialog.MovieTrailerListDialog
 import com.themovielist.widget.MovieDetailSectionView
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
+@Suppress("UNCHECKED_CAST")
 class MovieDetailActivity : AppCompatActivity() {
     private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { injector.movieDetailViewModelFactory() })
+
+    private val mMovieDetailSectionReview by lazy { section_view_movie_detail_review as MovieDetailSectionView<MovieReviewResponseModel> }
+    private val mMovieDetailSectionTrailer by lazy { section_view_movie_detail_trailer as MovieDetailSectionView<MovieTrailerResponseModel> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +46,8 @@ class MovieDetailActivity : AppCompatActivity() {
 
             configureToolbar(it.toolbar, movieModel.movieResponseModel.title)
 
-            configureMovieReviewContent(it.sectionViewMovieDetailReview as MovieDetailSectionView<MovieReviewModel>)
-            configureMovieTrailerContent(it.sectionViewMovieDetailTrailer as MovieDetailSectionView<MovieTrailerModel>)
+            configureMovieReviewContent()
+            configureMovieTrailerContent()
         }
 
         attachListeners()
@@ -92,8 +95,8 @@ class MovieDetailActivity : AppCompatActivity() {
         viewModel.movieDetail.safeNullObserve(this) {
             // TODO: Handle the status
             if (it.data != null) {
-                (section_view_movie_detail_review as MovieDetailSectionView<MovieReviewModel>).bind(it.data.reviews.results)
-                (section_view_movie_detail_trailer as MovieDetailSectionView<MovieTrailerModel>).bind(it.data.trailers.trailerList)
+                mMovieDetailSectionReview.bind(it.data.reviews.results)
+                mMovieDetailSectionTrailer.bind(it.data.trailers.trailerList)
             }
         }
 
@@ -106,32 +109,35 @@ class MovieDetailActivity : AppCompatActivity() {
         }
 
         viewModel.showFullMovieTrailerList.safeNullObserve(this) {
-            // TODO: Show movie trailer list dialog
+            val dialog = MovieTrailerListDialog.getInstance(it)
+            dialog.show(supportFragmentManager, MOVIE_TRAILER_LIST_TAG)
         }
     }
 
-    private fun configureMovieReviewContent(sectionView: MovieDetailSectionView<MovieReviewModel>) {
-        sectionView.onCreateSectionContent =
+    private fun configureMovieReviewContent() {
+        mMovieDetailSectionReview.onCreateSectionContent =
             { parentView, layoutInflater, movieReviewModel ->
-                MovieReviewItemBinding.inflate(layoutInflater, parentView, true).also {
+                ItemMovieReviewBinding.inflate(layoutInflater, parentView, true).also {
                     it.reviewModel = movieReviewModel
+                    it.executePendingBindings()
                 }
             }
 
-        sectionView.onClickSectionButton = {
+        mMovieDetailSectionReview.onClickSectionButton = {
             viewModel.showFullMovieReviewList()
         }
     }
 
-    private fun configureMovieTrailerContent(sectionView: MovieDetailSectionView<MovieTrailerModel>) {
-        sectionView.onCreateSectionContent =
+    private fun configureMovieTrailerContent() {
+        mMovieDetailSectionTrailer.onCreateSectionContent =
             { parentView, layoutInflater, movieTrailerModel ->
-                MovieTrailerItemBinding.inflate(layoutInflater, parentView, true).also {
+                ItemMovieTrailerBinding.inflate(layoutInflater, parentView, true).also {
                     it.trailerModel = movieTrailerModel
+                    it.executePendingBindings()
                 }
             }
 
-        sectionView.onClickSectionButton = {
+        mMovieDetailSectionTrailer.onClickSectionButton = {
             viewModel.showFullMovieTrailerList()
         }
     }
@@ -166,6 +172,7 @@ class MovieDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val EXTRA_MOVIE_MODEL = "extra_movie_model"
+        private const val MOVIE_TRAILER_LIST_TAG = "MOVIE_TRAILER_LIST_TAG"
 
         fun getIntent(context: Context, movieModel: MovieModel): Intent {
             return Intent(context, MovieDetailActivity::class.java).apply {

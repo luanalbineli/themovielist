@@ -6,29 +6,28 @@
     android:layout_height="match_parent">
 
     <View
-        android:id="@+id/movie_detail_section_divider"
+        android:id="@+id/view_movie_detail_section_divider"
         style="@style/HorizontalLineDivider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/movie_detail_section_title"
+        android:id="@+id/text_movie_detail_section_title"
         style="@style/MovieDetailSectionTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_margin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/movie_detail_section_divider"
+        app:layout_constraintTop_toBottomOf="@id/view_movie_detail_section_divider"
         tools:text="@string/reviews" />
 
     <FrameLayout
-        android:id="@+id/section_movie_detail_container"
+        android:id="@+id/view_movie_detail_section_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        app:layout_constraintTop_toBottomOf="@id/movie_detail_section_title">
+        app:layout_constraintTop_toBottomOf="@id/text_movie_detail_section_title">
 
         <TextView
             android:id="@+id/section_empty_message"
@@ -37,20 +36,19 @@
             android:layout_marginTop="@dimen/default_margin_2x"
             android:layout_marginBottom="@dimen/default_margin_2x"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/movie_detail_section_title" />
+            tools:text="The list is empty"
+            app:layout_constraintTop_toBottomOf="@id/text_movie_detail_section_title" />
     </FrameLayout>
 
     <TextView
-        android:id="@+id/section_see_all"
+        android:id="@+id/text_movie_detail_section_see_all"
         style="@style/TextAppearance.MaterialComponents.Subtitle1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:gravity="end"
-        android:paddingTop="@dimen/default_margin_0_5x"
+        android:gravity="end|center_vertical"
         android:textColor="@color/cardinal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/section_movie_detail_container"
+        app:layout_constraintTop_toBottomOf="@id/view_movie_detail_section_container"
         tools:text="See all reviews (12)" />
 </androidx.constraintlayout.widget.ConstraintLayout>
