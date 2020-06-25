@@ -24,7 +24,7 @@ abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constr
     val items: List<TModel>
         get() = mItems
 
-    private var mRequestStatus: RequestStatusView.Status? = null
+    private var mRequestRequestStatus: RequestStatusView.RequestStatus? = null
 
     private var mRequestErrorModel: Exception? = null
 
@@ -46,9 +46,9 @@ abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constr
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         if (holder.itemViewType == ViewType.GRID_STATUS.ordinal) {
-            Timber.d("Redrawing the request status: $mRequestStatus - position: $position")
+            Timber.d("Redrawing the request status: $mRequestRequestStatus - position: $position")
             val requestStatusVH = holder as RequestStatusViewHolder
-            requestStatusVH.bind(mRequestStatus!!, items.isEmpty(), errorMessageResId, emptyMessageResId, onTryAgain)
+            requestStatusVH.bind(mRequestRequestStatus!!, items.isEmpty(), errorMessageResId, emptyMessageResId, onTryAgain)
             return
         }
 
@@ -64,26 +64,26 @@ abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constr
     }
 
     fun showLoadingStatus() {
-        redrawGridStatus(RequestStatusView.Status.LOADING)
+        redrawGridStatus(RequestStatusView.RequestStatus.LOADING)
     }
 
     fun showErrorStatus(exception: Exception? = null) {
         mRequestErrorModel = exception
-        redrawGridStatus(RequestStatusView.Status.ERROR)
+        redrawGridStatus(RequestStatusView.RequestStatus.ERROR)
     }
 
     fun showEmptyStatus() {
-        redrawGridStatus(RequestStatusView.Status.EMPTY)
+        redrawGridStatus(RequestStatusView.RequestStatus.EMPTY)
     }
 
-    private fun redrawGridStatus(status: RequestStatusView.Status? = null) {
-        if (status == mRequestStatus) { // Already in the state
+    private fun redrawGridStatus(requestStatus: RequestStatusView.RequestStatus? = null) {
+        if (requestStatus == mRequestRequestStatus) { // Already in the state
             return
         }
 
-        val previousRequestStatus = mRequestStatus
-        mRequestStatus = status
-        if (mRequestStatus == null) {
+        val previousRequestStatus = mRequestRequestStatus
+        mRequestRequestStatus = requestStatus
+        if (mRequestRequestStatus == null) {
             notifyItemRemoved(itemSize)
         } else if (previousRequestStatus == null) {
             notifyItemInserted(itemSize)
@@ -107,7 +107,7 @@ abstract class CustomRecyclerViewAdapter<TModel, THolder: BaseViewHolder> constr
 
     @Deprecated("Use itemSize")
     override fun getItemCount(): Int {
-        return super.getItemCount() + if (mRequestStatus == null) 0 else 1
+        return super.getItemCount() + if (mRequestRequestStatus == null) 0 else 1
     }
 
     protected abstract fun onCreateItemViewHolder(layoutInflater: LayoutInflater, parent: ViewGroup, viewType: Int): THolder

@@ -14,10 +14,11 @@
     <dimen name="home_movie_list_image_height">200dp</dimen>
     <!-- END: Home -->
 
-    <!-- BEGIN: MOVIE DETAIL -->
+    <!-- BEGIN: Movie Detail -->
     <dimen name="movie_detail_trailer_thumbnail_size">64dp</dimen>
     <dimen name="movie_detail_menu_item_size">30dp</dimen>
-    <!-- END: MOVIE DETAIL -->
+    <dimen name="movie_detail_icon_size">24dp</dimen>
+    <!-- END: Movie Detail -->
 
     <!-- BEGIN: Movie list -->
     <dimen name="movie_list_image_width">80dp</dimen>
@@ -33,7 +34,6 @@
     <dimen name="a11y_min_font_size">12sp</dimen>
     <dimen name="a11y_min_touch_target">48dp</dimen>
     <dimen name="in_theaters_backdrop_height">240dp</dimen>
-    <dimen name="default_icon_size">24dp</dimen>
 
     <!-- BEGIN: Text sizes -->
     <dimen name="text_size_h1">64sp</dimen>

@@ -21,7 +21,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/view_movie_detail_section_divider"
-        tools:text="@string/reviews" />
+        tools:text="@string/text_movie_detail_reviews" />
 
     <FrameLayout
         android:id="@+id/view_movie_detail_section_container"
@@ -36,8 +36,9 @@
             android:layout_marginTop="@dimen/default_margin_2x"
             android:layout_marginBottom="@dimen/default_margin_2x"
             android:gravity="center"
-            tools:text="The list is empty"
-            app:layout_constraintTop_toBottomOf="@id/text_movie_detail_section_title" />
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/text_movie_detail_section_title"
+            tools:text="The list is empty" />
     </FrameLayout>
 
     <TextView

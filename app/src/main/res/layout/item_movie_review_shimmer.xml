@@ -1,55 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <data>
-
-        <variable
-            name="reviewModel"
-            type="com.themovielist.model.response.MovieReviewResponseModel" />
-
-    </data>
+    android:id="@+id/shimmer_movie_detail_section"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:shimmer_direction="left_to_right"
+    app:shimmer_duration="2000">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_margin"
-        android:layout_marginBottom="@dimen/default_margin"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:orientation="vertical">
 
-        <ImageView
+        <View
             android:id="@+id/image_movie_review_user"
             android:layout_width="@dimen/movie_detail_trailer_thumbnail_size"
             android:layout_height="@dimen/movie_detail_trailer_thumbnail_size"
             android:layout_marginTop="8dp"
+            android:background="@color/colorPrimary"
             android:tint="@color/half_baked"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_account_circle" />
 
-        <TextView
+        <View
             android:id="@+id/text_movie_review_user_name"
-            android:fontFamily="sans-serif-medium"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="18sp"
             android:layout_marginStart="@dimen/default_margin"
-            android:text="@{reviewModel.author}"
+            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_movie_review_user"
-            app:layout_constraintTop_toTopOf="@+id/image_movie_review_user"
-            tools:text="Name" />
+            app:layout_constraintTop_toTopOf="@+id/image_movie_review_user" />
 
-        <TextView
+        <View
             android:id="@+id/tvMovieReviewContent"
-            style="@style/TextAppearance.MaterialComponents.Body2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="16dp"
+            android:background="@color/colorPrimary"
             app:layout_constraintEnd_toEndOf="@+id/text_movie_review_user_name"
             app:layout_constraintStart_toStartOf="@+id/image_movie_review_user"
-            app:layout_constraintTop_toBottomOf="@+id/image_movie_review_user"
-            app:readMoreText="@{reviewModel.content}"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing." />
+            app:layout_constraintTop_toBottomOf="@+id/image_movie_review_user" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</com.facebook.shimmer.ShimmerFrameLayout>

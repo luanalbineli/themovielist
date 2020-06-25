@@ -33,8 +33,12 @@ class MovieDetailViewModel @Inject constructor(
     fun init(movieModel: MovieModel) {
         mMovie.postValue(movieModel)
 
-        mMovieDetail.addSource(movieRepository.getMovieDetail(viewModelScope, movieModel.movieResponseModel.id)) {
-            mMovieDetail.postValue(it)
+        loadMovieDetail(movieModel.movieResponseModel.id)
+    }
+
+    fun tryLoadMovieDetailAgain() {
+        mMovie.value?.let { movieModel ->
+            loadMovieDetail(movieModel.movieResponseModel.id)
         }
     }
 
@@ -59,6 +63,12 @@ class MovieDetailViewModel @Inject constructor(
     fun showFullMovieReviewList() {
         mMovieDetail.value?.data?.reviews?.let { reviewList ->
             mShowFullMovieReviewList.postValue(reviewList)
+        }
+    }
+
+    private fun loadMovieDetail(movieId: Int) {
+        mMovieDetail.addSource(movieRepository.getMovieDetail(viewModelScope, movieId)) {
+            mMovieDetail.postValue(it)
         }
     }
 

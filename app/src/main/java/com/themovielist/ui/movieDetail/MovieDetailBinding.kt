@@ -1,7 +1,11 @@
 package com.themovielist.ui.movieDetail
 
+import android.content.Intent
+import android.net.Uri
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
@@ -11,7 +15,6 @@ import com.themovielist.GlideApp
 import com.themovielist.R
 import com.themovielist.extension.yearFromCalendar
 import com.themovielist.model.response.genre.GenreResponseModel
-import timber.log.Timber
 import java.util.*
 
 @BindingAdapter("movieDetailRuntime")
@@ -26,13 +29,13 @@ fun TextView.movieDetailRuntime(runtime: Int?) {
 }
 
 @BindingAdapter("genres")
-fun genreAdapter(textView: TextView, genreList: List<GenreResponseModel>?) {
-    textView.text = genreList?.asSequence()?.map { it.name }?.reduce { a, b -> "$a, $b" }
+fun TextView.genreAdapter(genreList: List<GenreResponseModel>?) {
+    text = genreList?.asSequence()?.map { it.name }?.reduce { a, b -> "$a, $b" }
 }
 
 @BindingAdapter("yearFromCalendar")
-fun yearFromDate(textView: TextView, date: Date?) {
-    textView.text = date?.yearFromCalendar?.toString() ?: ""
+fun TextView.yearFromDate(date: Date?) {
+    text = date?.yearFromCalendar?.toString() ?: ""
 }
 
 @BindingAdapter("trailerThumbnail")
@@ -49,4 +52,18 @@ fun ImageView.trailerThumbnail(source: String) {
             )
         )
         .into(this)
+}
+
+@BindingAdapter("movieDetailTrailer")
+fun View.movieDetailTrailer(source: String) {
+   setOnClickListener {
+       val uriString = "https://www.youtube.com/watch?v=$source"
+       val uri = Uri.parse(String.format(uriString, source))
+       val intent = Intent(Intent.ACTION_VIEW, uri)
+       if (intent.resolveActivity(context.packageManager) != null) {
+           context.startActivity(intent)
+       } else {
+           Toast.makeText(context, R.string.error_intent_cant_be_handled, Toast.LENGTH_SHORT).show()
+       }
+   }
 }

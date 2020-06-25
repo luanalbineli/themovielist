@@ -10,7 +10,6 @@ import com.themovielist.R
 import com.themovielist.databinding.FragmentHomeBinding
 import com.themovielist.extension.*
 import com.themovielist.model.response.Status
-import com.themovielist.model.view.MovieModel
 import com.themovielist.ui.home.fulllist.FullMovieListActivity
 import com.themovielist.ui.movieDetail.MovieDetailActivity
 import com.themovielist.widget.RequestStatusView
@@ -34,7 +33,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         text_app_bar_title.setText(R.string.text_home)
 
-        request_status_home.toggleStatus(RequestStatusView.Status.ERROR)
+        request_status_home.toggleStatus(RequestStatusView.RequestStatus.ERROR)
         request_status_home.onTryAgain = {
             viewModel.tryFetchHomeDataAgain()
         }

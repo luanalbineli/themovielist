@@ -68,8 +68,8 @@ fun ImageView.movieImageUrl(
 fun readMoreText(textView: TextView, text: String) {
     val readMoreOption = ReadMoreOption.Builder(textView.context)
         .textLength(3, ReadMoreOption.TYPE_LINE)
-        .moreLabel(textView.context.getString(R.string.read_more))
-        .lessLabel(textView.context.getString(R.string.read_less))
+        .moreLabel(textView.context.getString(R.string.text_movie_detail_read_more))
+        .lessLabel(textView.context.getString(R.string.text_movie_detail_read_less))
         .moreLabelColor(ContextCompat.getColor(textView.context, R.color.half_baked))
         .lessLabelColor(ContextCompat.getColor(textView.context, R.color.half_baked))
         .expandAnimation(true)

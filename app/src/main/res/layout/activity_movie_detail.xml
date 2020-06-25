@@ -16,6 +16,10 @@
         <variable
             name="screenWidth"
             type="Float" />
+
+        <import type="com.themovielist.model.response.Status" />
+
+        <import type="com.themovielist.widget.RequestStatusView.RequestStatus" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -171,7 +175,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@string/overview"
+                        android:text="@string/text_movie_detail_overview"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -189,115 +193,133 @@
                         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing." />
 
                     <View
-                        android:id="@+id/divider"
+                        android:id="@+id/divider_movie_detail_one"
                         style="@style/HorizontalLineDivider"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintTop_toBottomOf="@+id/tvMovieDetailSynopsys" />
 
-                    <ImageView
-                        android:id="@+id/ivMovieDetailRatingIcon"
-                        android:layout_width="@dimen/default_icon_size"
-                        android:layout_height="@dimen/default_icon_size"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginTop="16dp"
-                        app:layout_constraintEnd_toStartOf="@+id/ivMovieDetailTimeIcon"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/divider"
-                        app:srcCompat="@drawable/ic_star_black"
-                        app:tint="@color/half_baked" />
-
-                    <ImageView
-                        android:id="@+id/ivMovieDetailTimeIcon"
-                        android:layout_width="@dimen/default_icon_size"
-                        android:layout_height="@dimen/default_icon_size"
-                        android:layout_marginStart="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivMovieDetailRatingIcon"
-                        app:layout_constraintTop_toTopOf="@+id/ivMovieDetailRatingIcon"
-                        app:srcCompat="@drawable/ic_schedule"
-                        app:tint="@color/half_baked" />
-
-                    <TextView
-                        android:id="@+id/text_movie_detail_rating"
-                        android:layout_width="wrap_content"
+                    <com.themovielist.widget.RequestStatusView
+                        android:id="@+id/request_status_movie_detail"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@{viewModel.movie.movieResponseModel.voteAverage}"
-                        app:digits="@{1}"
-                        app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailRatingIcon"
-                        app:layout_constraintStart_toStartOf="@+id/ivMovieDetailRatingIcon"
-                        app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailRatingIcon"
-                        tools:text="7.6" />
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:layout_marginTop="@dimen/default_margin_2x"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        app:goneUnless="@{viewModel.movieDetail.status == Status.ERROR}"
+                        app:layout_constraintTop_toBottomOf="@+id/divider_movie_detail_one"
+                        app:onTryAgain="@{() -> viewModel.tryLoadMovieDetailAgain()}"
+                        app:toggleStatus="@{RequestStatus.ERROR}" />
 
-                    <TextView
-                        android:id="@+id/text_movie_detail_runtime"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        app:movieDetailRuntime="@{viewModel.movieDetail.data.runtime}"
-                        app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailTimeIcon"
-                        app:layout_constraintStart_toStartOf="@+id/ivMovieDetailTimeIcon"
-                        app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailTimeIcon"
-                        tools:text="1h 30m" />
+                        android:layout_marginStart="@dimen/default_margin"
+                        android:layout_marginEnd="@dimen/default_margin"
+                        app:goneUnless="@{viewModel.movieDetail.status != Status.ERROR}"
+                        app:layout_constraintTop_toBottomOf="@+id/divider_movie_detail_one">
 
-                    <com.themovielist.widget.MovieDetailSectionView
-                        android:id="@+id/section_view_movie_detail_review"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:buttonTitle="@string/read_all_reviews_format"
-                        app:content="@layout/item_movie_review"
-                        app:emptyMessage="@string/the_list_is_empty"
-                        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-                        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_runtime"
-                        app:title="@string/reviews" />
+                        <ImageView
+                            android:id="@+id/ivMovieDetailRatingIcon"
+                            android:layout_width="@dimen/movie_detail_icon_size"
+                            android:layout_height="@dimen/movie_detail_icon_size"
+                            android:layout_marginTop="@dimen/default_margin"
+                            android:contentDescription="@string/a11y_movie_detail_rating_icon"
+                            app:layout_constraintEnd_toStartOf="@+id/ivMovieDetailTimeIcon"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_star_black"
+                            app:tint="@color/half_baked" />
 
-                    <com.themovielist.widget.MovieDetailSectionView
-                        android:id="@+id/section_view_movie_detail_trailer"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:buttonTitle="@string/see_all_trailers_format"
-                        app:content="@layout/item_movie_trailer"
-                        app:emptyMessage="@string/the_list_is_empty"
-                        app:layout_constraintEnd_toEndOf="@+id/guideline_end"
-                        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@+id/section_view_movie_detail_review"
-                        app:title="@string/trailers" />
+                        <ImageView
+                            android:id="@+id/ivMovieDetailTimeIcon"
+                            android:layout_width="@dimen/movie_detail_icon_size"
+                            android:layout_height="@dimen/movie_detail_icon_size"
+                            android:contentDescription="@string/a11y_movie_detail_schedule_icon"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivMovieDetailRatingIcon"
+                            app:layout_constraintTop_toTopOf="@+id/ivMovieDetailRatingIcon"
+                            app:srcCompat="@drawable/ic_schedule"
+                            app:tint="@color/half_baked" />
 
-                    <View
-                        android:id="@+id/divider1"
-                        style="@style/HorizontalLineDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/section_view_movie_detail_trailer" />
+                        <TextView
+                            android:id="@+id/text_movie_detail_rating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@{viewModel.movie.movieResponseModel.voteAverage}"
+                            app:digits="@{1}"
+                            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailRatingIcon"
+                            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailRatingIcon"
+                            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailRatingIcon"
+                            tools:text="7.6" />
 
-                    <TextView
-                        android:id="@+id/text_home_most_popular"
-                        style="@style/MovieDetailSectionTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/cast"
-                        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@+id/divider1" />
+                        <TextView
+                            android:id="@+id/text_movie_detail_runtime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailTimeIcon"
+                            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailTimeIcon"
+                            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailTimeIcon"
+                            app:movieDetailRuntime="@{viewModel.movieDetail.data.runtime}"
+                            tools:text="1h 30m" />
 
-                    <View
-                        android:id="@+id/divider2"
-                        style="@style/HorizontalLineDivider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/text_home_most_popular" />
+                        <com.themovielist.widget.MovieDetailSectionView
+                            android:id="@+id/section_view_movie_detail_review"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:buttonTitle="@string/format_movie_detailread_all_reviews"
+                            app:content="@layout/item_movie_review"
+                            app:emptyMessage="@string/text_movie_detail_list_empty"
+                            app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_runtime"
+                            app:shimmerContent="@layout/item_movie_review_shimmer"
+                            app:title="@string/text_movie_detail_reviews" />
 
-                    <TextView
-                        android:id="@+id/textView3"
-                        style="@style/MovieDetailSectionTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/recommendations"
-                        app:layout_constraintStart_toStartOf="@+id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@+id/divider2" />
+                        <com.themovielist.widget.MovieDetailSectionView
+                            android:id="@+id/section_view_movie_detail_trailer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:buttonTitle="@string/format_movie_detail_see_all_trailers"
+                            app:emptyMessage="@string/text_movie_detail_list_empty"
+                            app:layout_constraintTop_toBottomOf="@+id/section_view_movie_detail_review"
+                            app:shimmerContent="@layout/item_movie_trailer_shimmer"
+                            app:title="@string/text_movie_detail_trailers" />
+
+                        <View
+                            android:id="@+id/divider1"
+                            style="@style/HorizontalLineDivider"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/section_view_movie_detail_trailer" />
+
+                        <TextView
+                            android:id="@+id/text_home_most_popular"
+                            style="@style/MovieDetailSectionTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/text_movie_detail_cast"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/divider1" />
+
+                        <View
+                            android:id="@+id/divider2"
+                            style="@style/HorizontalLineDivider"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/text_home_most_popular" />
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            style="@style/MovieDetailSectionTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/text_movie_detail_recommendations"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/divider2" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
 

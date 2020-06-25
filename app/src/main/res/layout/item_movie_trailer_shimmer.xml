@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shimmer_movie_detail_section"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shimmer_direction="left_to_right"
+    app:shimmer_duration="2000">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical">
+
+        <View
+            android:background="@color/colorPrimary"
+            android:id="@+id/image_movie_trailer_thumbnail"
+            android:layout_width="@dimen/movie_detail_trailer_thumbnail_size"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_movie_trailer_type"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_movie_trailer_name" />
+
+        <View
+            android:background="@color/colorPrimary"
+            android:id="@+id/text_movie_trailer_name"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/text_size_subhead"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/image_movie_trailer_thumbnail"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/text_movie_trailer_type"
+            style="@style/TrailerChip"
+            android:layout_width="50dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_movie_trailer_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_movie_trailer_name" />
+
+        <TextView
+            android:id="@+id/text_movie_trailer_format"
+            style="@style/TrailerChip"
+            android:layout_width="50dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/default_margin_0_5x"
+            app:layout_constraintStart_toEndOf="@+id/text_movie_trailer_type"
+            app:layout_constraintTop_toTopOf="@+id/text_movie_trailer_type" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>

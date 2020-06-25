@@ -3,11 +3,7 @@ package com.themovielist.widget
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
-import androidx.annotation.StringRes
 import com.themovielist.R
 import com.themovielist.extension.setDisplay
 import kotlinx.android.synthetic.main.request_status_view.view.*
@@ -26,10 +22,10 @@ class RequestStatusView(context: Context, attributeSet: AttributeSet) :
         }
     }
 
-    fun toggleStatus(status: Status) {
-        loading_request_status.setDisplay(status == Status.LOADING)
-        view_request_status_error.setDisplay(status == Status.ERROR)
-        view_request_status_empty.setDisplay(status == Status.EMPTY)
+    fun toggleStatus(requestStatus: RequestStatus) {
+        loading_request_status.setDisplay(requestStatus == RequestStatus.LOADING)
+        view_request_status_error.setDisplay(requestStatus == RequestStatus.ERROR)
+        view_request_status_empty.setDisplay(requestStatus == RequestStatus.EMPTY)
     }
 
     fun setErrorMessage(stringResId: Int?) {
@@ -48,7 +44,7 @@ class RequestStatusView(context: Context, attributeSet: AttributeSet) :
         }
     }
 
-    enum class Status {
+    enum class RequestStatus {
         LOADING,
         ERROR,
         EMPTY

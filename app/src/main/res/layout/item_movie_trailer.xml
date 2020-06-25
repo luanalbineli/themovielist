@@ -13,9 +13,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="vertical">
+        android:layout_marginTop="@dimen/default_margin"
+        android:layout_marginBottom="@dimen/default_margin"
+        android:orientation="vertical"
+        app:movieDetailTrailer="@{trailerModel.source}">
 
         <ImageView
             android:id="@+id/image_movie_trailer_thumbnail"
@@ -29,7 +30,6 @@
             app:trailerThumbnail="@{trailerModel.source}" />
 
         <TextView
-            android:layout_marginTop="@dimen/default_margin"
             android:id="@+id/text_movie_trailer_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -51,7 +51,6 @@
             android:text="@{trailerModel.type}"
             style="@style/TrailerChip"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="16dp"
             app:layout_constraintStart_toStartOf="@+id/text_movie_trailer_name"
             app:layout_constraintTop_toBottomOf="@+id/text_movie_trailer_name"
             tools:text="Teaser" />
