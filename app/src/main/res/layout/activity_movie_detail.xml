@@ -271,7 +271,9 @@
                             android:layout_height="wrap_content"
                             app:buttonTitle="@string/format_movie_detailread_all_reviews"
                             app:content="@layout/item_movie_review"
+                            app:onClickSeeAll="@{() -> viewModel.showFullMovieReviewList()}"
                             app:emptyMessage="@string/text_movie_detail_list_empty"
+                            app:list="@{viewModel.movieDetail.data.reviews.results}"
                             app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_runtime"
                             app:shimmerContent="@layout/item_movie_review_shimmer"
                             app:title="@string/text_movie_detail_reviews" />
@@ -281,7 +283,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             app:buttonTitle="@string/format_movie_detail_see_all_trailers"
+                            app:onClickSeeAll="@{() -> viewModel.showFullMovieTrailerList()}"
                             app:emptyMessage="@string/text_movie_detail_list_empty"
+                            app:list="@{viewModel.movieDetail.data.trailers.trailerList}"
                             app:layout_constraintTop_toBottomOf="@+id/section_view_movie_detail_review"
                             app:shimmerContent="@layout/item_movie_trailer_shimmer"
                             app:title="@string/text_movie_detail_trailers" />

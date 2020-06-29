@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.res.getResourceIdOrThrow
+import androidx.core.content.res.getStringOrThrow
 import com.facebook.shimmer.ShimmerFrameLayout
 import com.themovielist.R
 import com.themovielist.extension.setDisplay
 import kotlinx.android.synthetic.main.view_movie_detail_section.view.*
-import timber.log.Timber
 
 class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet: AttributeSet) : FrameLayout(context, attributeSet) {
     private val mLayoutInflater by lazy { LayoutInflater.from(context) }
@@ -24,7 +24,7 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
 
     var onCreateSectionContent: ((parentView: ViewGroup, layoutInflater: LayoutInflater, TModel) -> Unit)? = null
 
-    var onClickSectionButton: (() -> Unit)? = null
+    var onClickSeeAll: OnClickListener? = null
 
     private val mShimmerLayout: ShimmerFrameLayout by lazy { findViewById<ShimmerFrameLayout>(R.id.shimmer_movie_detail_section) }
 
@@ -35,9 +35,9 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
         try {
             mShimmerContentLayoutResId = attributes.getResourceIdOrThrow(R.styleable.MovieDetailSectionView_shimmerContent)
 
-            mTitleText = attributes.getString(R.styleable.MovieDetailSectionView_title) ?: ""
-            mButtonTitle = attributes.getString(R.styleable.MovieDetailSectionView_buttonTitle) ?: ""
-            mEmptyMessage = attributes.getString(R.styleable.MovieDetailSectionView_emptyMessage) ?: ""
+            mTitleText = attributes.getStringOrThrow(R.styleable.MovieDetailSectionView_title)
+            mButtonTitle = attributes.getStringOrThrow(R.styleable.MovieDetailSectionView_buttonTitle)
+            mEmptyMessage = attributes.getStringOrThrow(R.styleable.MovieDetailSectionView_emptyMessage)
         } finally {
             attributes.recycle()
         }
@@ -49,11 +49,11 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
         mShimmerLayout.startShimmer()
     }
 
-    fun setList(itemList: List<TModel>) {
-        Timber.d("setList: $itemList")
-    }
+    fun setList(itemList: List<TModel>?) {
+        if (itemList == null) {
+            return
+        }
 
-    fun bind(itemList: List<TModel>) {
         mShimmerLayout.stopShimmer()
         view_movie_detail_section_container.removeView(mShimmerLayout)
 
@@ -63,7 +63,7 @@ class MovieDetailSectionView<TModel> constructor(context: Context, attributeSet:
         } else {
             if (itemList.size > 1) {
                 text_movie_detail_section_see_all.text = String.format(mButtonTitle, itemList.size)
-                text_movie_detail_section_see_all.setOnClickListener { onClickSectionButton?.invoke() }
+                text_movie_detail_section_see_all.setOnClickListener { onClickSeeAll?.onClick(this) }
             } else {
                 text_movie_detail_section_see_all.setDisplay(false)
             }

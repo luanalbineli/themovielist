@@ -33,11 +33,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         text_app_bar_title.setText(R.string.text_home)
 
-        request_status_home.toggleStatus(RequestStatusView.RequestStatus.ERROR)
-        request_status_home.onTryAgain = {
-            viewModel.tryFetchHomeDataAgain()
-        }
-
         viewModel.homeMovieList.safeNullObserve(viewLifecycleOwner) {
             container_home.setDisplay(it.status != Status.ERROR)
             request_status_home.setDisplay(it.status == Status.ERROR)

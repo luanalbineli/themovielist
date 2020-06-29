@@ -92,14 +92,6 @@ class MovieDetailActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.movieDetail.safeNullObserve(this) {
-            // TODO: Handle the status
-            if (it.data != null) {
-                mMovieDetailSectionReview.bind(it.data.reviews.results)
-                mMovieDetailSectionTrailer.bind(it.data.trailers.trailerList)
-            }
-        }
-
         viewModel.movie.safeNullObserve(this) {
             invalidateOptionsMenu()
         }
@@ -122,10 +114,6 @@ class MovieDetailActivity : AppCompatActivity() {
                     it.executePendingBindings()
                 }
             }
-
-        mMovieDetailSectionReview.onClickSectionButton = {
-            viewModel.showFullMovieReviewList()
-        }
     }
 
     private fun configureMovieTrailerContent() {
@@ -136,10 +124,6 @@ class MovieDetailActivity : AppCompatActivity() {
                     it.executePendingBindings()
                 }
             }
-
-        mMovieDetailSectionTrailer.onClickSectionButton = {
-            viewModel.showFullMovieTrailerList()
-        }
     }
 
     private fun bindMenuItem(

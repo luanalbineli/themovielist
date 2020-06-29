@@ -1,33 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="viewModel"
             type="com.themovielist.ui.home.HomeViewModel" />
+
+        <import type="com.themovielist.widget.RequestStatusView.RequestStatus" />
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include layout="@layout/include_appbar" />
 
         <ScrollView
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <com.themovielist.widget.RequestStatusView
-                    android:layout_margin="@dimen/default_margin"
+                    android:id="@+id/request_status_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/request_status_home" />
+                    android:layout_margin="@dimen/default_margin"
+                    app:onTryAgain="@{() -> viewModel.tryFetchHomeDataAgain()}"
+                    app:toggleStatus="@{RequestStatus.ERROR}" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/container_home"
@@ -50,8 +56,8 @@
                         style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_home_see_all"
                         android:onClick="@{() -> viewModel.showFullListSortedByPopularity()}"
+                        android:text="@string/text_home_see_all"
                         app:drawableRightCompat="@drawable/chevron_right"
                         app:layout_constraintBaseline_toBaselineOf="@+id/text_home_most_popular"
                         app:layout_constraintEnd_toEndOf="parent" />
@@ -78,7 +84,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/fragment_home_movie_list_popular" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/text_home_most_rated"
                         style="@style/HomeListTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -92,11 +98,11 @@
                         style="@style/TextAppearance.MaterialComponents.Headline6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/text_home_see_all"
                         android:onClick="@{() -> viewModel.showFullListSortedByRating()}"
+                        android:text="@string/text_home_see_all"
                         app:drawableRightCompat="@drawable/chevron_right"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_home_most_rated"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_home_most_rated"
                         app:layout_constraintEnd_toEndOf="parent" />
 
                     <androidx.fragment.app.FragmentContainerView
@@ -106,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin_1_5x"
                         android:tag="rating"
-                        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                        app:layout_constraintTop_toBottomOf="@+id/text_home_most_rated" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
         </ScrollView>
