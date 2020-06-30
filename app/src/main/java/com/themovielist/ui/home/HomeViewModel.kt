@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     private val homeRepository: HomeRepository,
-    private val movieRepository: MovieRepository,
+    movieRepository: MovieRepository,
     movieStore: MovieStore,
     val apiConfigurationFactory: ApiConfigurationFactory
 ) : MovieViewModel(movieRepository, movieStore) {

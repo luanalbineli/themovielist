@@ -1,4 +1,4 @@
-package com.themovielist.ui.home.horizontalList
+package com.themovielist.ui.horizontalMovieList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

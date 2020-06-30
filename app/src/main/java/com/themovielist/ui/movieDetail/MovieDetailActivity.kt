@@ -16,11 +16,14 @@ import com.themovielist.databinding.*
 import com.themovielist.extension.*
 import com.themovielist.model.response.MovieReviewResponseModel
 import com.themovielist.model.response.MovieTrailerResponseModel
+import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
+import com.themovielist.ui.horizontalMovieList.HorizontalMovieListFragment
 import com.themovielist.ui.movieDetail.trailerListDialog.MovieTrailerListDialog
 import com.themovielist.widget.MovieDetailSectionView
 import kotlinx.android.synthetic.main.activity_movie_detail.*
+import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
 class MovieDetailActivity : AppCompatActivity() {
@@ -74,6 +77,19 @@ class MovieDetailActivity : AppCompatActivity() {
     }
 
     private fun attachListeners() {
+        val horizontalMovieListFragment =
+            supportFragmentManager.findFragmentByTag(getString(R.string.tag_movie_list)) as HorizontalMovieListFragment
+
+        viewModel.movieDetail.safeNullObserve(this) { result ->
+            Timber.d("MOVIE_DETAIL: $result")
+            val recommendationMovieListResult = when (result.status) {
+                Status.LOADING -> Result.loading()
+                Status.SUCCESS -> Result.success(result.data!!.movieRecommendationList)
+                Status.ERROR -> Result.error(result.exception!!)
+            }
+            horizontalMovieListFragment.setResult(recommendationMovieListResult)
+        }
+
         viewModel.toggleMovieFavorite.safeNullObserve(this) { result ->
             if (result.status == Status.SUCCESS) {
                 showToggleMovieFavoriteMessage(result.data!!)

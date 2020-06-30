@@ -43,7 +43,7 @@
                     android:visibility="visible">
 
                     <TextView
-                        android:id="@+id/text_home_most_popular"
+                        android:id="@+id/text_movie_detail_cast"
                         style="@style/HomeListTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -59,19 +59,19 @@
                         android:onClick="@{() -> viewModel.showFullListSortedByPopularity()}"
                         android:text="@string/text_home_see_all"
                         app:drawableRightCompat="@drawable/chevron_right"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/text_home_most_popular"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/text_movie_detail_cast"
                         app:layout_constraintEnd_toEndOf="parent" />
 
                     <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/fragment_home_movie_list_popular"
-                        android:name="com.themovielist.ui.home.horizontalList.HorizontalMovieListFragment"
+                        android:name="com.themovielist.ui.home.horizontalList.HomeMovieListFragment"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin_1_5x"
                         android:tag="popular"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/text_home_most_popular" />
+                        app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_cast" />
 
                     <View
                         android:id="@+id/divider"
@@ -107,7 +107,7 @@
 
                     <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/homeRatedPartialListFragment"
-                        android:name="com.themovielist.ui.home.horizontalList.HorizontalMovieListFragment"
+                        android:name="com.themovielist.ui.home.horizontalList.HomeMovieListFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/default_margin_1_5x"

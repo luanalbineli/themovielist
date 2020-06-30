@@ -3,6 +3,7 @@ package com.themovielist.ui.movieDetail
 import androidx.lifecycle.*
 import com.themovielist.di.module.ApiConfigurationFactory
 import com.themovielist.model.response.*
+import com.themovielist.model.view.MovieDetailModel
 import com.themovielist.model.view.MovieModel
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.repository.movie.MovieStore
@@ -18,8 +19,8 @@ class MovieDetailViewModel @Inject constructor(
     val movie: LiveData<MovieModel>
         get() = mMovie
 
-    private val mMovieDetail = MediatorLiveData<Result<MovieDetailResponseModel>>()
-    val movieDetail: LiveData<Result<MovieDetailResponseModel>>
+    private val mMovieDetail = MediatorLiveData<Result<MovieDetailModel>>()
+    val movieDetail: LiveData<Result<MovieDetailModel>>
         get() = mMovieDetail
 
     private val mShowFullMovieTrailerList = MutableLiveData<List<MovieTrailerResponseModel>>()
@@ -55,13 +56,13 @@ class MovieDetailViewModel @Inject constructor(
     }
 
     fun showFullMovieTrailerList() {
-        mMovieDetail.value?.data?.trailers?.trailerList?.let { trailerList ->
+        mMovieDetail.value?.data?.movieDetailResponseModel?.trailers?.trailerList?.let { trailerList ->
             mShowFullMovieTrailerList.postValue(trailerList)
         }
     }
 
     fun showFullMovieReviewList() {
-        mMovieDetail.value?.data?.reviews?.let { reviewList ->
+        mMovieDetail.value?.data?.movieDetailResponseModel?.reviews?.let { reviewList ->
             mShowFullMovieReviewList.postValue(reviewList)
         }
     }

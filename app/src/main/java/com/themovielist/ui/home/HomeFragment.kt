@@ -38,30 +38,11 @@ class HomeFragment : Fragment() {
             request_status_home.setDisplay(it.status == Status.ERROR)
         }
 
-        viewModel.showMovieDetail.safeNullObserve(viewLifecycleOwner) {
-            val intent = MovieDetailActivity.getIntent(requireActivity(), it)
-            startActivity(intent)
-        }
-
-        viewModel.toggleMovieFavorite.safeNullObserve(viewLifecycleOwner) { result ->
-            if (result.status == Status.SUCCESS) {
-                showToggleMovieFavoriteMessage(result.data!!)
-            } else if (result.status == Status.ERROR) {
-                showSnackBarMessage(R.string.error_favorite_movie_text)
-            }
-        }
-
-        viewModel.toggleMovieWatched.safeNullObserve(viewLifecycleOwner) { result ->
-            if (result.status == Status.SUCCESS) {
-                showToggleMovieWatchedMessage(result.data!!)
-            } else if (result.status == Status.ERROR) {
-                showSnackBarMessage(R.string.error_watched_movie_text)
-            }
-        }
-
         viewModel.showFullMovieList.safeNullObserve(viewLifecycleOwner) { homeMovieSortType ->
             val intent = FullMovieListActivity.getIntent(requireContext(), homeMovieSortType)
             startActivity(intent)
         }
+
+        handleMovieActions(viewModel)
     }
 }

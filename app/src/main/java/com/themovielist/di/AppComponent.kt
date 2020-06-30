@@ -5,6 +5,7 @@ import com.themovielist.di.module.AppModule
 import com.themovielist.ui.MainViewModel
 import com.themovielist.ui.home.HomeViewModel
 import com.themovielist.ui.home.fulllist.FullMovieListViewModel
+import com.themovielist.ui.horizontalMovieList.HorizontalMovieListViewModel
 import com.themovielist.ui.movieDetail.MovieDetailViewModel
 import com.themovielist.ui.movieList.MovieListViewModel
 import dagger.BindsInstance
@@ -26,6 +27,7 @@ interface AppComponent {
 
     fun mainViewModelFactory(): ViewModelFactory<MainViewModel>
     fun homeViewModelFactory(): ViewModelFactory<HomeViewModel>
+    fun horizontalMovieListViewModelFactory(): ViewModelFactory<HorizontalMovieListViewModel>
     fun movieDetailViewModelFactory(): ViewModelFactory<MovieDetailViewModel>
     fun fullMovieListViewModelFactory(): ViewModelFactory<FullMovieListViewModel>
     fun movieListViewModelFactory(): ViewModelFactory<MovieListViewModel>
