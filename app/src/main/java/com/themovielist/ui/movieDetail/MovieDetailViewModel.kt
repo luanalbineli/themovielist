@@ -1,16 +1,22 @@
 package com.themovielist.ui.movieDetail
 
-import androidx.lifecycle.*
-import com.themovielist.di.module.ApiConfigurationFactory
-import com.themovielist.model.response.*
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.themovielist.di.ApiConfigurationFactory
+import com.themovielist.model.response.MovieReviewResponseModel
+import com.themovielist.model.response.MovieTrailerResponseModel
+import com.themovielist.model.response.PaginatedArrayResponseModel
+import com.themovielist.model.response.Result
 import com.themovielist.model.view.MovieDetailModel
 import com.themovielist.model.view.MovieModel
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.repository.movie.MovieStore
 import com.themovielist.ui.base.MovieViewModel
-import javax.inject.Inject
 
-class MovieDetailViewModel @Inject constructor(
+class MovieDetailViewModel @ViewModelInject constructor(
     val apiConfigurationFactory: ApiConfigurationFactory,
     private val movieRepository: MovieRepository,
     movieStore: MovieStore
@@ -27,7 +33,8 @@ class MovieDetailViewModel @Inject constructor(
     val showFullMovieTrailerList: LiveData<List<MovieTrailerResponseModel>>
         get() = mShowFullMovieTrailerList
 
-    private val mShowFullMovieReviewList = MutableLiveData<PaginatedArrayResponseModel<MovieReviewResponseModel>>()
+    private val mShowFullMovieReviewList =
+        MutableLiveData<PaginatedArrayResponseModel<MovieReviewResponseModel>>()
     val showFullMovieReviewList: LiveData<PaginatedArrayResponseModel<MovieReviewResponseModel>>
         get() = mShowFullMovieReviewList
 

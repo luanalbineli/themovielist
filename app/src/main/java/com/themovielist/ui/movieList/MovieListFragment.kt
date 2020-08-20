@@ -9,7 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.themovielist.R
-import com.themovielist.extension.*
+import com.themovielist.extension.safeNullObserve
+import com.themovielist.extension.showSnackBarMessage
+import com.themovielist.extension.showToggleMovieFavoriteMessage
+import com.themovielist.extension.showToggleMovieWatchedMessage
 import com.themovielist.model.response.PaginatedArrayResponseModel
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
@@ -18,7 +21,7 @@ import com.themovielist.ui.movieDetail.MovieDetailActivity
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 
 class MovieListFragment : Fragment() {
-    private val viewModel: MovieListViewModel by viewModels(factoryProducer = { injector.movieListViewModelFactory() })
+    private val viewModel: MovieListViewModel by viewModels()
 
     private val mAdapter by lazy {
         MovieListAdapter(
@@ -49,7 +52,12 @@ class MovieListFragment : Fragment() {
         list_movie.adapter = mAdapter
         list_movie.layoutManager = mLinearLayoutManager
         list_movie.onLoadMoreItems = onLoadMoreItems
-        list_movie.addItemDecoration(DividerItemDecoration(requireContext(), mLinearLayoutManager.orientation))
+        list_movie.addItemDecoration(
+            DividerItemDecoration(
+                requireContext(),
+                mLinearLayoutManager.orientation
+            )
+        )
 
         attachListeners()
     }

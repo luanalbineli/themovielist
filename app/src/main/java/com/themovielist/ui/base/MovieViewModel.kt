@@ -2,14 +2,14 @@ package com.themovielist.ui.base
 
 import androidx.databinding.Observable
 import androidx.databinding.ObservableField
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.themovielist.model.response.Result
 import com.themovielist.model.view.MovieModel
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.repository.movie.MovieStore
-import javax.inject.Inject
 
-open class MovieViewModel @Inject constructor(
+open class MovieViewModel @ViewModelInject constructor(
     private val movieRepository: MovieRepository,
     private val movieStore: MovieStore
 ) : IMovieActions, ViewModel() {
@@ -25,7 +25,7 @@ open class MovieViewModel @Inject constructor(
     override val toggleMovieWatched: LiveData<Result<MovieModel>>
         get() = mToggleMovieWatched
 
-    private val mMovieChangedObserver = object: Observable.OnPropertyChangedCallback() {
+    private val mMovieChangedObserver = object : Observable.OnPropertyChangedCallback() {
         override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
             (sender as? ObservableField<MovieModel>)?.get()?.let { movieModel ->
                 onMovieChanged(movieModel)

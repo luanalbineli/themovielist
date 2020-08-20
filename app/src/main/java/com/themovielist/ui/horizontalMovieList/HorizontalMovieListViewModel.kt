@@ -1,17 +1,17 @@
 package com.themovielist.ui.horizontalMovieList
 
-import com.themovielist.di.module.ApiConfigurationFactory
+import androidx.hilt.lifecycle.ViewModelInject
+import com.themovielist.di.ApiConfigurationFactory
 import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.repository.movie.MovieStore
 import com.themovielist.ui.base.MovieViewModel
-import javax.inject.Inject
 
 class HorizontalMovieListViewModel
-@Inject
+@ViewModelInject
 constructor(
     val apiConfigurationFactory: ApiConfigurationFactory,
     movieRepository: MovieRepository,
     movieStore: MovieStore
-): MovieViewModel(movieRepository, movieStore) {
+) : MovieViewModel(movieRepository, movieStore) {
 
 }

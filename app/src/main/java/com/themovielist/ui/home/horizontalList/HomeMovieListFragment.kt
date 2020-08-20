@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.themovielist.R
-import com.themovielist.extension.injector
 import com.themovielist.extension.safeNullObserve
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
@@ -15,7 +14,7 @@ import com.themovielist.ui.home.HomeViewModel
 import com.themovielist.ui.horizontalMovieList.HorizontalMovieListFragment
 
 class HomeMovieListFragment : Fragment() {
-    private val viewModel: HomeViewModel by activityViewModels(factoryProducer = { injector.homeViewModelFactory() })
+    private val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

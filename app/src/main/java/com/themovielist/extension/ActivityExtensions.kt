@@ -2,14 +2,10 @@ package com.themovielist.extension
 
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
-import com.themovielist.MainApplication
 import com.themovielist.R
 import com.themovielist.model.view.MovieModel
-
-val AppCompatActivity.injector get() = (application as MainApplication).component
 
 fun FragmentActivity.showSnackBarMessage(@StringRes messageResId: Int) = Snackbar.make(
     findViewById(android.R.id.content),

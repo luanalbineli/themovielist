@@ -1,5 +1,6 @@
 package com.themovielist.ui.home.fulllist
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.viewModelScope
@@ -13,13 +14,12 @@ import com.themovielist.repository.movie.MovieRepository
 import com.themovielist.repository.movie.MovieStore
 import com.themovielist.ui.base.MovieViewModel
 import com.themovielist.util.ApiUtil
-import javax.inject.Inject
 
-class FullMovieListViewModel @Inject constructor(
+class FullMovieListViewModel @ViewModelInject constructor(
     movieRepository: MovieRepository,
     private val homeRepository: HomeRepository,
     movieStore: MovieStore
-): MovieViewModel(movieRepository, movieStore) {
+) : MovieViewModel(movieRepository, movieStore) {
     private val mMovieList = MediatorLiveData<Result<PaginatedArrayResponseModel<MovieModel>>>()
     val movieList: LiveData<Result<PaginatedArrayResponseModel<MovieModel>>>
         get() = mMovieList

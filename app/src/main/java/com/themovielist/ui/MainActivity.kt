@@ -6,13 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.themovielist.R
-import com.themovielist.extension.injector
 import com.themovielist.ui.home.HomeFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val viewModel: MainViewModel by viewModels(factoryProducer = { injector.mainViewModelFactory() })
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

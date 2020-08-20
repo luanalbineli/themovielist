@@ -8,16 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.themovielist.R
 import com.themovielist.databinding.FragmentHomeBinding
-import com.themovielist.extension.*
+import com.themovielist.extension.handleMovieActions
+import com.themovielist.extension.safeNullObserve
+import com.themovielist.extension.setDisplay
 import com.themovielist.model.response.Status
 import com.themovielist.ui.home.fulllist.FullMovieListActivity
-import com.themovielist.ui.movieDetail.MovieDetailActivity
-import com.themovielist.widget.RequestStatusView
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.include_appbar.*
 
 class HomeFragment : Fragment() {
-    private val viewModel: HomeViewModel by activityViewModels(factoryProducer = { injector.homeViewModelFactory() })
+    private val viewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -22,12 +22,14 @@ import com.themovielist.model.view.MovieModel
 import com.themovielist.ui.horizontalMovieList.HorizontalMovieListFragment
 import com.themovielist.ui.movieDetail.trailerListDialog.MovieTrailerListDialog
 import com.themovielist.widget.MovieDetailSectionView
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import timber.log.Timber
 
+@AndroidEntryPoint
 @Suppress("UNCHECKED_CAST")
 class MovieDetailActivity : AppCompatActivity() {
-    private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { injector.movieDetailViewModelFactory() })
+    private val viewModel: MovieDetailViewModel by viewModels()
 
     private val mMovieDetailSectionReview by lazy { section_view_movie_detail_review as MovieDetailSectionView<MovieReviewResponseModel> }
     private val mMovieDetailSectionTrailer by lazy { section_view_movie_detail_trailer as MovieDetailSectionView<MovieTrailerResponseModel> }

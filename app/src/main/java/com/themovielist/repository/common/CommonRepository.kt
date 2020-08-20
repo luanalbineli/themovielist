@@ -1,7 +1,7 @@
 package com.themovielist.repository.common
 
 import android.util.SparseArray
-import androidx.core.util.contains
+import androidx.core.util.containsKey
 import com.themovielist.model.entity.MovieFavoriteWatchedEntityModel
 import com.themovielist.model.response.MovieResponseModel
 import com.themovielist.model.response.genre.GenreResponseModel
@@ -61,7 +61,7 @@ constructor(
         val movieFavoriteWatchedEntityModel =
             favoriteWatchedMovieList.firstOrNull { it.id == movieResponseModel.id }
         val genreList = movieResponseModel.genreIdList.flatMap { genreId ->
-            if (genreResponseList.contains(genreId))
+            if (genreResponseList.containsKey(genreId))
                 listOf(genreResponseList[genreId])
             else
                 emptyList()

@@ -1,4 +1,4 @@
-package com.themovielist.di.module
+package com.themovielist.di
 
 import android.content.Context
 import androidx.room.Room
@@ -9,6 +9,9 @@ import com.themovielist.repository.favorite.TheMovieListDB
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
@@ -22,9 +25,9 @@ import java.util.*
 import javax.inject.Singleton
 
 @Module
+@InstallIn(ApplicationComponent::class)
 object AppModule {
     @Provides
-    @JvmStatic
     @Reusable
     fun provideRetrofit(): Retrofit {
         val httpClient = OkHttpClient.Builder()
@@ -44,14 +47,13 @@ object AppModule {
         }
 
         return Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/")
-                .addConverterFactory(buildGsonConverter())
-                .client(httpClient.build())
-                .build()
+            .baseUrl("https://api.themoviedb.org/3/")
+            .addConverterFactory(buildGsonConverter())
+            .client(httpClient.build())
+            .build()
     }
 
     @Provides
-    @JvmStatic
     @Reusable
     fun provideApiConfigurationFactory(): ApiConfigurationFactory {
         return ApiConfigurationFactory()
@@ -59,42 +61,45 @@ object AppModule {
 
     private fun buildGsonConverter(): Converter.Factory {
         val gson = GsonBuilder()
-                // Handle empty release_date cases.
-                .registerTypeAdapter(Date::class.java, object : JsonDeserializer<Date> {
-                    var dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            // Handle empty release_date cases.
+            .registerTypeAdapter(Date::class.java, object : JsonDeserializer<Date> {
+                var dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
 
-                    @Throws(JsonParseException::class)
-                    override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Date? {
-                        return try {
-                            if (json.asString.isNullOrEmpty())
-                                null
-                            else
-                                dateFormat.parse(json.asString)
-                        } catch (e: ParseException) {
+                @Throws(JsonParseException::class)
+                override fun deserialize(
+                    json: JsonElement,
+                    typeOfT: Type,
+                    context: JsonDeserializationContext
+                ): Date? {
+                    return try {
+                        if (json.asString.isNullOrEmpty())
                             null
-                        }
-
+                        else
+                            dateFormat.parse(json.asString)
+                    } catch (e: ParseException) {
+                        null
                     }
-                })
-                .create()
+
+                }
+            })
+            .create()
 
         val dateTypeAdapter = gson.getAdapter(Date::class.java)
 
         val safeDateTypeAdapter = dateTypeAdapter.nullSafe()
 
         val gsonBuilder = GsonBuilder()
-                // .setDateFormat(DEFAULT_DATE_FORMAT)
-                .registerTypeAdapter(Date::class.java, safeDateTypeAdapter)
+            // .setDateFormat(DEFAULT_DATE_FORMAT)
+            .registerTypeAdapter(Date::class.java, safeDateTypeAdapter)
 
         return GsonConverterFactory.create(gsonBuilder.create())
     }
 
     @Provides
-    @JvmStatic
     @Singleton
-    fun provideRoomDataBase(context: Context): TheMovieListDB {
+    fun provideRoomDataBase(@ApplicationContext context: Context): TheMovieListDB {
         return Room.databaseBuilder(context, TheMovieListDB::class.java, "the-movie-list.db")
-                .build()
+            .build()
     }
 }
 

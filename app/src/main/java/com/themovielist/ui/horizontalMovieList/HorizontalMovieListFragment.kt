@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.themovielist.R
 import com.themovielist.extension.handleMovieActions
-import com.themovielist.extension.injector
 import com.themovielist.extension.setDisplay
 import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
@@ -26,7 +25,7 @@ class HorizontalMovieListFragment : Fragment() {
         )
     }
 
-    private val viewModel: HorizontalMovieListViewModel by activityViewModels(factoryProducer = { injector.horizontalMovieListViewModelFactory() })
+    private val viewModel: HorizontalMovieListViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

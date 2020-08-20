@@ -10,13 +10,14 @@ import androidx.databinding.DataBindingUtil
 import com.themovielist.R
 import com.themovielist.databinding.ActivityFullMovieListBinding
 import com.themovielist.enums.HomeMovieSortType
-import com.themovielist.extension.injector
 import com.themovielist.extension.safeNullObserve
 import com.themovielist.ui.movieList.MovieListFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.include_appbar.view.*
 
+@AndroidEntryPoint
 class FullMovieListActivity : AppCompatActivity() {
-    private val viewModel: FullMovieListViewModel by viewModels(factoryProducer = { injector.fullMovieListViewModelFactory() })
+    private val viewModel: FullMovieListViewModel by viewModels()
 
     private val mMovieListFragment: MovieListFragment? by lazy {
         supportFragmentManager.findFragmentByTag(
