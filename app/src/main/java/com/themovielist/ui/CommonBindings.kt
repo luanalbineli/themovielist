@@ -67,7 +67,7 @@ fun ImageView.movieImageUrl(
 @BindingAdapter("readMoreText")
 fun readMoreText(textView: TextView, text: String) {
     val readMoreOption = ReadMoreOption.Builder(textView.context)
-        .textLength(3, ReadMoreOption.TYPE_LINE)
+        .textLength(200, ReadMoreOption.TYPE_CHARACTER)
         .moreLabel(textView.context.getString(R.string.text_movie_detail_read_more))
         .lessLabel(textView.context.getString(R.string.text_movie_detail_read_less))
         .moreLabelColor(ContextCompat.getColor(textView.context, R.color.half_baked))

@@ -32,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/collapse_toolbar"
                 android:layout_width="match_parent"
@@ -143,14 +142,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.themovielist.widget.RequestStatusView
-                    android:id="@+id/rsvMovieDetailRequestStatus"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/movieDetailContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="visible">
@@ -170,7 +162,7 @@
                         app:layout_constraintGuide_end="16dp" />
 
                     <TextView
-                        android:id="@+id/tvMovieDetailSynopseLabel"
+                        android:id="@+id/text_movie_detail_overview_label"
                         style="@style/MovieDetailSectionTitle"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -181,7 +173,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvMovieDetailSynopsys"
+                        android:id="@+id/text_movie_detail_overview"
                         style="@style/TextAppearance.MaterialComponents.Subtitle2"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -189,7 +181,7 @@
                         android:text="@{viewModel.movie.movieResponseModel.overview}"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@id/tvMovieDetailSynopseLabel"
+                        app:layout_constraintTop_toBottomOf="@id/text_movie_detail_overview_label"
                         tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget ligula eu lectus lobortis condimentum. Aliquam nonummy auctor massa. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla at risus. Quisque purus magna, auctor et, sagittis ac, posuere eu, lectus. Nam mattis, felis ut adipiscing." />
 
                     <View
@@ -197,7 +189,7 @@
                         style="@style/HorizontalLineDivider"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMovieDetailSynopsys" />
+                        app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_overview" />
 
                     <com.themovielist.widget.RequestStatusView
                         android:id="@+id/request_status_movie_detail"
@@ -220,25 +212,25 @@
                         app:layout_constraintTop_toBottomOf="@+id/divider_movie_detail_one">
 
                         <ImageView
-                            android:id="@+id/ivMovieDetailRatingIcon"
+                            android:id="@+id/image_movie_detail_rating"
                             android:layout_width="@dimen/movie_detail_icon_size"
                             android:layout_height="@dimen/movie_detail_icon_size"
                             android:layout_marginTop="@dimen/default_margin"
                             android:contentDescription="@string/a11y_movie_detail_rating_icon"
-                            app:layout_constraintEnd_toStartOf="@+id/ivMovieDetailTimeIcon"
+                            app:layout_constraintEnd_toStartOf="@+id/image_movie_detail_time"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ic_star_black"
                             app:tint="@color/half_baked" />
 
                         <ImageView
-                            android:id="@+id/ivMovieDetailTimeIcon"
+                            android:id="@+id/image_movie_detail_time"
                             android:layout_width="@dimen/movie_detail_icon_size"
                             android:layout_height="@dimen/movie_detail_icon_size"
                             android:contentDescription="@string/a11y_movie_detail_schedule_icon"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivMovieDetailRatingIcon"
-                            app:layout_constraintTop_toTopOf="@+id/ivMovieDetailRatingIcon"
+                            app:layout_constraintStart_toEndOf="@+id/image_movie_detail_rating"
+                            app:layout_constraintTop_toTopOf="@+id/image_movie_detail_rating"
                             app:srcCompat="@drawable/ic_schedule"
                             app:tint="@color/half_baked" />
 
@@ -249,9 +241,9 @@
                             android:layout_marginTop="4dp"
                             android:text="@{viewModel.movie.movieResponseModel.voteAverage}"
                             app:digits="@{1}"
-                            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailRatingIcon"
-                            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailRatingIcon"
-                            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailRatingIcon"
+                            app:layout_constraintEnd_toEndOf="@+id/image_movie_detail_rating"
+                            app:layout_constraintStart_toStartOf="@+id/image_movie_detail_rating"
+                            app:layout_constraintTop_toBottomOf="@+id/image_movie_detail_rating"
                             tools:text="7.6" />
 
                         <TextView
@@ -259,9 +251,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
-                            app:layout_constraintEnd_toEndOf="@+id/ivMovieDetailTimeIcon"
-                            app:layout_constraintStart_toStartOf="@+id/ivMovieDetailTimeIcon"
-                            app:layout_constraintTop_toBottomOf="@+id/ivMovieDetailTimeIcon"
+                            app:layout_constraintEnd_toEndOf="@+id/image_movie_detail_time"
+                            app:layout_constraintStart_toStartOf="@+id/image_movie_detail_time"
+                            app:layout_constraintTop_toBottomOf="@+id/image_movie_detail_time"
                             app:movieDetailRuntime="@{viewModel.movieDetail.data.movieDetailResponseModel.runtime}"
                             tools:text="1h 30m" />
 

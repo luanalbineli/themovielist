@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
@@ -15,6 +16,7 @@ import com.themovielist.R
 import com.themovielist.extension.getScreenSize
 import kotlinx.android.synthetic.main.dialog_list_fullscreen.*
 import java.security.InvalidParameterException
+
 
 abstract class FullscreenListDialog<TModel : Parcelable> : BottomSheetDialogFragment() {
     protected lateinit var mList: ArrayList<TModel>

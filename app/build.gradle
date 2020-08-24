@@ -80,7 +80,7 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_logging_interceptor_version"
-    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "com.google.code.gson:gson:$gson_version"
 
     // Room
     implementation "androidx.room:room-runtime:$room_version"
@@ -93,7 +93,6 @@ dependencies {
     // ShineButton
     implementation "com.sackcentury:shinebutton:$shine_button_version"
 
-    // Shimmer
+    // Shimmer effect
     implementation "com.facebook.shimmer:shimmer:$shimmer_version"
-    implementation "io.supercharge:shimmerlayout:2.1.0"
 }

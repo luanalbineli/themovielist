@@ -3,14 +3,15 @@
 This is "basically" an Android application that consumes the services exposed by [TMDb](https://www.themoviedb.org).
 
 ### Patters, libraries and technology:
-  * MVVM
-  * Dagger 2.x
+  * MVVM (design pattern)
+  * Hilt (dependency injection)
   * Kotlin (+ Coroutines)
-  * Retrofit 2
-  * Room
-  * Timber
-  * Glide
-  * AndroidX
+  * Retrofit 2 (HTTP calls)
+  * Room (SQLite ORM)
+  * Timber (Logging)
+  * Glide (Network image fetcher/caching)
+  * Data binding (make the Activity/Fragment/Adapter dummy as possible)
+  * LiveData (lifecycle-aware components)
   * And so on
 
 ##### Why architecture patterns?
@@ -39,20 +40,19 @@ The application was divided into four tabs:
     * :x: Option to select the sorted by (added order, release date)
 
  * :white_check_mark: Movie detail screen
-   * :x: Show the backdrop and poster;
-   * :x: Show the user's average rating;
-   * :x: Show the first two reviews;
-   * :x: Show all reviews;
-   * :x: Show the first two trailers;
-   * :x: Show all trailers;
-   * :x: Option to favorite the movie;
+   * :white_check_mark: Show the backdrop and poster;
+   * :white_check_mark: Show the user's average rating;
+   * :white_check_mark: Show the first two reviews;
+   * :white_check_mark: Show all reviews;
+   * :white_check_mark: Show the first two trailers;
+   * :white_check_mark: Show all trailers;
+   * :white_check_mark: Option to favorite the movie;
    * :x: Show the cast;
-   * :x: Show recommendations (of movies, based on the movie you are seeing);
+   * :white_check_mark: Show recommendations (of movies, based on the movie you are seeing);
    
 ### Building yourself
 
-To build/run this project, you I'll need [Android Studio 3.0](https://developer.android.com/studio/index.html).
-Besides, you need to create a [TMDb account](https://www.themoviedb.org/account/signup) and get an API key.
+To build/run this project, you need to create a [TMDb account](https://www.themoviedb.org/account/signup) and get an API key.
 Then, with your API key in hands, just create a `gradle.properties` file on root folder, and add the following line:
 
 API_KEY = "YOUR_API_KEY"                                              

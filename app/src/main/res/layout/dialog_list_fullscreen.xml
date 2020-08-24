@@ -11,6 +11,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?android:selectableItemBackground"
         android:textAlignment="center"
+        android:elevation="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_close_white" />
@@ -18,9 +19,10 @@
     <TextView
         android:id="@+id/text_fullscreen_list_dialog_title"
         style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/a11y_min_touch_target"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_bottom_sheet_fragment_title"
+        android:elevation="4dp"
         android:ellipsize="end"
         android:gravity="center"
         android:singleLine="true"

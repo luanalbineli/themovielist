@@ -12,7 +12,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import com.sackcentury.shinebuttonlib.ShineButton
 import com.themovielist.R
-import com.themovielist.databinding.*
+import com.themovielist.databinding.ActivityMovieDetailBinding
+import com.themovielist.databinding.ItemMovieReviewBinding
+import com.themovielist.databinding.ItemMovieTrailerBinding
 import com.themovielist.extension.*
 import com.themovielist.model.response.MovieReviewResponseModel
 import com.themovielist.model.response.MovieTrailerResponseModel
@@ -20,6 +22,7 @@ import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
 import com.themovielist.ui.horizontalMovieList.HorizontalMovieListFragment
+import com.themovielist.ui.movieDetail.reviewList.MovieReviewListDialog
 import com.themovielist.ui.movieDetail.trailerListDialog.MovieTrailerListDialog
 import com.themovielist.widget.MovieDetailSectionView
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,17 +65,19 @@ class MovieDetailActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.movie_detail, menu)
         menu?.let {
             viewModel.movie.value?.let { movieModel ->
-                bindMenuItem(menu,
+                bindMenuItem(
+                    menu,
                     R.id.menu_item_favorite,
                     R.id.button_movie_item_menu_favorite,
-                    movieModel.isFavorite,
-                    View.OnClickListener { viewModel.toggleMovieFavorite() })
+                    movieModel.isFavorite
+                ) { viewModel.toggleMovieFavorite() }
 
-                bindMenuItem(menu,
+                bindMenuItem(
+                    menu,
                     R.id.menu_item_watched,
                     R.id.button_movie_item_menu_watched,
-                    movieModel.isWatched,
-                    View.OnClickListener { viewModel.toggleMovieWatched() })
+                    movieModel.isWatched
+                ) { viewModel.toggleMovieWatched() }
             }
         }
         return true
@@ -115,7 +120,8 @@ class MovieDetailActivity : AppCompatActivity() {
         }
 
         viewModel.showFullMovieReviewList.safeNullObserve(this) {
-            // TODO: Show movie review list dialog
+            val dialog = MovieReviewListDialog.getInstance(it.results)
+            dialog.show(supportFragmentManager, MOVIE_REVIEW_LIST_TAG)
         }
 
         viewModel.showFullMovieTrailerList.safeNullObserve(this) {
@@ -175,6 +181,7 @@ class MovieDetailActivity : AppCompatActivity() {
     companion object {
         private const val EXTRA_MOVIE_MODEL = "extra_movie_model"
         private const val MOVIE_TRAILER_LIST_TAG = "MOVIE_TRAILER_LIST_TAG"
+        private const val MOVIE_REVIEW_LIST_TAG = "MOVIE_REVIEW_LIST_TAG"
 
         fun getIntent(context: Context, movieModel: MovieModel): Intent {
             return Intent(context, MovieDetailActivity::class.java).apply {

@@ -37,10 +37,12 @@ constructor(
         val movieDetailResponseModel = serviceInstance.getMovieDetail(movieId)
         val movieResponseRecommendationList = serviceInstance.getMovieRecommendationList(movieId)
         val movieRecommendationList = commonRepository.mapToMovieList(movieResponseRecommendationList.results)
+        val movieCreditResponseModel = serviceInstance.getMovieCredits(movieId)
 
         return@makeRequest MovieDetailModel(
             movieDetailResponseModel,
-            movieRecommendationList
+            movieRecommendationList,
+            movieCreditResponseModel
         )
     }
 }

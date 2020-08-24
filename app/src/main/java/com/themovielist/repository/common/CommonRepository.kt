@@ -53,7 +53,7 @@ constructor(
 
     }
 
-    fun convertMovieResponseToMovie(
+    private fun convertMovieResponseToMovie(
         movieResponseModel: MovieResponseModel,
         genreResponseList: SparseArray<GenreResponseModel>,
         favoriteWatchedMovieList: List<MovieFavoriteWatchedEntityModel>
