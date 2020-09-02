@@ -299,12 +299,21 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/divider_movie_detail_trailer" />
 
+                        <androidx.fragment.app.FragmentContainerView
+                            android:id="@+id/fragment_movie_detail_cast"
+                            android:name="com.themovielist.ui.movieDetail.castList.MovieCastListFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_margin"
+                            android:tag="@string/tag_movie_detail_cast"
+                            app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_cast" />
+
                         <View
                             android:id="@+id/divider_movie_detail_cast"
                             style="@style/HorizontalLineDivider"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_cast" />
+                            app:layout_constraintTop_toBottomOf="@+id/fragment_movie_detail_cast" />
 
                         <TextView
                             android:id="@+id/text_movie_detail_recommendations"
@@ -317,14 +326,14 @@
                             app:layout_constraintTop_toBottomOf="@+id/divider_movie_detail_cast" />
 
                         <androidx.fragment.app.FragmentContainerView
-                            android:layout_marginTop="@dimen/default_margin"
                             android:id="@+id/fragment_movie_detail_recommendation"
                             android:name="com.themovielist.ui.horizontalMovieList.HorizontalMovieListFragment"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/default_margin"
+                            android:layout_marginBottom="@dimen/default_margin"
                             android:tag="@string/tag_movie_list"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            android:layout_marginBottom="@dimen/default_margin"
                             app:layout_constraintTop_toBottomOf="@+id/text_movie_detail_recommendations" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>

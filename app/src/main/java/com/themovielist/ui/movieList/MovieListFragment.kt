@@ -18,8 +18,10 @@ import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
 import com.themovielist.ui.movieDetail.MovieDetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_movie_list.*
 
+@AndroidEntryPoint
 class MovieListFragment : Fragment() {
     private val viewModel: MovieListViewModel by viewModels()
 

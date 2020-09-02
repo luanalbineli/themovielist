@@ -1,7 +1,5 @@
 package com.themovielist.model
 
-import java.util.*
-
 data class ApiConfigurationModel constructor(
         val backdropImageSizes: Array<ApiImageSizeModel> = arrayOf(
                 ApiImageSizeModel(300, ApiImageSizeModel.ImageSizeType.WIDTH),

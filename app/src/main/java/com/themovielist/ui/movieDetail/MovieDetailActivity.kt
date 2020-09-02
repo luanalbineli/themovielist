@@ -22,6 +22,7 @@ import com.themovielist.model.response.Result
 import com.themovielist.model.response.Status
 import com.themovielist.model.view.MovieModel
 import com.themovielist.ui.horizontalMovieList.HorizontalMovieListFragment
+import com.themovielist.ui.movieDetail.castList.MovieCastListFragment
 import com.themovielist.ui.movieDetail.reviewList.MovieReviewListDialog
 import com.themovielist.ui.movieDetail.trailerListDialog.MovieTrailerListDialog
 import com.themovielist.widget.MovieDetailSectionView
@@ -30,11 +31,13 @@ import kotlinx.android.synthetic.main.activity_movie_detail.*
 import timber.log.Timber
 
 @AndroidEntryPoint
-@Suppress("UNCHECKED_CAST")
 class MovieDetailActivity : AppCompatActivity() {
     private val viewModel: MovieDetailViewModel by viewModels()
 
+    @Suppress("UNCHECKED_CAST")
     private val mMovieDetailSectionReview by lazy { section_view_movie_detail_review as MovieDetailSectionView<MovieReviewResponseModel> }
+
+    @Suppress("UNCHECKED_CAST")
     private val mMovieDetailSectionTrailer by lazy { section_view_movie_detail_trailer as MovieDetailSectionView<MovieTrailerResponseModel> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,14 +90,23 @@ class MovieDetailActivity : AppCompatActivity() {
         val horizontalMovieListFragment =
             supportFragmentManager.findFragmentByTag(getString(R.string.tag_movie_list)) as HorizontalMovieListFragment
 
+        val movieCastListFragment =
+            supportFragmentManager.findFragmentByTag(getString(R.string.tag_movie_detail_cast)) as MovieCastListFragment
+
         viewModel.movieDetail.safeNullObserve(this) { result ->
             Timber.d("MOVIE_DETAIL: $result")
-            val recommendationMovieListResult = when (result.status) {
-                Status.LOADING -> Result.loading()
-                Status.SUCCESS -> Result.success(result.data!!.movieRecommendationList)
-                Status.ERROR -> Result.error(result.exception!!)
+            val (recommendationResult, castResult) = when (result.status) {
+                Status.LOADING -> Result.loading<List<MovieModel>>() to Result.loading()
+                Status.SUCCESS -> Result.success(result.data!!.movieRecommendationList) to Result.success(
+                    result.data.movieCreditResponseModel.castList
+                )
+                Status.ERROR -> Result.error<List<MovieModel>>(result.exception!!) to Result.error(
+                    result.exception
+                )
             }
-            horizontalMovieListFragment.setResult(recommendationMovieListResult)
+
+            horizontalMovieListFragment.setResult(recommendationResult)
+            movieCastListFragment.setResult(castResult)
         }
 
         viewModel.toggleMovieFavorite.safeNullObserve(this) { result ->

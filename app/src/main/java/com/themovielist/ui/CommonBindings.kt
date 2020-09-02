@@ -38,9 +38,10 @@ fun ImageView.movieImageUrl(
     viewHeight: Float?
 ) {
     Timber.d("Binding the image into imageView: $imageUrl")
+    val fallbackDrawable = AppCompatResources.getDrawable(context, R.drawable.ic_broken_image)
     if (imageUrl == null) {
         GlideApp.with(this)
-            .load(AppCompatResources.getDrawable(context, R.drawable.ic_broken_image))
+            .load(fallbackDrawable)
             .into(this)
     } else {
         val fullImageUrl = ApiUtil.buildPosterImageUrl(
@@ -52,6 +53,7 @@ fun ImageView.movieImageUrl(
         Timber.d("Binding the image url: $fullImageUrl")
         GlideApp.with(this)
             .load(fullImageUrl)
+            .fallback(fallbackDrawable)
             .apply(
                 RequestOptions.bitmapTransform(
                     MultiTransformation(

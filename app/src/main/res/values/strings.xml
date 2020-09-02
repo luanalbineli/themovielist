@@ -49,6 +49,7 @@
     <string name="text_trailer_list">Trailer list</string>
     <string name="text_review_list">Review list</string>
     <string name="tag_movie_list">Movie list</string>
+    <string name="tag_movie_detail_cast">Movie detail cast list</string>
     <string name="a11y_movie_item_calendar">Calendar image, related to the movie release year</string>
     <string name="a11y_favorite_button">Button used to favorite/unfavorite the movie</string>
     <string name="a11y_movie_item_star">Star image, related to the movie rating</string>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="movieCastResponseModel"
+            type="com.themovielist.model.response.credit.MovieCastResponseModel" />
+
+        <variable
+            name="apiImageSizeList"
+            type="com.themovielist.model.ApiImageSizeModel[]" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/image_item_horizontal_movie"
+            android:layout_width="@dimen/home_movie_list_image_width"
+            android:layout_height="@dimen/home_movie_list_image_height"
+            android:contentDescription="@string/a11y_movie_item_poster"
+            android:scaleType="centerCrop"
+            app:imageSizeList="@{apiImageSizeList}"
+            app:imageUrl="@{movieCastResponseModel.profilePath}"
+            app:layout_constraintBottom_toTopOf="@+id/text_item_movie_cast_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:viewWidth="@{@dimen/home_movie_list_image_width}"
+            tools:src="@drawable/movie_poster" />
+
+        <TextView
+            android:id="@+id/text_item_movie_cast_name"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@{movieCastResponseModel.name}"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/text_item_movie_cast_character"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:title="Cast name" />
+
+        <TextView
+            android:id="@+id/text_item_movie_cast_character"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@{movieCastResponseModel.character}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:title="Cast character" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
